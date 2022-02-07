@@ -51,13 +51,14 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Fonts\fa-brands-400.ttf" />
-	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
-	  <None Remove="Resources\Fonts\fa-solid-900.ttf" />
+	  <None Remove="Resources\Fonts\Torus Regular.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="AppShell.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\AboutPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\SessionsPage.xaml">

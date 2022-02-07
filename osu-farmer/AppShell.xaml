@@ -26,13 +26,6 @@
     </Shell.Resources>
 
     <FlyoutItem Title="Tracker">
-        <FlyoutItem.Icon>
-            <FontImageSource FontFamily="FAS"
-                             Color="{AppThemeBinding 
-                                    Dark=White, 
-                                    Light={StaticResource SystemGray5Dark}}"
-                             Glyph="{x:Static fontAwesome:FontAwesomeIcons.Image}"/>
-        </FlyoutItem.Icon>
         <ShellContent ContentTemplate="{DataTemplate local:TrackerPage}" Route="tracker" />
     </FlyoutItem>
     <FlyoutItem Title="Sessions">
@@ -40,5 +33,8 @@
     </FlyoutItem>
     <FlyoutItem Title="Settings">
         <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" Route="settings" />
+    </FlyoutItem>
+    <FlyoutItem Title="About">
+        <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" Route="about" />
     </FlyoutItem>
 </Shell>

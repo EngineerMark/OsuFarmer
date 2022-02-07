@@ -10,9 +10,10 @@ public static class MauiProgram
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("fa-brands-400.ttf", "FAB");
-				fonts.AddFont("fa-regular-400.ttf", "FAR");
-				fonts.AddFont("fa-solid-400.ttf", "FAS");
+				fonts.AddFont("Font Awesome 6 Brands-Regular-400.otf", "FAB");
+				fonts.AddFont("Font Awesome 6 Free-Regular-400.otf", "FAR");
+				fonts.AddFont("Font Awesome 6 Free-Solid-400.otf", "FAS");
+				fonts.AddFont("Torus Regular.otf", "TorusRegular");
 			});
 
 		return builder.Build();
