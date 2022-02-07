@@ -1,0 +1,12 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="osu_farmer.MainPage"
+             BackgroundColor="{DynamicResource PrimaryColor}">
+    <ScrollView>
+        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*">
+
+            <Label Text="Hello, World!" Grid.Row="0" FontSize="32" TextColor="White" />
+
+        </Grid>
+    </ScrollView>
+</ContentPage>
