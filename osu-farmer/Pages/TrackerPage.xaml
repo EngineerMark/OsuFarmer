@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="osu_farmer.TrackerPage"
+             xmlns:local="clr-namespace:osu_farmer"
              Title="Tracker"
              BackgroundColor="{DynamicResource OsuRegular}">
     <ContentPage.Content>
@@ -20,8 +21,16 @@
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Image Grid.Column="0"  x:Name="trackerUserFlag" Source="https://assets.ppy.sh/old-flags/NL.png" WidthRequest="35" HeightRequest="26" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"/>
+                <Image Grid.Column="0" x:Name="trackerUserFlag" Source="https://assets.ppy.sh/old-flags/NL.png" WidthRequest="35" HeightRequest="26" HorizontalOptions="End" VerticalOptions="Center" Aspect="AspectFit"/>
                 <Label Grid.Column="1" VerticalTextAlignment="Center" Text="Netherlands" HorizontalTextAlignment="Start" WidthRequest="500"/>
+            </Grid>
+            <Grid Margin="50,0,50,0">
+                <StackLayout x:Name="TrackerItemList" Spacing="5">
+                    <local:TrackerItemControl/>
+                    <local:TrackerItemControl />
+                    <local:TrackerItemControl />
+                    <local:TrackerItemControl />
+                </StackLayout>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
