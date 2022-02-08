@@ -12,6 +12,7 @@
 
     <!-- Display name -->
     <ApplicationTitle>osu-farmer</ApplicationTitle>
+    <ApplicationIcon>Resources/icon.ico</ApplicationIcon>
 
     <!-- App Identifier -->
     <ApplicationId>com.companyname.osu_farmer</ApplicationId>
@@ -30,11 +31,11 @@
     <Nullable>enable</Nullable>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
     <Platforms>AnyCPU;x64</Platforms>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
-  <PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>
 
@@ -60,12 +61,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Platforms\Windows\icon.ico" />
     <None Remove="Resources\Fonts\Torus Regular.otf" />
     <None Remove="Resources\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Platforms\Windows\icon.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
   </ItemGroup>
 
   <ItemGroup>

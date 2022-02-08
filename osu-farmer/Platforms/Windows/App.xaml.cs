@@ -10,6 +10,8 @@ namespace osu_farmer.WinUI;
 /// </summary>
 public partial class App : MauiWinUIApplication
 {
+    Microsoft.Win32.SafeHandles.SafeFileHandle iIcon;
+
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -21,6 +23,7 @@ public partial class App : MauiWinUIApplication
         Microsoft.Maui.Handlers.WindowHandler.WindowMapper.AppendToMapping(nameof(IWindow), (h, v) =>
         {
             (v.Handler.NativeView as MauiWinUIWindow).ExtendsContentIntoTitleBar = false;
+            (v.Handler.NativeView as MauiWinUIWindow).Title = "osu!Farmer";
         });
     }
 
