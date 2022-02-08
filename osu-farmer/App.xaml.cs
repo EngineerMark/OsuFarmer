@@ -1,4 +1,6 @@
-﻿namespace osu_farmer;
+﻿using System.Runtime.Loader;
+
+namespace osu_farmer;
 
 public partial class App : Application
 {
