@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
-    <OutputType>exe</OutputType>
+    
+    <OutputType>Exe</OutputType>
     <RootNamespace>osu_farmer</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
@@ -30,10 +31,14 @@
     <TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
     <Nullable>enable</Nullable>
     <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
-    <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <Platforms>AnyCPU</Platforms>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <Platforms>x64</Platforms>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <PublishSingleFile>true</PublishSingleFile>
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
@@ -58,6 +63,7 @@
     <!-- Required - WinUI does not yet have buildTransitive for everything -->
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.0.0.30" />
+    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
   </ItemGroup>
 
   <ItemGroup>
@@ -74,11 +80,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PInvoke.User32" Version="0.7.104" />
-  </ItemGroup>
-
-  <ItemGroup>
     <MauiXaml Update="AppShell.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
+    <MauiXaml Update="Controls\SessionItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
     <MauiXaml Update="Controls\TrackerItemControl.xaml">
@@ -96,6 +101,10 @@
     <MauiXaml Update="Pages\TrackerPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Osu\" />
   </ItemGroup>
 
   <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">

@@ -26,7 +26,7 @@
             </Grid>
             <Grid Margin="50,0,50,0">
                 <StackLayout x:Name="TrackerItemList" Spacing="5">
-                    <local:TrackerItemControl/>
+                    <local:TrackerItemControl />
                     <local:TrackerItemControl />
                     <local:TrackerItemControl />
                     <local:TrackerItemControl />

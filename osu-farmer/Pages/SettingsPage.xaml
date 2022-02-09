@@ -4,10 +4,31 @@
              x:Class="osu_farmer.SettingsPage"
              Title="Settings"
              BackgroundColor="{DynamicResource OsuRegular}">
-    <StackLayout Margin="20">
-        <Entry x:Name="settingsApiKey" Text="osu! api key" />
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+    <StackLayout Spacing="10" Margin="20">
+        <Entry x:Name="settingsApiKey" Placeholder="osu! api key" />
+        <BoxView HorizontalOptions="CenterAndExpand" HeightRequest="2" Color="{DynamicResource OsuDark}" />
+        <ScrollView MaximumHeightRequest="400">
+            <StackLayout Spacing="5">
+                <Button Text="Save" />
+                <Button Text="Save" />
+                <Button Text="Save" />
+                <Button Text="Save" />
+                <Button Text="Save" />
+            </StackLayout>
+        </ScrollView>
+
+        <Grid ColumnSpacing="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button GridLayout.Column="0" Text="Save" />
+            <Button GridLayout.Column="1" Text="Reset" />
+        </Grid>
     </StackLayout>
 </ContentPage>

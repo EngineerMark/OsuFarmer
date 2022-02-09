@@ -27,7 +27,6 @@ public static class MauiProgram
 						WindowExtensions.Hwnd = args.Hwnd;
 						WindowExtensions.SetIcon("Platforms/Windows/icon.ico");
 					}
-					app.ExtendsContentIntoTitleBar = false;
 				}));
 #endif
 		});

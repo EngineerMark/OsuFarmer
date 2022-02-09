@@ -25,16 +25,19 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <FlyoutItem Title="Tracker">
-        <ShellContent ContentTemplate="{DataTemplate local:TrackerPage}" Route="tracker" />
+    <!--<FlyoutItem Title="Tracker">
+        <ShellContent x:Name="TrackerPageElement" ContentTemplate="{DataTemplate local:TrackerPage}" Route="tracker" />
     </FlyoutItem>
     <FlyoutItem Title="Sessions">
-        <ShellContent ContentTemplate="{DataTemplate local:SessionsPage}" Route="sessions" />
+        <ShellContent x:Name="SessionsPageElement" ContentTemplate="{DataTemplate local:SessionsPage}" Route="sessions" />
     </FlyoutItem>
     <FlyoutItem Title="Settings">
-        <ShellContent ContentTemplate="{DataTemplate local:SettingsPage}" Route="settings" />
+        <ShellContent x:Name="SettingsPageElement" ContentTemplate="{DataTemplate local:SettingsPage}" Route="settings" />
     </FlyoutItem>
     <FlyoutItem Title="About">
-        <ShellContent ContentTemplate="{DataTemplate local:AboutPage}" Route="about" />
+        <ShellContent x:Name="AboutPageElement" ContentTemplate="{DataTemplate local:AboutPage}" Route="about" />
     </FlyoutItem>
+    <FlyoutItem Title="Beatmaps">
+        <ShellContent x:Name="BeatmapPageElement" ContentTemplate="{DataTemplate local:AboutPage}" Route="beatmaps" />
+    </FlyoutItem>-->
 </Shell>
