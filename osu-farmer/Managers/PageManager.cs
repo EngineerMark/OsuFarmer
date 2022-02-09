@@ -13,6 +13,7 @@ namespace osu_farmer.Managers
             typeof(SessionsPage),
             typeof(SettingsPage),
             typeof(AboutPage),
+            typeof(BeatmapsPage),
         };
 
         public List<ContentPage> ContentPages { get; }
@@ -23,7 +24,7 @@ namespace osu_farmer.Managers
             ContentPages = new List<ContentPage>();
             
             foreach(Type t in Pages){
-                ContentPage? page = AppManager.Instance?.GetShell().AddPage(t);
+                ContentPage? page = AppManager.Instance?.GetShell()?.AddPage(t);
                 if(page!=null){
                     ContentPages.Add(page);
                 }

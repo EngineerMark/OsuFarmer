@@ -31,7 +31,7 @@ public partial class AppShell : Shell
 
 		FlyoutItem flyoutItem = new FlyoutItem();
 		flyoutItem.Items.Add(content);
-		flyoutItem.Title = t.Name;
+		flyoutItem.Title = page?.Title;
 
 		Items.Add(flyoutItem);
 		return (ContentPage?)content.Content;

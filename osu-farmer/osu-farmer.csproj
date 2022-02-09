@@ -92,6 +92,9 @@
     <MauiXaml Update="Pages\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Pages\BeatmapsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Pages\SessionsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
@@ -105,6 +108,12 @@
 
   <ItemGroup>
     <Folder Include="Core\Osu\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\BeatmapsPage.xaml.cs">
+      <DependentUpon>BeatmapsPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
