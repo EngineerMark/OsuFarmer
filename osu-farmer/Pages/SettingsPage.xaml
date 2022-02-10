@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="osu_farmer.SettingsPage"
+             xmlns:local="clr-namespace:osu_farmer"
              Title="Settings"
              BackgroundColor="{DynamicResource OsuRegular}">
     <StackLayout Spacing="10" Margin="20">
@@ -17,6 +18,12 @@
                 </x:Array>
             </Picker.ItemsSource>
         </Picker>
+
+        <ScrollView MaximumHeightRequest="350">
+            <StackLayout x:Name="settingsTrackerList">
+
+            </StackLayout>
+        </ScrollView>
 
         <Grid ColumnSpacing="20">
             <Grid.RowDefinitions>

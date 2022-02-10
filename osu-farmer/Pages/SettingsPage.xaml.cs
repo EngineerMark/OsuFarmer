@@ -20,6 +20,46 @@ public partial class SettingsPage : ContentPage
         SetApiKey(settings.ApiKey ?? String.Empty);
         SetUsername(settings.ApiUsername ?? String.Empty);
         SetGamemode(settings.ApiGamemode);
+
+        if(settingsTrackerList.Count==0){
+            foreach(TrackerItem item in Settings.PrefabTrackers){
+                TrackerOptionControl optionControl = new TrackerOptionControl();
+
+                optionControl.AttachedProperty = item.Property;
+
+                settingsTrackerList.Add(optionControl);
+
+                optionControl.Title = item.Name;
+            }
+        }
+
+        foreach (TrackerItem item in Settings.PrefabTrackers)
+        {
+            TrackerOptionControl optionControl = GetTrackerOptionControl(item.Property);
+            optionControl.Toggled = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
+        }
+    }
+
+    public TrackerOptionControl? GetTrackerOptionControl(string property){
+        IView[] children = settingsTrackerList.ToArray();
+
+        foreach (IView item in children)
+        {
+            if (item is TrackerOptionControl)
+            {
+                TrackerOptionControl control = (TrackerOptionControl)item;
+                if (control != null)
+                {
+                    if (control.AttachedProperty.Equals(property, StringComparison.InvariantCultureIgnoreCase))
+                        return control;
+                }
+            }
+        }
+        return null;
+    }
+
+    public void SetTrackerOptionState(string property, bool state){
+        
     }
 
     public Settings GetSettings()

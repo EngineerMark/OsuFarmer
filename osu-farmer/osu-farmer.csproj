@@ -89,6 +89,9 @@
     <MauiXaml Update="Controls\TrackerItemControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
+    <MauiXaml Update="Controls\TrackerOptionControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </MauiXaml>
     <MauiXaml Update="Pages\AboutPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </MauiXaml>
