@@ -21,26 +21,22 @@ public partial class SettingsPage : ContentPage
         SetUsername(settings.ApiUsername ?? String.Empty);
         SetGamemode(settings.ApiGamemode);
 
-        if(settingsTrackerList.Count==0){
-            foreach(TrackerItem item in Settings.PrefabTrackers){
-                TrackerOptionControl optionControl = new TrackerOptionControl();
-
-                optionControl.AttachedProperty = item.Property;
-
-                settingsTrackerList.Add(optionControl);
-
-                optionControl.Title = item.Name;
-            }
-        }
+        settingsTrackerList.Clear();
 
         foreach (TrackerItem item in Settings.PrefabTrackers)
         {
-            TrackerOptionControl optionControl = GetTrackerOptionControl(item.Property);
-            optionControl.Toggled = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
+            TrackerOptionControl optionControl = new TrackerOptionControl();
+
+            optionControl.AttachedProperty = item.Property;
+            optionControl.IsToggled = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
+            optionControl.Title = item.Name;
+
+            settingsTrackerList.Add(optionControl);
         }
     }
 
-    public TrackerOptionControl? GetTrackerOptionControl(string property){
+    public TrackerOptionControl? GetTrackerOptionControl(string property)
+    {
         IView[] children = settingsTrackerList.ToArray();
 
         foreach (IView item in children)
@@ -58,10 +54,6 @@ public partial class SettingsPage : ContentPage
         return null;
     }
 
-    public void SetTrackerOptionState(string property, bool state){
-        
-    }
-
     public Settings GetSettings()
     {
         Settings settings = new Settings()
@@ -70,6 +62,16 @@ public partial class SettingsPage : ContentPage
             ApiUsername = settingsApiUsername.Text,
             ApiGamemode = (Mode)settingsModePicker.SelectedIndex
         };
+
+        settings.Trackers = new Dictionary<string, bool>();
+        foreach (TrackerItem item in Settings.PrefabTrackers)
+        {
+            TrackerOptionControl? control = GetTrackerOptionControl(item.Property);
+            if(control!=null){
+                settings.Trackers.Add(item.Property, control.IsToggled);
+            }
+        }
+
         return settings;
     }
 
@@ -86,7 +88,7 @@ public partial class SettingsPage : ContentPage
             Settings currentSettings = SettingsManager.Instance.Settings;
             Settings newSettings = GetSettings();
 
-            if(currentSettings.ApiKey != newSettings.ApiKey || currentSettings.ApiUsername != newSettings.ApiUsername || currentSettings.ApiGamemode != newSettings.ApiGamemode)
+            if (currentSettings.ApiKey != newSettings.ApiKey || currentSettings.ApiUsername != newSettings.ApiUsername || currentSettings.ApiGamemode != newSettings.ApiGamemode)
             {
                 bool res = await AppManager.Instance.GetShell().CurrentPage.DisplayAlert("Warning", "The changes you made will reset the current session. Are you sure?", "Yes", "No");
                 if (res)
@@ -95,7 +97,8 @@ public partial class SettingsPage : ContentPage
                     apply = false;
             }
 
-            if(apply){
+            if (apply)
+            {
                 SettingsManager.Instance.ApplySettings(newSettings);
             }
 

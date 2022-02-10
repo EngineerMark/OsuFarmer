@@ -55,6 +55,8 @@ namespace osu_farmer.Managers
 
         public async void ApplySettings(Settings settings){
             this.settings = settings;
+            this.settings.UpdateTrackers();
+            PageManager.Instance?.GetPage<TrackerPage>()?.UpdateTrackerFields(settings);
             await SaveSettings();
             //restart app loop
         }

@@ -40,6 +40,7 @@ namespace osu_farmer.Managers
             bool runLoop = true;
 
             SettingsManager.Instance?.LoadSettings();
+            PageManager.Instance?.GetPage<TrackerPage>().GenerateTrackerFields(SettingsManager.Instance.Settings);
 
             if (SettingsManager.Instance.Settings == null){
                 await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");

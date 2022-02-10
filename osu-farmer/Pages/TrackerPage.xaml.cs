@@ -41,16 +41,32 @@ public partial class TrackerPage : ContentPage
 
 		if(settings.RunningTrackers!=null && settings.RunningTrackers.Count>0)
 		{
-
-			foreach(TrackerItem item in settings.RunningTrackers){
+			foreach(TrackerItem item in Settings.PrefabTrackers)
+			{
 				TrackerItemControl control = new TrackerItemControl();
 				control.SetTitle(item.Name);
 				control.SetCurrentValue(0);
 				control.SetChangedValue(0);
 				control.AttachedProperty = item.Property;
+				control.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property); ;
 
 				TrackerItemList.Add(control);
 			}
 		}
+	}
+
+	public void UpdateTrackerFields(Settings settings){
+		if (settings == null)
+			return;
+
+		if (settings.RunningTrackers != null && settings.RunningTrackers.Count > 0)
+		{
+			foreach (TrackerItem item in Settings.PrefabTrackers)
+			{
+				TrackerItemControl? control = GetTrackerControl(item.Property);
+				control.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property); ;
+			}
+		}
+		string s = "";
 	}
 }

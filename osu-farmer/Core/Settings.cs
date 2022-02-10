@@ -51,26 +51,40 @@ namespace osu_farmer.Core
         public List<TrackerItem> RunningTrackers { get; set; }
 
         public Settings(){
-            if(Trackers==null){
+            UpdateTrackers();
+        }
+
+        public void UpdateTrackers(){
+            if (Trackers == null)
+            {
                 Trackers = new Dictionary<string, bool>();
                 foreach (TrackerItem item in PrefabTrackers)
                     Trackers.Add(item.Property, item.Enabled);
             }
 
-            if (Trackers.Count>0){
+
+
+            if (Trackers.Count > 0)
+            {
                 RunningTrackers = new List<TrackerItem>();
                 foreach (KeyValuePair<string, bool> item in Trackers)
                 {
-                    if(item.Value){
-                        TrackerItem? prefab = PrefabTrackers.Find(i=>i.Property.Equals(item.Key, StringComparison.OrdinalIgnoreCase));
-                        if(prefab!=null)
-                            RunningTrackers.Add(new TrackerItem(prefab));
+                    if (item.Value)
+                    {
+                        TrackerItem? prefab = PrefabTrackers.Find(i => i.Property.Equals(item.Key, StringComparison.OrdinalIgnoreCase));
+                        if (prefab != null)
+                        {
+                            TrackerItem newItem = new TrackerItem(prefab);
+                            if (newItem != null)
+                                RunningTrackers.Add(newItem);
+                            else
+                            {
+                                string s = "";
+                            }
+                        }
                     }
                 }
             }
-
-            //Populate trackerpage
-            PageManager.Instance?.GetPage<TrackerPage>().GenerateTrackerFields(this);
         }
     }
 }

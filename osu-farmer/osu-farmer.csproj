@@ -40,7 +40,7 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <Platforms>x64</Platforms>
     <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <PublishSingleFile>true</PublishSingleFile>
+    <!--<PublishSingleFile>true</PublishSingleFile>-->
     <SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
   </PropertyGroup>
 

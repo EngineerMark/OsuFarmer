@@ -10,7 +10,6 @@ public partial class App : Application
 		System.Diagnostics.Debugger.Launch();
 #endif
 		InitializeComponent();
-
 		MainPage = new AppShell();
 	}
 }

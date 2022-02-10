@@ -4,11 +4,17 @@ public partial class TrackerOptionControl : ContentView
 {
 	public string? AttachedProperty { get; set; }
 
-	public bool Toggled
-	{
-		get { return ToggleElement.IsToggled; }
-		set { ToggleElement.IsToggled = value; }
-	}
+	public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(TrackerOptionControl), false, BindingMode.TwoWay, propertyChanged: IsToggledChanged);
+
+
+    public bool IsToggled {
+		get {
+			return (bool)base.GetValue(IsToggledProperty);
+        }
+		set {
+			base.SetValue(IsToggledProperty, value);
+        }
+    }
 
 	private string? title;
 	public string? Title
@@ -25,7 +31,13 @@ public partial class TrackerOptionControl : ContentView
 		return ToggleElement;
     }
 
-	public TrackerOptionControl()
+    private static void IsToggledChanged(BindableObject bindable, object oldValue, object newValue)
+    {
+		TrackerOptionControl control = (TrackerOptionControl)bindable;
+		control.ToggleElement.IsToggled = (bool)newValue;
+	}
+
+    public TrackerOptionControl()
 	{
 		InitializeComponent();
 		BindingContext = this;
