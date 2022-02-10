@@ -2,6 +2,8 @@ namespace osu_farmer;
 
 public partial class TrackerItemControl : ContentView
 {
+	public string AttachedProperty { get; set; } = "null";
+
 	public string Title { get; set; } = "Example Stat";
 	public static readonly BindableProperty TitleProperty = BindableProperty.Create(
 														 propertyName: "Title",
@@ -28,6 +30,21 @@ public partial class TrackerItemControl : ContentView
 														 defaultValue: "",
 														 defaultBindingMode: BindingMode.TwoWay,
 														 propertyChanged: ChangedValuePropertyChanged);
+
+	public void SetTitle(string title)
+	{
+		TitleElement.Text = title;
+	}
+
+	public void SetCurrentValue(double value)
+	{
+		CurrentValueElement.Text = string.Format("{0:n0}", value);
+	}
+
+	public void SetChangedValue(double value)
+	{
+		CurrentValueElement.Text = string.Format("{0:n0}", value);
+	}
 
 	public TrackerItemControl()
 	{

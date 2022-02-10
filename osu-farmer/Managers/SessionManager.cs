@@ -28,7 +28,7 @@ namespace osu_farmer.Managers
         }
 
         public void RemoveSession(string identifier){
-            Page p = AppManager.Instance.FindPage("settings");
+            Page? p = PageManager.Instance?.GetPage<SettingsPage>();
             string s = "";
         }
     }

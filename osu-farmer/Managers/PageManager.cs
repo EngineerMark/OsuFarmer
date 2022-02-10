@@ -32,7 +32,16 @@ namespace osu_farmer.Managers
         }
 
         public T? GetPage<T>() where T : ContentPage{
-            return (T?)ContentPages.Find(p => p.GetType().GetGenericTypeDefinition() == typeof(T));
+            //return (T?)ContentPages.Find(p => p.GetType().GetGenericTypeDefinition() == typeof(T));
+            T? page = null;
+            foreach (ContentPage _page in ContentPages)
+            {
+                if(_page is T){
+                    page = (T?)_page;
+                    break;
+                }
+            }
+            return page;
         }
     }
 }
