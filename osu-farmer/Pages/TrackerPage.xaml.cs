@@ -1,5 +1,6 @@
 using osu_farmer.Core;
 using osu_farmer.Core.Osu;
+using osu_farmer.Managers;
 using System.Globalization;
 
 namespace osu_farmer;
@@ -29,6 +30,22 @@ public partial class TrackerPage : ContentPage
 		}
 		trackerUserCountry.Text = country ?? "Unknown";
 	}
+
+	public void ApplySession(Session session){
+		foreach(TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers){
+			TrackerItemControl? tracker = GetTrackerControl(item.Property);
+
+			object test = session.Start[item.Property];
+
+			double original = Convert.ToInt64(session.Start[item.Property]);
+			double current = Convert.ToInt64(session.Latest[item.Property]);
+
+			double diff = current - original;
+
+			tracker.SetCurrentValue(current);
+			tracker.SetChangedValue(diff);
+		}
+    }
 
 	public void SetLoadedState(bool state){
 		trackerViewer.IsVisible = state;
@@ -77,7 +94,6 @@ public partial class TrackerPage : ContentPage
 				control.AttachedProperty = item.Property;
 				control.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property); ;
 
-				System.Diagnostics.Debug.WriteLine("Tracker state for " + item.Property + ": " + (control.IsVisible ? "1" : "0"));
 				TrackerItemList.Add(control);
 			}
 		}
@@ -95,6 +111,16 @@ public partial class TrackerPage : ContentPage
 				control.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property); ;
 			}
 		}
-		string s = "";
 	}
+
+    private void Button_LoadSession(object sender, EventArgs e)
+    {
+		PageManager.Instance?.GoTo<SessionsPage>();
+    }
+
+    private void Button_NewSession(object sender, EventArgs e)
+    {
+		//SessionManager.Instance?.StartNewSession();
+		AppManager.Instance?.StartLoop(true);
+    }
 }

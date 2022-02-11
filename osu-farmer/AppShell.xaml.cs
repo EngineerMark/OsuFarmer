@@ -28,6 +28,7 @@ public partial class AppShell : Shell
 
 		ShellContent content = new ShellContent();
 		content.Content = page;
+		content.Route = page.Title.ToLower();
 
 		FlyoutItem flyoutItem = new FlyoutItem();
 		flyoutItem.Items.Add(content);

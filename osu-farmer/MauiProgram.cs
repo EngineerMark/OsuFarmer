@@ -35,7 +35,7 @@ public static class MauiProgram
 			});
 
 			return builder.Build();
-		}catch (Exception e){
+		}catch (ArgumentException e){
 			Console.WriteLine(e.Message);
 			return null;
         }

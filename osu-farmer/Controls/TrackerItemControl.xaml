@@ -18,8 +18,8 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" x:Name="TitleElement" HorizontalOptions="End" VerticalOptions="Center" Text="Example Stat"></Label>
-            <Entry Grid.Column="1" x:Name="CurrentValueElement" Text="20" IsReadOnly="True"/>
-            <Entry Grid.Column="2" x:Name="ChangedValueElement" Text="+10" TextColor="Green" IsReadOnly="True"/>
+            <Entry Grid.Column="1" x:Name="CurrentValueElement" Text="0" IsReadOnly="True"/>
+            <Entry Grid.Column="2" x:Name="ChangedValueElement" Text="0" TextColor="Green" IsReadOnly="True"/>
             <Label Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" Text=""></Label>
 
         </Grid>

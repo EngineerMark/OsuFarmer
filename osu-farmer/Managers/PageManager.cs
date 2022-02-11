@@ -43,5 +43,9 @@ namespace osu_farmer.Managers
             }
             return page;
         }
+
+        public void GoTo<T>() where T : ContentPage {
+            Device.BeginInvokeOnMainThread(async () => await Shell.Current?.GoToAsync("//" + GetPage<T>()?.Title?.ToLower()));
+        }
     }
 }

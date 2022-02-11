@@ -124,7 +124,7 @@
     <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
   </PropertyGroup>
 
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent">
-	  <Exec Command="echo on&#xD;&#xA;cd $(TargetDir)&#xD;&#xA;if $(ConfigurationName) == Release (&#xD;&#xA;   del *.pdb&#xD;&#xA;   del *.xml&#xD;&#xA;)" />
-	</Target>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="echo on&#xD;&#xA;cd $(TargetDir)&#xD;&#xA;if $(ConfigurationName) == Release (&#xD;&#xA;   del *.pdb&#xD;&#xA;   del *.xml&#xD;&#xA;)" />
+  </Target>
 </Project>

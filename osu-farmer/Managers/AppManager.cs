@@ -38,10 +38,11 @@ namespace osu_farmer.Managers
             StartLoop();
         }
 
-        public void StartLoop(){
+        public void StartLoop(bool reset = true){
             BreakLoop();
+            _cts = null;
             _cts = new CancellationTokenSource();
-            Device.BeginInvokeOnMainThread(()=>ApplicationLoop(_cts.Token).ContinueWith((args) => { }));
+            Device.BeginInvokeOnMainThread(()=>ApplicationLoop(_cts.Token, reset).ContinueWith((args) => { }));
         }
 
         public void BreakLoop(){
@@ -53,7 +54,7 @@ namespace osu_farmer.Managers
             });
         }
 
-        private async Task ApplicationLoop(CancellationToken ct)
+        private async Task ApplicationLoop(CancellationToken ct, bool reset)
         {
             PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
             bool runLoop = true;
@@ -63,7 +64,7 @@ namespace osu_farmer.Managers
 
             if (SettingsManager.Instance.Settings == null){
                 await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
-                await ApplicationLoop(ct);
+                await ApplicationLoop(ct, reset);
                 return;
             }
 
@@ -76,7 +77,7 @@ namespace osu_farmer.Managers
                 SettingsManager.Instance.settings.ApiKey = val;
                 if (!(await OsuHelper.IsApiValid()))
                 {
-                    await ApplicationLoop(ct);
+                    await ApplicationLoop(ct, reset);
                     return;
                 }
             }
@@ -89,7 +90,7 @@ namespace osu_farmer.Managers
                 SettingsManager.Instance.settings.ApiUsername = val;
                 if (!(await OsuHelper.IsUserValid(SettingsManager.Instance.settings.ApiUsername)))
                 {
-                    await ApplicationLoop(ct);
+                    await ApplicationLoop(ct, reset);
                     return;
                 }
             }
@@ -104,15 +105,11 @@ namespace osu_farmer.Managers
             //test
             User? user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
 
-            if(user!=null){
-                foreach(TrackerItem tracker in SettingsManager.Instance.Settings.RunningTrackers){
-                    double data = Convert.ToInt64(user[tracker.Property]);
-                    PageManager.Instance?.GetPage<TrackerPage>()?.SetCurrentValue(tracker.Property, data);
-                }
-            }
-
             PageManager.Instance?.GetPage<TrackerPage>().ApplyUser(user);
             PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
+
+            if(reset)
+                SessionManager.Instance?.StartNewSession(user);
 
             while (runLoop)
             {
@@ -120,11 +117,13 @@ namespace osu_farmer.Managers
                 if (ct.IsCancellationRequested)
                     break;
 
-                await Task.Delay(1000);
+                await Task.Delay(4500);
+                user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
+                SessionManager.Instance?.IterateSession(user);
             }
 
             await Task.Delay(500);
-            await ApplicationLoop(ct);
+            await ApplicationLoop(ct, reset);
         }
 
         public AppShell? GetShell(){

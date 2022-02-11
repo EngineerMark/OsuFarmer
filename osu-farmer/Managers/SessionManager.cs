@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using osu_farmer.Core;
+using osu_farmer.Core.Osu;
 
 namespace osu_farmer.Managers
 {
@@ -17,6 +18,28 @@ namespace osu_farmer.Managers
             Register(this);
 
             ReloadFiles();
+        }
+
+        public void StartNewSession(User? user){
+            CurrentSession = new Session();
+            CurrentSession.Start = user;
+            CurrentSession.Latest = user;
+
+            CurrentSession.CreatedAt = DateTime.Now;
+            CurrentSession.LastUpdatedAt = DateTime.Now;
+
+            PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
+        }
+
+        public void IterateSession(User? user){
+            if(CurrentSession==null){
+                throw new NullReferenceException("No session currently exists, yet trying to update it");
+            }
+
+            CurrentSession.Latest = user;
+            CurrentSession.LastUpdatedAt = DateTime.Now;
+
+            PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
         }
 
         /// <summary>
