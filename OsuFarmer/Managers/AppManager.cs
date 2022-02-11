@@ -20,6 +20,7 @@ namespace OsuFarmer.Managers
         public PageManager PageManager { get; set; }
         public SettingsManager SettingsManager { get; set; }
         public FileManager FileManager { get; set; }
+        public NetworkManager NetworkManager { get; set; }
 
         private CancellationTokenSource _cts;
 
@@ -37,6 +38,7 @@ namespace OsuFarmer.Managers
             SettingsManager = new SettingsManager();
             SessionManager = new SessionManager();
             PageManager = new PageManager();
+            NetworkManager = new NetworkManager();
 
             StartLoop();
         }
@@ -83,6 +85,13 @@ namespace OsuFarmer.Managers
             if (SettingsManager.Instance.Settings == null){
                 Page? p = PageManager.Instance?.GetPage<TrackerPage>();
                 await p?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
+                await ApplicationLoop(ct, reset);
+                return;
+            }
+
+            if (!NetworkManager.CheckForInternetConnection())
+            {
+                await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("No internet", "There is no internet connection available", "Retry");
                 await ApplicationLoop(ct, reset);
                 return;
             }
@@ -138,6 +147,12 @@ namespace OsuFarmer.Managers
             {
                 if (CancelLoop)
                     break;
+
+                if (!NetworkManager.CheckForInternetConnection())
+                {
+                    await Task.Delay(1500);
+                    continue;
+                }
 
                 await Task.Delay(4500);
                 user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
