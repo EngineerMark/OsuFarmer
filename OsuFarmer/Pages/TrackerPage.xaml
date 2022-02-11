@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsuFarmer.TrackerPage"
+             xmlns:local="clr-namespace:OsuFarmer"
+             Title="Tracker"
+             BackgroundColor="{DynamicResource OsuRegular}">
+    <ContentPage.Content>
+        <Grid HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand" Margin="20,0,20,0">
+            <ScrollView x:Name="trackerViewer">
+                <StackLayout Margin="0,20,0,0" Spacing="10">
+                    <StackLayout HeightRequest="50" Spacing="10" Orientation="Horizontal">
+                        <Button Clicked="Button_LoadSession" Text="Load Session" />
+                        <Button Clicked="Button_NewSession" Text="New Session" />
+                    </StackLayout>
+                    <Frame Background="#ffffff" HorizontalOptions="Center" Padding="0" CornerRadius="15" WidthRequest="100" HeightRequest="100">
+                        <Image x:Name="trackerUserAvatar" Source="https://a.ppy.sh/10153735" WidthRequest="100" HeightRequest="100" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" VerticalOptions="Start" Aspect="AspectFill"/>
+                    </Frame>
+                    <Label x:Name="trackerUsername" FontSize="Title" Text="Misaki Nakahara" HorizontalTextAlignment="Center" />
+                    <FlexLayout Margin="0,3,0,3" HorizontalOptions="CenterAndExpand" HeightRequest="30" JustifyContent="Center">
+                        <Grid WidthRequest="35">
+                            <Image x:Name="trackerUserFlag" Source="https://assets.ppy.sh/old-flags/NL.png" WidthRequest="35" HeightRequest="26" VerticalOptions="Center" Aspect="AspectFit"/>
+                        </Grid>
+                        <BoxView BackgroundColor="#00000000" WidthRequest="10"></BoxView>
+                        <Label x:Name="trackerUserCountry" VerticalTextAlignment="Center" Text="Netherlands" />
+                    </FlexLayout>
+                    <Grid Margin="15,0,15,0">
+                        <StackLayout x:Name="TrackerItemList" Spacing="5">
+                        </StackLayout>
+                    </Grid>
+                </StackLayout>
+            </ScrollView>
+            <ActivityIndicator x:Name="trackerLoader" IsRunning="true" VerticalOptions="Center" HorizontalOptions="Center"></ActivityIndicator>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

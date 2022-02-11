@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsuFarmer.TrackerOptionControl"
+             HeightRequest="30">
+    <ContentView.Content>
+        <Grid ColumnSpacing="10" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"></ColumnDefinition>
+                <ColumnDefinition Width="4*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="TitleElement" HorizontalOptions="End" Text="{Binding Title}" VerticalOptions="CenterAndExpand"></Label>
+            <Switch Grid.Column="1" x:Name="ToggleElement" IsToggled="{Binding IsToggled}" />
+            <Label Grid.Column="2" HorizontalOptions="End" VerticalOptions="Center" Text=""></Label>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

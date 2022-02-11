@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OsuFarmer.SettingsPage"
+             xmlns:local="clr-namespace:OsuFarmer"
+             Title="Settings"
+             BackgroundColor="{DynamicResource OsuRegular}">
+    <ScrollView>
+        <StackLayout Spacing="10" Margin="20">
+            <Entry x:Name="settingsApiKey" Placeholder="osu! api key" IsPassword="True" />
+            <Entry x:Name="settingsApiUsername" Placeholder="osu! username" />
+            <Picker x:Name="settingsModePicker">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Standard</x:String>
+                        <x:String>Taiko</x:String>
+                        <x:String>Catch The Beat</x:String>
+                        <x:String>Mania</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+
+            <ScrollView MaximumHeightRequest="350">
+                <StackLayout x:Name="settingsTrackerList">
+
+                </StackLayout>
+            </ScrollView>
+
+            <Grid ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <Button GridLayout.Column="0" x:Name="ButtonSave" Clicked="Button_SaveSettings" Text="Save" />
+                <Button GridLayout.Column="1" x:Name="ButtonReset" Clicked="Button_ResetSettings" Text="Reset" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
