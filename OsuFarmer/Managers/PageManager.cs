@@ -13,7 +13,7 @@ namespace OsuFarmer.Managers
             typeof(SessionsPage),
             typeof(SettingsPage),
             typeof(AboutPage),
-            typeof(BeatmapsPage),
+            //typeof(BeatmapsPage),
         };
 
         public List<ContentPage> ContentPages { get; }

@@ -116,10 +116,15 @@ public partial class TrackerPage : ContentPage
     private void Button_NewSession(object sender, EventArgs e)
     {
 		//SessionManager.Instance?.StartNewSession();
-		AppManager.Instance?.StartLoop(true);
-    }
+		Device.InvokeOnMainThreadAsync(async () =>
+		{
+			bool reset = await DisplayAlert("New session", "Are you sure you want to start a new session?", "Yes", "No");
+			if(reset)
+				AppManager.Instance?.StartLoop(true);
+		});
+	}
 
-    private void Button_SaveSession(object sender, EventArgs e)
+	private void Button_SaveSession(object sender, EventArgs e)
     {
 		Device.InvokeOnMainThreadAsync(async () =>
 		{

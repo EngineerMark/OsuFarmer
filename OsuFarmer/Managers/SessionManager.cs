@@ -43,6 +43,8 @@ namespace OsuFarmer.Managers
             CurrentSession.CreatedAt = DateTime.Now;
             CurrentSession.LastUpdatedAt = DateTime.Now;
 
+            CurrentSession.Mode = SettingsManager.Instance?.Settings?.ApiGamemode ?? Mode.Standard;
+
             PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
         }
 
