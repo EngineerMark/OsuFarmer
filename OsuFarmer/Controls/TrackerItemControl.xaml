@@ -12,15 +12,17 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="2*"></ColumnDefinition>
-                <ColumnDefinition Width="5*"></ColumnDefinition>
-                <ColumnDefinition Width="5*"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="3.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.5*"></ColumnDefinition>
+                <ColumnDefinition Width="3.5*"></ColumnDefinition>
+                <ColumnDefinition Width="0.9*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" x:Name="TitleElement" HorizontalOptions="End" VerticalOptions="Center" Text="Example Stat"></Label>
             <Entry Grid.Column="1" x:Name="CurrentValueElement" Text="0" IsReadOnly="True"/>
-            <Entry Grid.Column="2" x:Name="ChangedValueElement" Text="0" TextColor="Green" IsReadOnly="True"/>
-            <Label Grid.Column="3" HorizontalOptions="End" VerticalOptions="Center" Text=""></Label>
+            <Label Grid.Column="2" FontAttributes="Bold" Padding="0,0,0,0" HorizontalOptions="EndAndExpand" VerticalOptions="Center" x:Name="ChangedValueSignElement" Text="" TextColor="{Binding ChangedTextColor}" />
+            <Entry Grid.Column="3" x:Name="ChangedValueElement" Text="0" IsReadOnly="True"/>
+            <Label Grid.Column="4" HorizontalOptions="End" VerticalOptions="Center" Text=""></Label>
 
         </Grid>
     </ContentView.Content>
