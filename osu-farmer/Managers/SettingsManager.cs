@@ -51,6 +51,7 @@ namespace osu_farmer.Managers
                 await SaveSettings();
             }
 
+            settings.UpdateTrackers();
         }
 
         public async void ApplySettings(Settings settings){

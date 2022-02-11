@@ -11,10 +11,10 @@
                 <RowDefinition Height="Auto"></RowDefinition>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="5*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
             <Label Grid.Column="0" x:Name="TitleElement" HorizontalOptions="End" VerticalOptions="Center" Text="Example Stat"></Label>

@@ -18,6 +18,8 @@ namespace osu_farmer.Managers
         public SettingsManager SettingsManager { get; set; }
         public FileManager FileManager { get; set; }
 
+        private CancellationTokenSource _cts;
+
         public AppManager(AppManagerData data)
         {
             Register(this);
@@ -33,10 +35,27 @@ namespace osu_farmer.Managers
             SessionManager = new SessionManager();
             PageManager = new PageManager();
 
-            Device.BeginInvokeOnMainThread(ApplicationLoop);
+            StartLoop();
         }
 
-        private async void ApplicationLoop(){
+        public void StartLoop(){
+            BreakLoop();
+            _cts = new CancellationTokenSource();
+            Device.BeginInvokeOnMainThread(()=>ApplicationLoop(_cts.Token).ContinueWith((args) => { }));
+        }
+
+        public void BreakLoop(){
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                if (_cts!=null){
+                    _cts.Cancel();
+                }
+            });
+        }
+
+        private async Task ApplicationLoop(CancellationToken ct)
+        {
+            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
             bool runLoop = true;
 
             SettingsManager.Instance?.LoadSettings();
@@ -44,7 +63,7 @@ namespace osu_farmer.Managers
 
             if (SettingsManager.Instance.Settings == null){
                 await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
-                ApplicationLoop();
+                await ApplicationLoop(ct);
                 return;
             }
 
@@ -57,7 +76,7 @@ namespace osu_farmer.Managers
                 SettingsManager.Instance.settings.ApiKey = val;
                 if (!(await OsuHelper.IsApiValid()))
                 {
-                    ApplicationLoop();
+                    await ApplicationLoop(ct);
                     return;
                 }
             }
@@ -70,7 +89,7 @@ namespace osu_farmer.Managers
                 SettingsManager.Instance.settings.ApiUsername = val;
                 if (!(await OsuHelper.IsUserValid(SettingsManager.Instance.settings.ApiUsername)))
                 {
-                    ApplicationLoop();
+                    await ApplicationLoop(ct);
                     return;
                 }
             }
@@ -92,13 +111,20 @@ namespace osu_farmer.Managers
                 }
             }
 
+            PageManager.Instance?.GetPage<TrackerPage>().ApplyUser(user);
+            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
+
             while (runLoop)
             {
+                await Task.Delay(500, ct);
+                if (ct.IsCancellationRequested)
+                    break;
+
                 await Task.Delay(1000);
             }
 
             await Task.Delay(500);
-            ApplicationLoop();
+            await ApplicationLoop(ct);
         }
 
         public AppShell? GetShell(){

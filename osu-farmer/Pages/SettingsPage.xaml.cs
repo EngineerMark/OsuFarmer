@@ -11,7 +11,12 @@ public partial class SettingsPage : ContentPage
         InitializeComponent();
     }
 
-    public void SetApiKey(string key) => settingsApiKey.Text = key;
+    public void SetApiKey(string key)
+    {
+        settingsApiKey.Text = key;
+        settingsApiKey.IsPassword = false;
+        settingsApiKey.IsPassword = true;
+    }
     public void SetUsername(string name) => settingsApiUsername.Text = name;
     public void SetGamemode(Mode mode) => settingsModePicker.SelectedIndex = (int)mode;
 
@@ -88,7 +93,7 @@ public partial class SettingsPage : ContentPage
             Settings currentSettings = SettingsManager.Instance.Settings;
             Settings newSettings = GetSettings();
 
-            if (currentSettings.ApiKey != newSettings.ApiKey || currentSettings.ApiUsername != newSettings.ApiUsername || currentSettings.ApiGamemode != newSettings.ApiGamemode)
+            if (currentSettings.ApiUsername != newSettings.ApiUsername || currentSettings.ApiGamemode != newSettings.ApiGamemode)
             {
                 bool res = await AppManager.Instance.GetShell().CurrentPage.DisplayAlert("Warning", "The changes you made will reset the current session. Are you sure?", "Yes", "No");
                 if (res)
@@ -100,6 +105,9 @@ public partial class SettingsPage : ContentPage
             if (apply)
             {
                 SettingsManager.Instance.ApplySettings(newSettings);
+                if(resetSession){
+                    AppManager.Instance?.StartLoop();
+                }
             }
 
             ButtonSave.IsEnabled = true;

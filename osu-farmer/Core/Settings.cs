@@ -50,10 +50,6 @@ namespace osu_farmer.Core
         [JsonIgnore]
         public List<TrackerItem> RunningTrackers { get; set; }
 
-        public Settings(){
-            UpdateTrackers();
-        }
-
         public void UpdateTrackers(){
             if (Trackers == null)
             {
@@ -61,8 +57,6 @@ namespace osu_farmer.Core
                 foreach (TrackerItem item in PrefabTrackers)
                     Trackers.Add(item.Property, item.Enabled);
             }
-
-
 
             if (Trackers.Count > 0)
             {

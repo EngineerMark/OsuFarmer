@@ -9,6 +9,8 @@ namespace osu_farmer.Managers
 {
     public class SessionManager : Manager<SessionManager>
     {
+        public Session CurrentSession { get; set; }
+
         public List<Session> StoredSessions;
 
         public SessionManager(){

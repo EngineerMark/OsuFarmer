@@ -4,7 +4,9 @@
              x:Class="osu_farmer.AboutPage"
              Title="About"
              BackgroundColor="{DynamicResource OsuRegular}">
-    <StackLayout>
-        <Label FontSize="Title" Text="About osu!Farmer" HorizontalOptions="CenterAndExpand" />
-    </StackLayout>
+    <ScrollView>
+        <StackLayout>
+            <Label FontSize="Title" Text="About osu!Farmer" HorizontalOptions="CenterAndExpand" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>
