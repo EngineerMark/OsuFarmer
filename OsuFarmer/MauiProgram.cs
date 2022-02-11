@@ -1,4 +1,6 @@
-﻿namespace OsuFarmer;
+﻿using Microsoft.Maui.LifecycleEvents;
+
+namespace OsuFarmer;
 
 public static class MauiProgram
 {
@@ -12,6 +14,17 @@ public static class MauiProgram
 				//fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("Torus Regular.otf", "TorusRegular");
 			});
+
+#if WINDOWS
+		builder.ConfigureLifecycleEvents(lifecycle =>
+		{
+			lifecycle
+            .AddWindows(windows =>
+                windows.OnNativeMessage((app, args) => {
+                    app.ExtendsContentIntoTitleBar = false;
+                }));
+		});
+#endif
 
 		return builder.Build();
 	}

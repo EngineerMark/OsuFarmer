@@ -7,7 +7,7 @@
              BackgroundColor="{DynamicResource OsuRegular}">
     <StackLayout Margin="20">
         <ScrollView HeightRequest="300">
-            <StackLayout Spacing="5">
+            <StackLayout x:Name="SessionListElement" Spacing="5">
                 <local:SessionItemControl></local:SessionItemControl>
                 <local:SessionItemControl></local:SessionItemControl>
                 <local:SessionItemControl></local:SessionItemControl>

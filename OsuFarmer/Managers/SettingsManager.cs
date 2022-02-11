@@ -74,7 +74,7 @@ namespace OsuFarmer.Managers
                 Directory.CreateDirectory(SettingsDirectory);
 
                 if(File.Exists(SettingsPath))
-                    if (IsFileLocked(SettingsPath))
+                    if (FileManager.IsFileLocked(SettingsPath))
                         return false;
 
                 string data = string.Empty;
@@ -82,33 +82,8 @@ namespace OsuFarmer.Managers
                     data = JsonConvert.SerializeObject(this.settings);
                 }catch (Exception){ }
 
-                if (string.IsNullOrEmpty(data))
-                    return false;
-
-
-                //empty file
-                await File.WriteAllTextAsync(SettingsPath, String.Empty);
-
-                //fill file with data
-                await File.WriteAllTextAsync(SettingsPath, data);
-
-                return true;
+                return await FileManager.WriteFile(SettingsPath, data);
             }
-            return false;
-        }
-
-        protected bool IsFileLocked(string file){
-            try{
-                using (FileStream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.None))
-                {
-                    stream.Close();
-                }
-            }
-            catch (IOException)
-            {
-                return true;
-            }
-
             return false;
         }
     }

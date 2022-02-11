@@ -121,6 +121,29 @@ public partial class TrackerPage : ContentPage
 
     private void Button_SaveSession(object sender, EventArgs e)
     {
+		Device.InvokeOnMainThreadAsync(async () =>
+		{
+			SetLoadedState(false);
+			bool replace = false;
+			string name = SessionManager.Instance?.CurrentSession?.Name;
+			//check if it exists
+			Session? s = SessionManager.Instance?.GetSessionByName(name);
+            if (s != null)
+            {
+				//ask to replace
+				replace = await DisplayAlert("Session already exists", "Do you want to overwrite the existing stored session?", "Yes", "No");
+			}
+			if(!replace)
+				name = await DisplayPromptAsync("Save Session", "Please enter a name for this session", "Save", "Cancel");
 
-    }
+			SessionManager.Instance?.CurrentSession?.SetName(name);
+
+			bool result = await SessionManager.Instance?.SaveSessionToFile(SessionManager.Instance.CurrentSession);
+
+            if (!result)
+				await DisplayAlert("Oops", "Something went wrong while saving, please retry later.", "Ok");
+
+			SetLoadedState(true);
+		});
+	}
 }

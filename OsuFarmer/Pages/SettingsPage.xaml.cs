@@ -11,12 +11,7 @@ public partial class SettingsPage : ContentPage
         InitializeComponent();
     }
 
-    public void SetApiKey(string key)
-    {
-        settingsApiKey.Text = key;
-        settingsApiKey.IsPassword = false;
-        settingsApiKey.IsPassword = true;
-    }
+    public void SetApiKey(string key) => settingsApiKey.Text = key;
     public void SetUsername(string name) => settingsApiUsername.Text = name;
     public void SetGamemode(Mode mode) => settingsModePicker.SelectedIndex = (int)mode;
 

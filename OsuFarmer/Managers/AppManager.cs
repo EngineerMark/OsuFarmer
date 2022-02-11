@@ -59,6 +59,15 @@ namespace OsuFarmer.Managers
             });
         }
 
+        public async Task BreakLoopAsync()
+        {
+            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+            if (IsLoopRunning)
+                CancelLoop = true;
+            while(IsLoopRunning)
+                await Task.Delay(25);
+        }
+
         private async Task ApplicationLoop(CancellationToken ct, bool reset)
         {
             IsLoopRunning = true;
@@ -68,6 +77,8 @@ namespace OsuFarmer.Managers
 
             await SettingsManager.Instance?.LoadSettings();
             PageManager.Instance?.GetPage<TrackerPage>().GenerateTrackerFields(SettingsManager.Instance.Settings);
+
+            SessionManager.Instance.ReloadFiles();
 
             if (SettingsManager.Instance.Settings == null){
                 Page? p = PageManager.Instance?.GetPage<TrackerPage>();
@@ -114,10 +125,14 @@ namespace OsuFarmer.Managers
             User? user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
 
             PageManager.Instance?.GetPage<TrackerPage>().ApplyUser(user);
-            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
 
             if(reset)
                 SessionManager.Instance?.StartNewSession(user);
+            else
+                if (SessionManager.Instance?.CurrentSession != null)
+                    SessionManager.Instance?.IterateSession(user);
+
+            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
 
             while (true)
             {
