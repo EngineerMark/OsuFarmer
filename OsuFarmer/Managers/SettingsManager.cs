@@ -28,7 +28,7 @@ namespace OsuFarmer.Managers
             Register(this);
         }
 
-        public async void LoadSettings()
+        public async Task LoadSettings()
         {
             Settings? settings = null;
             if (File.Exists(SettingsPath))

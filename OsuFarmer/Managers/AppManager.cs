@@ -13,6 +13,9 @@ namespace OsuFarmer.Managers
     {
         private AppManagerData data;
 
+        public bool IsLoopRunning { get; set; } = false;
+        public bool CancelLoop { get; private set; } = false;
+
         public SessionManager SessionManager { get; set; }
         public PageManager PageManager { get; set; }
         public SettingsManager SettingsManager { get; set; }
@@ -40,30 +43,35 @@ namespace OsuFarmer.Managers
 
         public void StartLoop(bool reset = true){
             BreakLoop();
-            _cts = null;
             _cts = new CancellationTokenSource();
-            Device.BeginInvokeOnMainThread(()=>ApplicationLoop(_cts.Token, reset).ContinueWith((args) => { }));
+            Device.InvokeOnMainThreadAsync(async ()=> {
+                PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+                if (CancelLoop)
+                    while (IsLoopRunning) await Task.Delay(25);
+                await ApplicationLoop(_cts.Token, reset);
+            });
         }
 
         public void BreakLoop(){
-            Device.BeginInvokeOnMainThread(() =>
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                if (_cts!=null){
-                    _cts.Cancel();
-                }
+                if(IsLoopRunning) CancelLoop = true;
             });
         }
 
         private async Task ApplicationLoop(CancellationToken ct, bool reset)
         {
-            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
-            bool runLoop = true;
+            IsLoopRunning = true;
+            CancelLoop = false;
 
-            SettingsManager.Instance?.LoadSettings();
+            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+
+            await SettingsManager.Instance?.LoadSettings();
             PageManager.Instance?.GetPage<TrackerPage>().GenerateTrackerFields(SettingsManager.Instance.Settings);
 
             if (SettingsManager.Instance.Settings == null){
-                await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
+                Page? p = PageManager.Instance?.GetPage<TrackerPage>();
+                await p?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
                 await ApplicationLoop(ct, reset);
                 return;
             }
@@ -111,10 +119,9 @@ namespace OsuFarmer.Managers
             if(reset)
                 SessionManager.Instance?.StartNewSession(user);
 
-            while (runLoop)
+            while (true)
             {
-                await Task.Delay(500, ct);
-                if (ct.IsCancellationRequested)
+                if (CancelLoop)
                     break;
 
                 await Task.Delay(4500);
@@ -122,8 +129,7 @@ namespace OsuFarmer.Managers
                 SessionManager.Instance?.IterateSession(user);
             }
 
-            await Task.Delay(500);
-            await ApplicationLoop(ct, reset);
+            IsLoopRunning = false;
         }
 
         public AppShell? GetShell(){

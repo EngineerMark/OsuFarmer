@@ -24,7 +24,7 @@ namespace OsuFarmer.Core
             new TrackerItem("Silver S", "CountSH", true),
             new TrackerItem("Gold S", "CountS", true),
 
-            new TrackerItem("Total A", "TotalA", false),
+            new TrackerItem("Total A", "CountA", false),
 
             new TrackerItem("Ranked Score", "RankedScore", true),
             new TrackerItem("Total Score", "TotalScore", true),

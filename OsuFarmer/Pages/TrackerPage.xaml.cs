@@ -32,16 +32,14 @@ public partial class TrackerPage : ContentPage
 	}
 
 	public void ApplySession(Session session){
-		foreach(TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers){
-			TrackerItemControl? tracker = GetTrackerControl(item.Property);
-
-			object test = session.Start[item.Property];
+		foreach (TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers){
 
 			double original = Convert.ToInt64(session.Start[item.Property]);
 			double current = Convert.ToInt64(session.Latest[item.Property]);
 
 			double diff = current - original;
 
+			TrackerItemControl? tracker = GetTrackerControl(item.Property);
 			tracker.SetCurrentValue(current);
 			tracker.SetChangedValue(diff);
 		}
@@ -53,7 +51,7 @@ public partial class TrackerPage : ContentPage
 	}
 
 	public TrackerItemControl? GetTrackerControl(string property){
-		IView[] children = TrackerItemList.ToArray();
+		IView[] children = TrackerItemList.Children.ToArray();
 
 		foreach (IView item in children)
 		{
@@ -77,24 +75,21 @@ public partial class TrackerPage : ContentPage
 		tracker.SetCurrentValue(value);
 	}
 
-	public void GenerateTrackerFields(Settings settings){
+	public async void GenerateTrackerFields(Settings settings){
 		if (settings == null)
 			return;
-		
-		TrackerItemList.Clear();
 
-		if(settings.RunningTrackers!=null && settings.RunningTrackers.Count>0)
+		TrackerItemList.Children.Clear();
+		if (settings.RunningTrackers!=null && settings.RunningTrackers.Count>0)
 		{
 			foreach(TrackerItem item in Settings.PrefabTrackers)
 			{
-				TrackerItemControl control = new TrackerItemControl();
-				control.SetTitle(item.Name);
-				control.SetCurrentValue(0);
-				control.SetChangedValue(0);
-				control.AttachedProperty = item.Property;
-				control.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property); ;
-
-				TrackerItemList.Add(control);
+				TrackerItemControl c = new TrackerItemControl();
+				TrackerItemList.Children.Add(c);
+				c.SetTitle(item.Name);
+				c.SetChangedValue(0);
+				c.AttachedProperty = item.Property;
+				c.IsVisible = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
 			}
 		}
 	}

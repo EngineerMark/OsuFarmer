@@ -7,7 +7,7 @@
              BackgroundColor="{DynamicResource OsuRegular}">
     <ScrollView>
         <StackLayout Spacing="10" Margin="20">
-            <Entry x:Name="settingsApiKey" Placeholder="osu! api key" IsPassword="True" />
+            <Entry x:Name="settingsApiKey" Placeholder="osu! api key" />
             <Entry x:Name="settingsApiUsername" Placeholder="osu! username" />
             <Picker x:Name="settingsModePicker">
                 <Picker.ItemsSource>
