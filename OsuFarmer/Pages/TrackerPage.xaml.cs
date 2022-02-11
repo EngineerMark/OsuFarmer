@@ -118,4 +118,9 @@ public partial class TrackerPage : ContentPage
 		//SessionManager.Instance?.StartNewSession();
 		AppManager.Instance?.StartLoop(true);
     }
+
+    private void Button_SaveSession(object sender, EventArgs e)
+    {
+
+    }
 }

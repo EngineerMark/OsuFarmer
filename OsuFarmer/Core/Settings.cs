@@ -42,7 +42,6 @@ namespace OsuFarmer.Core
             new TrackerItem("50 Hits", "Count50", false),
 
             new TrackerItem("Playcount", "Playcount", true),
-
         };
 
         public Dictionary<string, bool> Trackers { get; set; }

@@ -10,9 +10,10 @@
             VerticalOptions="CenterAndExpand" Margin="20,0,20,0">
             <ScrollView x:Name="trackerViewer">
                 <StackLayout Margin="0,20,0,0" Spacing="10">
-                    <StackLayout HeightRequest="50" Spacing="10" Orientation="Horizontal">
-                        <Button Clicked="Button_LoadSession" Text="Load Session" />
-                        <Button Clicked="Button_NewSession" Text="New Session" />
+                    <StackLayout HeightRequest="40" Spacing="10" Orientation="Horizontal">
+                        <Button Padding="0,0,0,0" Clicked="Button_LoadSession" Text="Load Session" />
+                        <Button Padding="0,0,0,0" Clicked="Button_SaveSession" Text="Save Session" />
+                        <Button Padding="0,0,0,0" Clicked="Button_NewSession" Text="New Session" />
                     </StackLayout>
                     <Frame Background="#ffffff" HorizontalOptions="Center" Padding="0" CornerRadius="15" WidthRequest="100" HeightRequest="100">
                         <Image x:Name="trackerUserAvatar" Source="https://a.ppy.sh/10153735" WidthRequest="100" HeightRequest="100" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All" HorizontalOptions="Center" VerticalOptions="Start" Aspect="AspectFill"/>
@@ -31,7 +32,7 @@
                     </Grid>
                 </StackLayout>
             </ScrollView>
-            <ActivityIndicator x:Name="trackerLoader" IsRunning="true" VerticalOptions="Center" HorizontalOptions="Center"></ActivityIndicator>
+            <ActivityIndicator Color="HotPink" HeightRequest="80" WidthRequest="80" HorizontalOptions="Center" x:Name="trackerLoader" IsRunning="true" VerticalOptions="Center"></ActivityIndicator>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
