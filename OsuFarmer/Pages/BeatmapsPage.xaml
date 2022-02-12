@@ -5,8 +5,7 @@
              Title="Beatmaps"
              BackgroundColor="White">
     <StackLayout>
-        <Label Text="Welcome to .NET MAUI!"
-                VerticalOptions="CenterAndExpand" 
+        <Label Text="osu!Farmer"
                 HorizontalOptions="CenterAndExpand" />
     </StackLayout>
 </ContentPage>

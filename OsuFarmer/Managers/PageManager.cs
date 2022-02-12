@@ -12,7 +12,7 @@ namespace OsuFarmer.Managers
             typeof(TrackerPage),
             typeof(SessionsPage),
             typeof(SettingsPage),
-            typeof(AboutPage),
+            //typeof(AboutPage),
             //typeof(BeatmapsPage),
         };
 

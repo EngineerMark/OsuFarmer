@@ -4,38 +4,24 @@ public partial class TrackerOptionControl : ContentView
 {
 	public string? AttachedProperty { get; set; }
 
-	public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(TrackerOptionControl), false, BindingMode.TwoWay, propertyChanged: IsToggledChanged);
+    public static readonly BindableProperty IsToggledProperty = BindableProperty.Create(nameof(IsToggled), typeof(bool), typeof(TrackerOptionControl), true, BindingMode.TwoWay);
+    public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(TrackerOptionControl), string.Empty);
 
-
-    public bool IsToggled {
-		get {
-			return (bool)base.GetValue(IsToggledProperty);
-        }
-		set {
-			base.SetValue(IsToggledProperty, value);
-        }
-    }
-
-	private string? title;
-	public string? Title
+	public bool IsToggled
 	{
-		get { return title; }
-		set
-		{
-			title = value;
-			OnPropertyChanged(nameof(Title)); // Notify that there was a change on this property
-		}
+		get => (bool)GetValue(TrackerOptionControl.IsToggledProperty);
+		set => SetValue(TrackerOptionControl.IsToggledProperty, value);
+	}
+
+	public string Title
+	{
+		get => (string)GetValue(TrackerOptionControl.TitleProperty);
+		set => SetValue(TrackerOptionControl.TitleProperty, value);
 	}
 
 	public Switch GetToggle(){
 		return ToggleElement;
     }
-
-    private static void IsToggledChanged(BindableObject bindable, object oldValue, object newValue)
-    {
-		TrackerOptionControl control = (TrackerOptionControl)bindable;
-		control.ToggleElement.IsToggled = (bool)newValue;
-	}
 
     public TrackerOptionControl()
 	{

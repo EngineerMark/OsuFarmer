@@ -1,3 +1,4 @@
+using Microsoft.Maui.Controls;
 using OsuFarmer.Managers;
 
 namespace OsuFarmer;

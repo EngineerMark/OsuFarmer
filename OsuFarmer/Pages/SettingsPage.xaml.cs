@@ -6,13 +6,29 @@ namespace OsuFarmer;
 
 public partial class SettingsPage : ContentPage
 {
+    public static readonly BindableProperty APIKeyProperty = BindableProperty.Create(nameof(APIKey), typeof(string), typeof(SettingsPage), string.Empty);
+    public static readonly BindableProperty APIUsernameProperty = BindableProperty.Create(nameof(APIUsername), typeof(string), typeof(SettingsPage), string.Empty);
+
+    public string APIKey
+    {
+        get => (string)GetValue(SettingsPage.APIKeyProperty);
+        set => SetValue(SettingsPage.APIKeyProperty, value);
+    }
+
+    public string APIUsername
+    {
+        get => (string)GetValue(SettingsPage.APIUsernameProperty);
+        set => SetValue(SettingsPage.APIUsernameProperty, value);
+    }
+
     public SettingsPage()
     {
         InitializeComponent();
+        BindingContext = this;
     }
 
-    public void SetApiKey(string key) => settingsApiKey.Text = key;
-    public void SetUsername(string name) => settingsApiUsername.Text = name;
+    public void SetApiKey(string key) => APIKey = key;
+    public void SetUsername(string name) => APIUsername = name;
     public void SetGamemode(Mode mode) => settingsModePicker.SelectedIndex = (int)mode;
 
     public void PrefillSettings(Settings settings)
@@ -21,23 +37,23 @@ public partial class SettingsPage : ContentPage
         SetUsername(settings.ApiUsername ?? String.Empty);
         SetGamemode(settings.ApiGamemode);
 
-        settingsTrackerList.Clear();
+        settingsTrackerList.Children.Clear();
 
         foreach (TrackerItem item in Settings.PrefabTrackers)
         {
             TrackerOptionControl optionControl = new TrackerOptionControl();
 
             optionControl.AttachedProperty = item.Property;
-            optionControl.IsToggled = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
+            optionControl.IsToggled = settings.RunningTrackers.Exists(_item => _item.Property == optionControl.AttachedProperty);
             optionControl.Title = item.Name;
 
-            settingsTrackerList.Add(optionControl);
+            settingsTrackerList.Children.Add(optionControl);
         }
     }
 
     public TrackerOptionControl? GetTrackerOptionControl(string property)
     {
-        IView[] children = settingsTrackerList.ToArray();
+        IView[] children = settingsTrackerList.Children.ToArray();
 
         foreach (IView item in children)
         {
@@ -67,7 +83,8 @@ public partial class SettingsPage : ContentPage
         foreach (TrackerItem item in Settings.PrefabTrackers)
         {
             TrackerOptionControl? control = GetTrackerOptionControl(item.Property);
-            if(control!=null){
+            if (control != null)
+            {
                 settings.Trackers.Add(item.Property, control.IsToggled);
             }
         }
@@ -100,7 +117,8 @@ public partial class SettingsPage : ContentPage
             if (apply)
             {
                 SettingsManager.Instance.ApplySettings(newSettings);
-                if(resetSession){
+                if (resetSession)
+                {
                     AppManager.Instance?.StartLoop();
                 }
             }
@@ -113,6 +131,9 @@ public partial class SettingsPage : ContentPage
 
     private void Button_ResetSettings(object sender, EventArgs e)
     {
-        PrefillSettings(SettingsManager.Instance.Settings);
+        Device.BeginInvokeOnMainThread(() =>
+        {
+            PrefillSettings(SettingsManager.Instance.Settings);
+        });
     }
 }

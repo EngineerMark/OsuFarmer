@@ -15,7 +15,7 @@
 		<ApplicationTitle>osu!Farmer</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.mauitestapp</ApplicationId>
+		<ApplicationId>com.companyname.OsuFarmer</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
@@ -38,12 +38,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\farmericon.svg" Color="#ffffff" />
-
-		<!-- Splash Screen -->
-		<!--<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />-->
+		<MauiIcon Include="Resources\farmericon.svg" Color="#ffffff" />
 		<MauiSplashScreen Include="Resources\farmericon.svg" Color="#ffffff" />
+		<!--<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />-->
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -61,8 +58,6 @@
 	<ItemGroup>
 	  <None Remove="Platforms\Windows\icon.ico" />
 	  <None Remove="Resources\Fonts\Torus Regular.otf" />
-	  <None Remove="Resources\icon-3.png" />
-	  <None Remove="Resources\icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
