@@ -1,7 +1,4 @@
 ﻿using Microsoft.Maui.LifecycleEvents;
-#if WINDOWS
-using OsuFarmer.Platforms.Windows;
-#endif
 
 namespace OsuFarmer;
 
@@ -28,7 +25,6 @@ public static class MauiProgram
                 {
                     wndLifeCycleBuilder.OnNativeMessage((app, args) =>
                     {
-
                         app.ExtendsContentIntoTitleBar = false;
                     });
 
@@ -43,12 +39,9 @@ public static class MauiProgram
                         PInvoke.User32.SetWindowPosFlags.SWP_SHOWWINDOW);
 
                         PInvoke.User32.SetWindowText(hwnd, title);
-
-                        if (WindowExtensions.Hwnd == IntPtr.Zero)
-                        {
-                            WindowExtensions.Hwnd = hwnd;
-                            WindowExtensions.SetIcon("Platforms/Windows/icon.ico");
-                        }
+                        IntPtr hIcon = PInvoke.User32.LoadImage(IntPtr.Zero, "Platforms/Windows/icon.ico",
+                            PInvoke.User32.ImageType.IMAGE_ICON, 16, 16, PInvoke.User32.LoadImageFlags.LR_LOADFROMFILE);
+                        PInvoke.User32.SendMessage(hwnd, PInvoke.User32.WindowMessage.WM_SETICON, (IntPtr)0, hIcon);
                     });
                     wndLifeCycleBuilder.OnClosed((window, args) =>
                     {

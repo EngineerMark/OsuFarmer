@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OsuFarmer.Platforms.Windows
+namespace OsuFarmer.WinUI
 {
     public static class WindowExtensions
     {

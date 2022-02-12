@@ -39,11 +39,11 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\icon.ico" />
-		<MauiIcon Include="Resources\icon2.png" IsAppIcon="true" />
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\farmericon.svg" Color="#ffffff" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+		<!--<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />-->
+		<MauiSplashScreen Include="Resources\farmericon.svg" Color="#ffffff" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -59,12 +59,20 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="Platforms\Windows\icon.ico" />
 	  <None Remove="Resources\Fonts\Torus Regular.otf" />
 	  <None Remove="Resources\icon-3.png" />
 	  <None Remove="Resources\icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Content Include="Platforms\Windows\icon.ico">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.2" />
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	  <PackageReference Include="PInvoke.User32" Version="0.7.104" />
 	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.2-mauipre.1.22102.15" />
