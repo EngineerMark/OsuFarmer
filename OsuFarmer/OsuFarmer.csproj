@@ -9,6 +9,7 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<ApplicationIcon>Resources/icon.ico</ApplicationIcon>
 
 		<!-- Display name -->
 		<ApplicationTitle>osu!Farmer</ApplicationTitle>
@@ -29,6 +30,7 @@
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 		<Nullable>enable</Nullable>
 		<Platforms>AnyCPU;x64</Platforms>
+		<ApplicationIcon>Resources/icon.ico</ApplicationIcon>
 	</PropertyGroup>
 
 	<PropertyGroup Condition=" '$(Platform)' == 'x64'">
@@ -37,7 +39,8 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\icon.ico" />
+		<MauiIcon Include="Resources\icon2.png" IsAppIcon="true" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
@@ -57,10 +60,22 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\Torus Regular.otf" />
+	  <None Remove="Resources\icon-3.png" />
+	  <None Remove="Resources\icon.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+	  <PackageReference Include="PInvoke.User32" Version="0.7.104" />
+	  <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.2-mauipre.1.22102.15" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="AppInternalSettings.Designer.cs">
+	    <DesignTimeSharedInput>True</DesignTimeSharedInput>
+	    <AutoGen>True</AutoGen>
+	    <DependentUpon>AppInternalSettings.settings</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -91,6 +106,13 @@
 	  <MauiXaml Update="Pages\TrackerPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="AppInternalSettings.settings">
+	    <Generator>SettingsSingleFileGenerator</Generator>
+	    <LastGenOutput>AppInternalSettings.Designer.cs</LastGenOutput>
+	  </None>
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
