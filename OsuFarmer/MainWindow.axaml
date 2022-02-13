@@ -16,6 +16,7 @@
 		Height="700"
 		Design.Width="350"
 		Design.Height="700"
+		xmlns:controls = "clr-namespace:OsuFarmer.Controls;assembly=OsuFarmer" 
 		xmlns:pages = "clr-namespace:OsuFarmer.Pages;assembly=OsuFarmer" 
 		TransparencyLevelHint="AcrylicBlur"
         Background="Transparent"
@@ -43,7 +44,10 @@
 				</Grid>
 			</ScrollViewer>
 		</Grid>
-		<Border Margin="0,25,0,0" Background="#55000000" x:Name="UILocker" IsVisible="True">
-		</Border>
+		<Grid x:Name="UILocker" IsVisible="True">
+			<Border Margin="0,25,0,0" Background="#000000">
+				<ProgressRing IsIndeterminate="True" />
+			</Border>
+		</Grid>
 	</Grid>
 </Window>
