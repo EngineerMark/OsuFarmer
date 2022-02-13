@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using HtmlAgilityPack;
+using OsuFarmer.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace OsuFarmer.Core.Osu
 {
@@ -77,6 +80,124 @@ namespace OsuFarmer.Core.Osu
         public long Clears { get => CountSSH + CountSS + CountSH + CountS + CountA; }
         public long TotalSS { get => CountSSH + CountSS; }
         public long TotalS { get => CountSH + CountS; }
+
+        [JsonIgnore]
+        public WebData? WebData { get; set; }
+
+        public async Task<bool> PopulateWebProfile(int mode)
+        {
+            string? _mode = "osu";
+            switch (mode)
+            {
+                case 0:
+                    _mode = "osu";
+                    break;
+                case 1:
+                    _mode = "taiko";
+                    break;
+                case 2:
+                    _mode = "fruits";
+                    break;
+                case 3:
+                    _mode = "mania";
+                    break;
+            }
+
+            string? web = null;
+            try
+            {
+                web = await ApiHelper.GetData("https://osu.ppy.sh/users/" + ID + "/" + _mode);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(web))
+                return false;
+
+            HtmlDocument? doc = new HtmlDocument();
+            doc.LoadHtml(web);
+            HtmlNode jsonNode = doc.DocumentNode.SelectSingleNode("//div[@class='js-react--profile-page osu-layout osu-layout--full']");
+            string data = jsonNode.GetAttributeValue("data-initial-data", "{}");
+            string decoded = HttpUtility.HtmlDecode(data);
+
+            try
+            {
+                WebData = JsonConvert.DeserializeObject<WebData>(decoded);
+                string s = "";
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            //if (WebData != null && WebData.User != null)
+            //{
+            //    DateTime now = (DateTime)DateTime.UtcNow;
+            //    DateTime? first = null;
+            //    int months = -1;
+            //    //Fill in empty playcount data
+            //    if (WebData?.User?.Playcount != null && WebData?.User?.Playcount?.Count > 1)
+            //    {
+            //        first = (DateTime)WebData?.User?.Playcount[0]?.Start;
+            //        months = Math.Abs((now.Month - ((DateTime)first).Month) + 12 * (now.Year - ((DateTime)first).Year)) + 1;
+            //    }
+
+
+            //    if (WebData?.User?.Playcount != null && WebData?.User?.Playcount?.Count > 1)
+            //    {
+            //        if (WebData?.User?.Replayswatched != null)
+            //        {
+            //            List<WebUserMonthlyData?>? replays = new List<WebUserMonthlyData?>();
+
+            //            for (int i = 0; i < months; i++)
+            //            {
+            //                DateTime m = ((DateTime)first).AddMonths(i);
+
+            //                WebUserMonthlyData s = WebData?.User?.Replayswatched.Find(x => x.Start.Equals(m)) ?? null;
+            //                if (s == null)
+            //                {
+            //                    replays.Add(new WebUserMonthlyData()
+            //                    {
+            //                        Start = m,
+            //                        Count = 0
+            //                    });
+            //                }
+            //                else
+            //                {
+            //                    replays.Add(s);
+            //                }
+            //            }
+
+            //            WebData?.User?.SetReplayswatched(replays);
+            //        }
+            //        List<WebUserMonthlyData?>? playcount = new List<WebUserMonthlyData?>();
+
+            //        for (int i = 0; i < months; i++)
+            //        {
+            //            DateTime m = ((DateTime)first).AddMonths(i);
+
+            //            WebUserMonthlyData s = WebData?.User?.Playcount.Find(x => x.Start.Equals(m)) ?? null;
+            //            if (s == null)
+            //            {
+            //                playcount.Add(new WebUserMonthlyData()
+            //                {
+            //                    Start = m,
+            //                    Count = 0
+            //                });
+            //            }
+            //            else
+            //            {
+            //                playcount.Add(s);
+            //            }
+            //        }
+
+            //        WebData?.User?.SetPlaycount(playcount);
+            //    }
+            //}
+            return WebData != null;
+        }
 
         public object this[string propertyName]
         {

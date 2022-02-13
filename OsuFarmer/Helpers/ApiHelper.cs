@@ -1,7 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Avalonia.Media.Imaging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +11,14 @@ namespace OsuFarmer.Helpers
 {
     public static class ApiHelper
     {
+        public static Bitmap BitmapFromUrl(string url)
+        {
+            System.Net.WebRequest request = System.Net.WebRequest.Create(url);
+            System.Net.WebResponse response = request.GetResponse();
+            System.IO.Stream responseStream = response.GetResponseStream();
+            return new Bitmap(url);
+        }
+
         public static async Task<T?> GetDataDeserialized<T>(string? url)
         {
             if (!string.IsNullOrEmpty(url))

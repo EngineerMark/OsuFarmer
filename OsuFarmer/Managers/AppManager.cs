@@ -1,4 +1,5 @@
-﻿using OsuFarmer.Core;
+﻿using Avalonia.Controls;
+using OsuFarmer.Core;
 using OsuFarmer.Core.Osu;
 using System;
 using System.Collections;
@@ -16,13 +17,11 @@ namespace OsuFarmer.Managers
         public bool IsLoopRunning { get; set; } = false;
         public bool CancelLoop { get; private set; } = false;
 
-        public SessionManager SessionManager { get; set; }
-        public PageManager PageManager { get; set; }
-        public SettingsManager SettingsManager { get; set; }
-        public FileManager FileManager { get; set; }
-        public NetworkManager NetworkManager { get; set; }
-
-        private CancellationTokenSource _cts;
+        public SessionManager? SessionManager { get; set; } = null;
+        //public PageManager? PageManager { get; set; } = null;
+        public SettingsManager? SettingsManager { get; set; } = null;
+        public FileManager? FileManager { get; set; } = null;
+        public NetworkManager? NetworkManager { get; set; } = null;
 
         public AppManager(AppManagerData data)
         {
@@ -37,7 +36,7 @@ namespace OsuFarmer.Managers
             FileManager = new FileManager();
             SettingsManager = new SettingsManager();
             SessionManager = new SessionManager();
-            PageManager = new PageManager();
+            //PageManager = new PageManager();
             NetworkManager = new NetworkManager();
 
             StartLoop();
@@ -45,17 +44,16 @@ namespace OsuFarmer.Managers
 
         public void StartLoop(bool reset = true){
             BreakLoop();
-            _cts = new CancellationTokenSource();
-            Device.InvokeOnMainThreadAsync(async ()=> {
-                PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+            Task.Run(async ()=> {
+                //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
                 if (CancelLoop)
                     while (IsLoopRunning) await Task.Delay(25);
-                await ApplicationLoop(_cts.Token, reset);
+                await ApplicationLoop(reset);
             });
         }
 
         public void BreakLoop(){
-            Device.BeginInvokeOnMainThread(async () =>
+            Task.Run(async () =>
             {
                 if(IsLoopRunning) CancelLoop = true;
             });
@@ -63,49 +61,51 @@ namespace OsuFarmer.Managers
 
         public async Task BreakLoopAsync()
         {
-            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+            //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
             if (IsLoopRunning)
                 CancelLoop = true;
             while(IsLoopRunning)
                 await Task.Delay(25);
         }
 
-        private async Task ApplicationLoop(CancellationToken ct, bool reset)
+        private async Task ApplicationLoop(bool reset)
         {
             IsLoopRunning = true;
             CancelLoop = false;
 
-            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
+            UIManager.Instance.SetLoadState(true);
+
+            //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
 
             await SettingsManager.Instance?.LoadSettings();
-            PageManager.Instance?.GetPage<TrackerPage>().GenerateTrackerFields(SettingsManager.Instance.Settings);
+            await UIManager.Instance.GenerateTrackerFields(SettingsManager.Instance.Settings);
 
             SessionManager.Instance.ReloadFiles();
 
             if (SettingsManager.Instance.Settings == null){
-                Page? p = PageManager.Instance?.GetPage<TrackerPage>();
-                await p?.DisplayAlert("Error", "Something went wrong. Please retry!", "Retry");
-                await ApplicationLoop(ct, reset);
+                await UIManager.Instance.DisplayAlertAsync("Error", "Something went wrong. Please retry!");
+                await ApplicationLoop(reset);
                 return;
             }
 
-            if (!NetworkManager.CheckForInternetConnection())
-            {
-                await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("No internet", "There is no internet connection available", "Retry");
-                await ApplicationLoop(ct, reset);
-                return;
-            }
+            //if (!NetworkManager.CheckForInternetConnection())
+            //{
+            //    await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayAlert("No internet", "There is no internet connection available", "Retry");
+            //    await ApplicationLoop(reset);
+            //    return;
+            //}
 
             await Task.Delay(2000);
 
-            //test api
-            if(!(await OsuHelper.IsApiValid()))
+            ////test api
+            if (!(await OsuHelper.IsApiValid()))
             {
-                string? val = await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayPromptAsync("API Key", "No or invalid osu! API key is in use, please enter it", "Continue", "Cancel");
+                //string? val = await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayPromptAsync("API Key", "No or invalid osu! API key is in use, please enter it", "Continue", "Cancel");
+                string? val = await UIManager.Instance.DisplayInputAlertAsync("API Key", "No or invalid osu! API key is in use, please enter it", true);
                 SettingsManager.Instance.settings.ApiKey = val;
                 if (!(await OsuHelper.IsApiValid()))
                 {
-                    await ApplicationLoop(ct, reset);
+                    await ApplicationLoop(reset);
                     return;
                 }
             }
@@ -114,11 +114,11 @@ namespace OsuFarmer.Managers
 
             if (string.IsNullOrEmpty(SettingsManager.Instance?.Settings?.ApiUsername))
             {
-                string? val = await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayPromptAsync("Username", "No or invalid osu! username is in use, please enter it", "Continue", "Cancel");
+                string? val = await UIManager.Instance.DisplayInputAlertAsync("Username", "No or invalid osu! username is in use, please enter it", true);
                 SettingsManager.Instance.settings.ApiUsername = val;
                 if (!(await OsuHelper.IsUserValid(SettingsManager.Instance.settings.ApiUsername)))
                 {
-                    await ApplicationLoop(ct, reset);
+                    await ApplicationLoop(reset);
                     return;
                 }
             }
@@ -126,22 +126,23 @@ namespace OsuFarmer.Managers
             await Task.Delay(50);
 
             await SettingsManager.Instance.SaveSettings();
-            PageManager.Instance?.GetPage<SettingsPage>()?.PrefillSettings(SettingsManager.Instance.Settings);
+            //PageManager.Instance?.GetPage<SettingsPage>()?.PrefillSettings(SettingsManager.Instance.Settings);
+            UIManager.Instance?.PrefillSettings(SettingsManager.Instance.Settings);
 
             await Task.Delay(50);
 
-            //test
+            ////test
             User? user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
 
-            PageManager.Instance?.GetPage<TrackerPage>().ApplyUser(user);
+            await UIManager.Instance.TrackersApplyUser(user);
 
-            if(reset)
+            if (reset)
                 SessionManager.Instance?.StartNewSession(user);
-            else
-                if (SessionManager.Instance?.CurrentSession != null)
-                    SessionManager.Instance?.IterateSession(user);
+            else if (SessionManager.Instance?.CurrentSession != null)
+                SessionManager.Instance?.IterateSession(user);
 
-            PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
+            //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
+            UIManager.Instance.SetLoadState(false);
 
             while (true)
             {
@@ -161,14 +162,11 @@ namespace OsuFarmer.Managers
 
             IsLoopRunning = false;
         }
-
-        public AppShell? GetShell(){
-            return data.Shell;
-        }
     }
 
 
     public struct AppManagerData {
-        public AppShell Shell;
+        public Window Window;
+        public UIManager UIManager;
     }
 }

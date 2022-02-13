@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,7 +46,8 @@ namespace OsuFarmer.Managers
 
             CurrentSession.Mode = SettingsManager.Instance?.Settings?.ApiGamemode ?? Mode.Standard;
 
-            PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
+            //PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
+            UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
         public async Task LoadSession(Session s)
@@ -59,11 +61,10 @@ namespace OsuFarmer.Managers
                 SettingsManager.Instance.settings.ApiGamemode = mode;
 
             await SettingsManager.Instance?.SaveSettings();
-            PageManager.Instance.GetPage<SettingsPage>().PrefillSettings(SettingsManager.Instance.settings);
+            UIManager.Instance.PrefillSettings(SettingsManager.Instance.settings);
 
             CurrentSession = new Session(s);
-
-            PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
+            UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
 
@@ -75,7 +76,7 @@ namespace OsuFarmer.Managers
             CurrentSession.Latest = user;
             CurrentSession.LastUpdatedAt = DateTime.Now;
 
-            PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
+            UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
         public async Task<bool> SaveSessionToFile(Session s)
@@ -162,8 +163,7 @@ namespace OsuFarmer.Managers
                     StoredSessions = temp_sessions;
                 }
             }
-
-            PageManager.Instance?.GetPage<SessionsPage>()?.PopulateSessions(StoredSessions);
+            UIManager.Instance.PopulateSessions(StoredSessions);
         }
 
         public void RemoveSession(string name){

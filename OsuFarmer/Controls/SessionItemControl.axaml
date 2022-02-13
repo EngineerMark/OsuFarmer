@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="40"
+             x:Class="OsuFarmer.Controls.SessionItemControl">
+	<Grid Margin="0,0,15,0">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"></RowDefinition>
+			</Grid.RowDefinitions>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="3*"></ColumnDefinition>
+				<ColumnDefinition Width="3*"></ColumnDefinition>
+				<ColumnDefinition Width="3*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+				<ColumnDefinition Width="1*"></ColumnDefinition>
+			</Grid.ColumnDefinitions>
+
+			<TextBox Grid.Column="0" Text="{Binding Username}" x:Name="FileUserValueElement" IsReadOnly="True"/>
+			<TextBox Grid.Column="1" Text="{Binding Filename}" x:Name="FileNameValueElement" IsReadOnly="True"/>
+			<TextBox Grid.Column="2" Text="{Binding Fileage}" x:Name="FileAgeValueElement" IsReadOnly="True"/>
+			<Button Grid.Column="3" Command="{Binding OnLoad}" Content="O" ToolTip.Tip="Open this session" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ButtonOpenElement"></Button>
+			<Button Grid.Column="4" Command="{Binding OnDelete}" Content="X" ToolTip.Tip="Delete this session" Padding="0,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="ButtonDeleteElement"></Button>
+		</Grid>
+	</Grid>
+</UserControl>

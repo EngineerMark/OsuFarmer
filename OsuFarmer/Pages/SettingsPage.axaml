@@ -1,0 +1,42 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			FontFamily="/Assets/Fonts/Torus.otf#Torus"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:Class="OsuFarmer.Pages.SettingsPage">
+	<ScrollViewer>
+		<Grid Margin="10,20,30,20">
+			<StackPanel Orientation="Vertical" Spacing="10">
+				<!--<Label FontSize="25" Content="Australia" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />-->
+				<Label FontSize="15" FontWeight="Bold" Content="API" />
+				<TextBox Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
+				<TextBox Watermark="Username" Text="{Binding APIUsername}" />
+				<ComboBox SelectedIndex="{Binding APIGamemode}">
+					<ComboBoxItem Content="Standard" />
+					<ComboBoxItem Content="Taiko" />
+					<ComboBoxItem Content="Catch The Beat" />
+					<ComboBoxItem Content="Mania" />
+				</ComboBox>
+				<Label />
+				<Label FontSize="15" FontWeight="Bold" Content="Trackers" />
+				<ScrollViewer MaxHeight="350">
+					<StackPanel x:Name="settingsTrackerList">
+						
+					</StackPanel>
+				</ScrollViewer>
+				<Label />
+				<Label FontSize="15" FontWeight="Bold" Content="Visuals" />
+				<StackPanel Orientation="Horizontal" Spacing="10" Height="35">
+					<ToggleSwitch x:Name="VisualsHeaderToggle" IsChecked="{Binding VisualsHeaderEnabled}" VerticalContentAlignment="Center"/>
+					<Label VerticalContentAlignment="Center" Content="Display header image" />
+				</StackPanel>
+				<Label />
+				<StackPanel Spacing="10" Orientation="Horizontal">
+					<Button x:Name="ButtonSave" Command="{Binding OnSave}" Content="Save" />
+					<Button x:Name="ButtonReset" Command="{Binding OnReset}" Content="Reset" />
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</UserControl>

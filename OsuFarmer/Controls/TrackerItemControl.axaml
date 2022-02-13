@@ -1,0 +1,25 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:Class="OsuFarmer.Controls.TrackerItemControl">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+			<RowDefinition Height="Auto"></RowDefinition>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="2*"></ColumnDefinition>
+			<ColumnDefinition Width="3.5*"></ColumnDefinition>
+			<ColumnDefinition Width="0.5*"></ColumnDefinition>
+			<ColumnDefinition Width="3.5*"></ColumnDefinition>
+		</Grid.ColumnDefinitions>
+		<Label Grid.Column="0" x:Name="TitleElement" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Content="{Binding Title}"></Label>
+		<TextBox Grid.Column="1" x:Name="CurrentValueElement" Text="{Binding OriginalValue}" IsReadOnly="True"/>
+		<Label Grid.Column="2" Padding="0,0,0,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" x:Name="ChangedValueSignElement" Content="" />
+		<TextBox Grid.Column="3" x:Name="ChangedValueElement" Text="{Binding ChangedValue}" IsReadOnly="True"/>
+	</Grid>
+</UserControl>

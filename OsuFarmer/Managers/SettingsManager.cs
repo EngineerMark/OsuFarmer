@@ -6,17 +6,13 @@ using System.Threading.Tasks;
 using OsuFarmer.Core;
 using OsuFarmer.Core.Interfaces;
 using Newtonsoft.Json;
+using System.IO;
 
 namespace OsuFarmer.Managers
 {
     public class SettingsManager : Manager<SettingsManager>, IUsesStorage
     {
-#if DEBUG
         public string FileLocation { get => @"Data\";}
-#else
-        public string FileLocation { get => @"..\Data\";}
-
-#endif
 
         public string SettingsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory(), FileLocation); }
         public string SettingsPath { get => Path.Combine(SettingsDirectory, "Settings.json"); }
@@ -54,10 +50,15 @@ namespace OsuFarmer.Managers
             settings.UpdateTrackers();
         }
 
-        public async void ApplySettings(Settings settings){
+        public async Task ApplySettings(Settings? settings){
             this.settings = settings;
             this.settings.UpdateTrackers();
-            PageManager.Instance?.GetPage<TrackerPage>()?.UpdateTrackerFields(settings);
+            await UIManager.Instance?.ApplySettings(settings);
+            //TrackerPage trackerPage = PageManager.Instance?.GetPage<TrackerPage>();
+
+            //trackerPage.UpdateTrackerFields(settings);
+            //trackerPage.HeaderImageVisible = settings.ShowHeaderImage;
+
             await SaveSettings();
             //restart app loop
         }

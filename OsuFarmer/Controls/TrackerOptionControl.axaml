@@ -1,0 +1,13 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="40"
+             x:Class="OsuFarmer.Controls.TrackerOptionControl">
+	<StackPanel Orientation="Horizontal" Spacing="10" HorizontalAlignment="Left">
+		<ToggleSwitch VerticalAlignment="Center" IsChecked="{Binding IsToggled}" />
+		<Label Content="{Binding Title}" VerticalContentAlignment="Center" />
+		<!--<Switch Vert="CenterAndExpand" x:Name="ToggleElement" Toggl="True" />-->
+		<!--<Label VerticalOptions="CenterAndExpand" VerticalTextAlignment="Center" x:Name="TitleElement" HorizontalOptions="Start" Text="{Binding Title}"></Label>-->
+	</StackPanel>
+</UserControl>
