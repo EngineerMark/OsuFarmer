@@ -1,3 +1,4 @@
+using Aura.UI.Controls.Navigation;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
@@ -20,6 +21,7 @@ namespace OsuFarmer
             this.AttachDevTools();
 #endif
             this.DataContext = new MainWindowViewModel();
+            //this.FindControl<Grid>("UILocker").IsVisible = false;
 
             UIManager = new UIManager(this);
             AppManager = new AppManager(new AppManagerData()

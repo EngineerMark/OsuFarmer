@@ -6,7 +6,7 @@
 			FontFamily="/Assets/Fonts/Torus.otf#Torus"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:Class="OsuFarmer.Pages.SessionsPage">
-	<StackPanel Margin="20">
+	<StackPanel Margin="20,20">
 		<ScrollViewer MaxHeight="300">
 			<StackPanel x:Name="SessionListElement" Spacing="5">
 				<controls:SessionItemControl></controls:SessionItemControl>

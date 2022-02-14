@@ -6,7 +6,7 @@
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:Class="OsuFarmer.Pages.SettingsPage">
 	<ScrollViewer>
-		<Grid Margin="10,20,30,20">
+		<Grid Margin="10,10,30,20">
 			<StackPanel Orientation="Vertical" Spacing="10">
 				<!--<Label FontSize="25" Content="Australia" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />-->
 				<Label FontSize="15" FontWeight="Bold" Content="API" />
