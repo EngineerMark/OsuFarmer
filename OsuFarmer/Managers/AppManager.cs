@@ -129,6 +129,7 @@ namespace OsuFarmer.Managers
             await SettingsManager.Instance.SaveSettings();
             //PageManager.Instance?.GetPage<SettingsPage>()?.PrefillSettings(SettingsManager.Instance.Settings);
             UIManager.Instance?.PrefillSettings(SettingsManager.Instance.Settings);
+            await UIManager.Instance?.ApplySettings(SettingsManager.Instance.Settings);
 
             await Task.Delay(50);
 
