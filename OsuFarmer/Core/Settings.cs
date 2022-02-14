@@ -31,8 +31,8 @@ namespace OsuFarmer.Core
             new TrackerItem("Ranked Score", "RankedScore", true),
             new TrackerItem("Total Score", "TotalScore", true),
 
-            new TrackerItem("Global Rank", "WorldRank", true),
-            new TrackerItem("Country Rank", "CountryRank", true),
+            new TrackerItem("Global Rank", "WorldRank", true, true),
+            new TrackerItem("Country Rank", "CountryRank", true, true),
 
             new TrackerItem("PP", "PP", true),
             new TrackerItem("Accuracy", "Accuracy", true),

@@ -18,11 +18,15 @@ namespace OsuFarmer.Core
         public User? Start { get; set; }
         public User? Latest { get; set; }
 
+        public Dictionary<DateTime, User>? HistoricData { get; set; }
+
         public Mode Mode { get; set; }
 
         public void SetName(string? name) => Name = name;
 
-        public Session() { }
+        public Session() {
+            HistoricData = new Dictionary<DateTime, User>();
+        }
         public Session(Session s)
         {
             this.Name = s.Name;
@@ -31,6 +35,7 @@ namespace OsuFarmer.Core
             this.Mode = s.Mode;
             this.Start = s.Start;
             this.Latest = s.Latest;
+            this.HistoricData = HistoricData != null ? new Dictionary<DateTime, User>(HistoricData) : new Dictionary<DateTime, User>();
         }
     }
 }

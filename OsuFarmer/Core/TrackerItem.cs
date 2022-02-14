@@ -24,15 +24,21 @@ namespace OsuFarmer.Core
         public bool Enabled { get; set; }
 
         /// <summary>
+        /// If true, negative numbers are seen as good, like decrease in ranking
+        /// </summary>
+        public bool Inverted { get; set; }
+
+        /// <summary>
         /// The priority of this tracker, lower is more important (higher up the list)
         /// </summary>
         public int Priority { get; set; }
 
         public TrackerItem(){ }
-        public TrackerItem(string name, string property, bool enabled = true){
+        public TrackerItem(string name, string property, bool enabled = true, bool inverted = false){
             this.Name = name;
             this.Property = property;
             this.Enabled = enabled;
+            this.Inverted = inverted;
         }
         public TrackerItem(TrackerItem item){
             this.Name = item.Name;

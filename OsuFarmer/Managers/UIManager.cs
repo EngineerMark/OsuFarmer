@@ -13,6 +13,7 @@ using System.Globalization;
 using OsuFarmer.Alerts;
 using Avalonia.Media.Imaging;
 using OsuFarmer.Helpers;
+using Avalonia.Media;
 
 namespace OsuFarmer.Managers
 {
@@ -146,6 +147,18 @@ namespace OsuFarmer.Managers
 					context.OriginalValue = ""+current;
 					context.ChangedValue = ""+diff;
 
+					context.ChangedSign = (diff == 0 ? "" : (
+						!context.InvertSign ? 
+						(diff>0?TrackerItemControlViewModel.PositiveCharacter:TrackerItemControlViewModel.NegativeCharacter) :
+						(diff>0?TrackerItemControlViewModel.NegativeCharacter:TrackerItemControlViewModel.PositiveCharacter)
+					));
+
+					context.ChangedSignColor = (diff == 0 ? Brushes.White : (
+						!context.InvertSign ?
+						(diff > 0 ? TrackerItemControlViewModel.PositiveColor : TrackerItemControlViewModel.NegativeColor) :
+						(diff > 0 ? TrackerItemControlViewModel.NegativeColor : TrackerItemControlViewModel.PositiveColor)
+					));
+
 					//tracker.SetCurrentValue(current);
 					//tracker.SetChangedValue(diff);
 				}
@@ -174,6 +187,7 @@ namespace OsuFarmer.Managers
 						trackerItemList.Children.Add(c);
 						TrackerItemControlViewModel? context = (TrackerItemControlViewModel?)c.DataContext;
 						context.Title = item.Name ?? string.Empty;
+						context.InvertSign = item.Inverted;
 						//c.SetTitle(item.Name);
 						//c.SetChangedValue(0);
 						//c.AttachedProperty = item.Property;

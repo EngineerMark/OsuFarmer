@@ -19,7 +19,7 @@
 		</Grid.ColumnDefinitions>
 		<Label Grid.Column="0" x:Name="TitleElement" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Content="{Binding Title}"></Label>
 		<TextBox Grid.Column="1" x:Name="CurrentValueElement" Text="{Binding OriginalValue}" IsReadOnly="True"/>
-		<Label Grid.Column="2" Padding="0,0,0,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" x:Name="ChangedValueSignElement" Content="" />
+		<Label Grid.Column="2" FontWeight="Bold" Padding="0,0,0,0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Foreground="{Binding ChangedSignColor}" Content="{Binding ChangedSign}" />
 		<TextBox Grid.Column="3" x:Name="ChangedValueElement" Text="{Binding ChangedValue}" IsReadOnly="True"/>
 	</Grid>
 </UserControl>
