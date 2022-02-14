@@ -7,13 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MessageBox.Avalonia;
-using MessageBox.Avalonia.DTO;
-using MessageBox.Avalonia.Enums;
-using MessageBox.Avalonia.Models;
 using OsuFarmer.ViewModels;
 using OsuFarmer.Core.Osu;
 using System.Globalization;
+using OsuFarmer.Alerts;
 
 namespace OsuFarmer.Managers
 {
@@ -251,47 +248,27 @@ namespace OsuFarmer.Managers
 			return null;
 		}
 
-		public async Task<ButtonResult> DisplayAlertAsync(string title, string message, ButtonEnum buttons = ButtonEnum.Ok)
-        {
+		public async Task<AlertResult> DisplayAlertAsync(string title, string message, string[]? buttons = null)
+		{
 			return await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
 				SetLoadState(true);
-				var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxStandardWindow(new MessageBoxStandardParams()
-                {
-					ContentHeader = title,
-					ContentMessage = message,
-					ButtonDefinitions = buttons,
-					CanResize = false,
-					HasSystemDecorations = false,
-					WindowStartupLocation = WindowStartupLocation.CenterScreen
-				});
-				ButtonResult res = await messageBoxStandardWindow.ShowDialog(MainWindow);
+				AlertWindow alertWindow = new AlertWindow();
+				AlertResult res = await alertWindow.Run(title, message, buttons);
 				SetLoadState(false);
 				return res;
 			});
 		}
 
-		public async Task<string> DisplayInputAlertAsync(string title, string message, bool isPassword = false)
-        {
+		public async Task<AlertResult> DisplayInputAlertAsync(string title, string message, bool isPassword = false)
+		{
 			return await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
 				SetLoadState(true);
-				var messageBoxStandardWindow = MessageBoxManager.GetMessageBoxInputWindow(new MessageBoxInputParams()
-				{
-					ContentHeader = title,
-					ContentMessage = message,
-					ButtonDefinitions = new[]
-					{
-						new ButtonDefinition { Name = "Continue", IsDefault = true }
-					},
-					CanResize = true,
-					IsPassword = isPassword,
-					HasSystemDecorations = false,
-					WindowStartupLocation = WindowStartupLocation.CenterScreen
-				});
-				MessageWindowResultDTO res = await messageBoxStandardWindow.ShowDialog(MainWindow);
+				AlertWindow alertWindow = new AlertWindow();
+				AlertResult res = await alertWindow.Run(title, message, new string[] { "Continue" }, true, isPassword);
 				SetLoadState(false);
-				return res.Message;
+				return res;
 			});
 		}
 

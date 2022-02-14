@@ -1,0 +1,41 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:System.Windows;"
+        mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="200"
+		x:Name="AlertWin"
+		TransparencyLevelHint="AcrylicBlur"
+        Background="Transparent"
+        x:Class="OsuFarmer.Alerts.AlertWindow"
+		Icon="/Assets/Images/icon.png"
+		FontFamily="/Assets/Fonts/Torus.otf#Torus"
+		ExtendClientAreaToDecorationsHint="True"
+		Width="400"
+		MaxWidth="400"
+		Height="200"
+		CanResize="False"
+		SizeToContent="Height"
+        Title="osu!Farmer">
+	<Grid>
+		<Grid Height="30" VerticalAlignment="Top" IsHitTestVisible="False">
+			<Grid Margin="3">
+				<StackPanel Orientation="Horizontal" Spacing="5">
+					<Image Source="/Assets/Images/icon.png"></Image>
+					<Label Content="{Binding ElementName=AlertWin, Path=Title}" Padding="0" VerticalContentAlignment="Center" />
+				</StackPanel>
+			</Grid>
+		</Grid>
+		<Grid Margin="5,30,5,10">
+			<StackPanel Spacing="5">
+				<Label Content="{Binding Title}" />
+				<TextBlock Margin="5,0,5,0" TextWrapping="Wrap" Text="{Binding Description}"></TextBlock>
+				<TextBox x:Name="EditField" Text="{Binding InputData}" IsVisible="{Binding ShowInputField}" />
+				<StackPanel x:Name="ButtonsList" Orientation="Horizontal" HorizontalAlignment="Right">
+					<Button Content="Yes" />
+					<Button Content="No" />
+				</StackPanel>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>

@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using OsuFarmer.Alerts;
 using OsuFarmer.Core;
 using OsuFarmer.Core.Osu;
 using System;
@@ -75,8 +76,6 @@ namespace OsuFarmer.Managers
 
             UIManager.Instance.SetLoadState(true);
 
-            //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(false);
-
             await SettingsManager.Instance?.LoadSettings();
             await UIManager.Instance.GenerateTrackerFields(SettingsManager.Instance.Settings);
 
@@ -101,9 +100,10 @@ namespace OsuFarmer.Managers
             if (!(await OsuHelper.IsApiValid()))
             {
                 //string? val = await PageManager.Instance?.GetPage<TrackerPage>()?.DisplayPromptAsync("API Key", "No or invalid osu! API key is in use, please enter it", "Continue", "Cancel");
-                string? val = await UIManager.Instance.DisplayInputAlertAsync("API Key", "No or invalid osu! API key is in use, please enter it", true);
-                SettingsManager.Instance.settings.ApiKey = val;
-                if (!(await OsuHelper.IsApiValid()))
+                AlertResult? val = await UIManager.Instance.DisplayInputAlertAsync("API Key", "No or invalid osu! API key is in use, please enter it", true);
+                if(val.Value.Input!=null)
+                    SettingsManager.Instance.settings.ApiKey = val.Value.Input;
+                if (val.Value.Input==null || !(await OsuHelper.IsApiValid()))
                 {
                     await ApplicationLoop(reset);
                     return;
@@ -114,8 +114,9 @@ namespace OsuFarmer.Managers
 
             if (string.IsNullOrEmpty(SettingsManager.Instance?.Settings?.ApiUsername))
             {
-                string? val = await UIManager.Instance.DisplayInputAlertAsync("Username", "No or invalid osu! username is in use, please enter it", true);
-                SettingsManager.Instance.settings.ApiUsername = val;
+                AlertResult? val = await UIManager.Instance.DisplayInputAlertAsync("Username", "No or invalid osu! username is in use, please enter it", true);
+                if (val.Value.Input != null)
+                    SettingsManager.Instance.settings.ApiUsername = val.Value.Input;
                 if (!(await OsuHelper.IsUserValid(SettingsManager.Instance.settings.ApiUsername)))
                 {
                     await ApplicationLoop(reset);

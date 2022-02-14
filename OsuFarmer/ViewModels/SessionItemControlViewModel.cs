@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MessageBox.Avalonia.Enums;
 using OsuFarmer.Core;
 
 namespace OsuFarmer.ViewModels
@@ -41,11 +40,11 @@ namespace OsuFarmer.ViewModels
                 Session? s = SessionManager.Instance?.GetSessionByName(Filename);
                 if (s == null)
                 {
-                    await UIManager.Instance.DisplayAlertAsync("Error", "Something went wrong preparing this session file, please retry later", ButtonEnum.Ok);
+                    await UIManager.Instance.DisplayAlertAsync("Error", "Something went wrong preparing this session file, please retry later", new string[] { "Ok" });
                     return;
                 }
 
-                bool response = (await UIManager.Instance.DisplayAlertAsync("Load", "Loading a session will also adjust your settings like username and gamemode to it. Are you sure?", ButtonEnum.YesNo))==ButtonResult.Yes;
+                bool response = (await UIManager.Instance.DisplayAlertAsync("Load", "Loading a session will also adjust your settings like username and gamemode to it. Are you sure?", new string[] {"Yes", "No"})).PressedButton == "Yes";
 
                 if (response)
                 {
@@ -61,9 +60,9 @@ namespace OsuFarmer.ViewModels
         {
             await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                bool response = (await UIManager.Instance.DisplayAlertAsync("Warning", "This will delete the session file permanently. Are you sure?", ButtonEnum.YesNo))==ButtonResult.Yes;
+                bool response = (await UIManager.Instance.DisplayAlertAsync("Warning", "This will delete the session file permanently. Are you sure?", new string[] { "Yes", "No" })).PressedButton == "Yes";
 
-                if (response)
+            if (response)
                     SessionManager.Instance?.RemoveSession(Filename);
             });
             //Page p = OsuFarmer.Helpers.ViewExtensions.GetParentPage(this);

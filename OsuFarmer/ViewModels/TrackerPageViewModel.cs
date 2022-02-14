@@ -8,8 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MessageBox.Avalonia.Enums;
 using OsuFarmer.Core;
+using OsuFarmer.Alerts;
 
 namespace OsuFarmer.ViewModels
 {
@@ -28,8 +28,8 @@ namespace OsuFarmer.ViewModels
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 UIManager.Instance?.SetLoadState(true);
-                ButtonResult res = await UIManager.Instance.DisplayAlertAsync("New session", "Are you sure you want to start a new session?", ButtonEnum.YesNo);
-                if (res == ButtonResult.Yes)
+                AlertResult res = await UIManager.Instance.DisplayAlertAsync("New session", "Are you sure you want to start a new session?", new string[] { "Yes", "No" });
+                if (res.PressedButton == "Yes")
                 {
                     await AppManager.Instance?.BreakLoopAsync();
                     AppManager.Instance?.StartLoop(true);
@@ -44,19 +44,19 @@ namespace OsuFarmer.ViewModels
             {
                 bool replace = false;
                 string name = SessionManager.Instance?.CurrentSession?.Name;
-			    Session? s = SessionManager.Instance?.GetSessionByName(name);
+                Session? s = SessionManager.Instance?.GetSessionByName(name);
                 if (s != null)
                 {
                     //ask to replace
-                    replace = (await UIManager.Instance.DisplayAlertAsync("Session already exists", "Do you want to overwrite the existing stored session?", ButtonEnum.YesNo)==ButtonResult.Yes);
+                    replace = (await UIManager.Instance.DisplayAlertAsync("Session already exists", "Do you want to overwrite the existing stored session?", new string[] { "Yes", "No" })).PressedButton == "Yes";
                 }
                 if (!replace)
-                    name = await UIManager.Instance.DisplayInputAlertAsync("Save Session", "Please enter a name for this session");
+                    name = (await UIManager.Instance.DisplayInputAlertAsync("Save Session", "Please enter a name for this session")).Input ?? string.Empty;
 
                 SessionManager.Instance?.CurrentSession?.SetName(name);
                 bool result = await SessionManager.Instance?.SaveSessionToFile(SessionManager.Instance.CurrentSession);
                 if (!result)
-                    await UIManager.Instance.DisplayAlertAsync("Oops", "Something went wrong while saving, please retry later.", ButtonEnum.Ok);
+                    await UIManager.Instance.DisplayAlertAsync("Oops", "Something went wrong while saving, please retry later.", new string[] { "Ok" });
             });
         }
     }

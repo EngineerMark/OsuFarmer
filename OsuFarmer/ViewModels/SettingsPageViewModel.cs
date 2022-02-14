@@ -7,7 +7,6 @@ using System.ComponentModel;
 using OsuFarmer.Core.Osu;
 using OsuFarmer.Managers;
 using OsuFarmer.Core;
-using MessageBox.Avalonia.Enums;
 using OsuFarmer.Controls;
 
 namespace OsuFarmer.ViewModels
@@ -42,7 +41,7 @@ namespace OsuFarmer.ViewModels
 
                 if (currentSettings?.ApiUsername != newSettings.ApiUsername || currentSettings?.ApiGamemode != newSettings.ApiGamemode)
                 {
-                    bool res = (await UIManager.Instance?.DisplayAlertAsync("Warning", "The changes you made will reset the current session. Are you sure?", ButtonEnum.YesNo)) == ButtonResult.Yes;
+                    bool res = (await UIManager.Instance?.DisplayAlertAsync("Warning", "The changes you made will reset the current session. Are you sure?", new string[] { "Yes", "No" })).PressedButton == "Yes";
                     if (res)
                         resetSession = true;
                     else
