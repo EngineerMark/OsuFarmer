@@ -108,7 +108,7 @@ namespace OsuFarmer.Core.Osu
             {
                 web = await ApiHelper.GetData("https://osu.ppy.sh/users/" + ID + "/" + _mode);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
@@ -125,7 +125,6 @@ namespace OsuFarmer.Core.Osu
             try
             {
                 WebData = JsonConvert.DeserializeObject<WebData>(decoded);
-                string s = "";
             }
             catch (Exception)
             {
@@ -199,7 +198,7 @@ namespace OsuFarmer.Core.Osu
             return WebData != null;
         }
 
-        public object this[string propertyName]
+        public object? this[string propertyName]
         {
             get
             {
@@ -207,13 +206,13 @@ namespace OsuFarmer.Core.Osu
                 // like:  return Properties.Settings.Default.PropertyValues[propertyName] 
                 // instead of the following
                 Type myType = typeof(User);
-                PropertyInfo myPropInfo = myType.GetProperty(propertyName);
+                PropertyInfo? myPropInfo = myType.GetProperty(propertyName);
                 return myPropInfo.GetValue(this, null);
             }
             set
             {
                 Type myType = typeof(User);
-                PropertyInfo myPropInfo = myType.GetProperty(propertyName);
+                PropertyInfo? myPropInfo = myType.GetProperty(propertyName);
                 myPropInfo.SetValue(this, value, null);
             }
         }

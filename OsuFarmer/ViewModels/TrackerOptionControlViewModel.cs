@@ -8,7 +8,7 @@ namespace OsuFarmer.ViewModels
 {
     public class TrackerOptionControlViewModel : BaseViewModel
     {
-        public string AttachedProperty { get; set; }
+        public string? AttachedProperty { get; set; }
 
         private string _Title = "Example Tracker";
         private bool _IsToggled = true;

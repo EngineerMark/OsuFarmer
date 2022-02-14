@@ -15,8 +15,11 @@ namespace OsuFarmer.Managers
             Register(this);
         }
 
-        public static bool CheckForInternetConnection(int timeoutMs = 10000, string url = null)
+        public static bool CheckForInternetConnection(int timeoutMs = 10000, string? url = null)
         {
+            if (url == null)
+                return false;
+
             try
             {
                 url ??= CultureInfo.InstalledUICulture switch

@@ -34,7 +34,7 @@ namespace OsuFarmer.Core.Osu
         public float Accuracy;
 
         [JsonProperty("mods")]
-        public string[] Mods;
+        public string[]? Mods;
 
         [JsonProperty("score")]
         public long Score;
@@ -49,7 +49,7 @@ namespace OsuFarmer.Core.Osu
         public bool Perfect;
 
         [JsonProperty("rank")]
-        public string Grade;
+        public string? Grade;
 
         [JsonProperty("created_at")]
         public string? CreatedAt { get; set; }
@@ -105,22 +105,22 @@ namespace OsuFarmer.Core.Osu
     public class WebBeatmapSet
     {
         [JsonProperty("artist")]
-        public string Artist;
+        public string? Artist;
 
         [JsonProperty("artist_unicode")]
-        public string ArtistUnicode;
+        public string? ArtistUnicode;
 
         [JsonProperty("creator")]
-        public string Creator;
+        public string? Creator;
 
         [JsonProperty("title")]
-        public string Title;
+        public string? Title;
 
         [JsonProperty("title_unicode")]
-        public string TitleUnicode;
+        public string? TitleUnicode;
 
         [JsonProperty("status")]
-        public string Status;
+        public string? Status;
     }
 
     public class WebBeatmap
@@ -135,10 +135,10 @@ namespace OsuFarmer.Core.Osu
         public long ID;
 
         [JsonProperty("mode")]
-        public string Mode;
+        public string? Mode;
 
         [JsonProperty("status")]
-        public string Status;
+        public string? Status;
 
         [JsonProperty("total_length")]
         public int TotalLength;
@@ -147,7 +147,7 @@ namespace OsuFarmer.Core.Osu
         public long UserID;
 
         [JsonProperty("version")]
-        public string Version;
+        public string? Version;
 
         [JsonProperty("accuracy")]
         public double OD;

@@ -54,7 +54,7 @@ namespace OsuFarmer.Managers
         }
 
         public void BreakLoop(){
-            Task.Run(async () =>
+            Task.Run(() =>
             {
                 if(IsLoopRunning) CancelLoop = true;
             });

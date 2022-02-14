@@ -245,6 +245,9 @@
 		<Content Include="Assets\Images\Flags\__.png" />
 	</ItemGroup>
 	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+	<ItemGroup>
 		<PackageReference Include="Aura.UI" Version="0.1.5-dev-04" />
 		<PackageReference Include="Aura.UI.FluentTheme" Version="0.1.5-dev-04" />
 		<PackageReference Include="Avalonia" Version="0.10.12" />
@@ -252,7 +255,6 @@
 		<!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
 		<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="0.10.12" />
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.42" />
-		<PackageReference Include="MessageBox.Avalonia" Version="1.7.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 	</ItemGroup>
 	<Target Name="PostBuild" AfterTargets="PostBuildEvent">

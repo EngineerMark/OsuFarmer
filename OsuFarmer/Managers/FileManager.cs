@@ -16,10 +16,11 @@ namespace OsuFarmer.Managers
 
         public static string GetExecutablePath()
         {
-            return System.Reflection.Assembly.GetEntryAssembly().Location;
+            //return System.Reflection.Assembly.GetEntryAssembly().Location;
+            return string.Empty;
         }
 
-        public static string GetExecutableDirectory()
+        public static string? GetExecutableDirectory()
         {
             return Path.GetDirectoryName(GetExecutablePath());
         }

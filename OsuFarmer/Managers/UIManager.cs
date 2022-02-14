@@ -36,27 +36,37 @@ namespace OsuFarmer.Managers
 			});
 		}
 
-		public async Task ApplySettings(Settings settings)
+		public async Task ApplySettings(Settings? settings)
         {
+			if (settings == null)
+				return;
+
 			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
 				await UpdateTrackerFields(settings);
 				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
-				TrackerPageViewModel context = (TrackerPageViewModel)trackerPage.DataContext;
+				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
 
 				context.ShowHeader = settings.ShowHeaderImage;
 			});
 		}
 
-		public async Task TrackersApplyUser(User user)
+		public async Task TrackersApplyUser(User? user)
         {
+			if (user == null)
+				return;
+
 			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
 				bool web = await user.PopulateWebProfile((int)SettingsManager.Instance.Settings.ApiGamemode);
 
 				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
-				TrackerPageViewModel context = (TrackerPageViewModel)trackerPage.DataContext;
-				context.Username = user.Username;
+				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
+
+				if (context == null)
+					throw new NullReferenceException();
+
+				context.Username = user.Username ?? String.Empty;
 
 				CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
 				string? country = null;
@@ -84,13 +94,13 @@ namespace OsuFarmer.Managers
 				foreach (TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers)
 				{
 
-					double original = Convert.ToInt64(session.Start[item.Property]);
-					double current = Convert.ToInt64(session.Latest[item.Property]);
+					double original = Convert.ToInt64(session.Start[item.Property??string.Empty]);
+					double current = Convert.ToInt64(session.Latest[item.Property ?? string.Empty]);
 
 					double diff = current - original;
 
-					TrackerItemControl? tracker = FindTrackerItem(item.Property);
-					TrackerItemControlViewModel context = (TrackerItemControlViewModel)tracker.DataContext;
+					TrackerItemControl? tracker = FindTrackerItem(item.Property ?? string.Empty);
+					TrackerItemControlViewModel? context = (TrackerItemControlViewModel?)tracker.DataContext;
 
 					context.OriginalValue = ""+current;
 					context.ChangedValue = ""+diff;
@@ -103,7 +113,7 @@ namespace OsuFarmer.Managers
 
 		}
 
-		public async Task GenerateTrackerFields(Settings settings)
+		public async Task GenerateTrackerFields(Settings? settings)
 		{
 			if (settings == null)
 				return;
@@ -122,7 +132,7 @@ namespace OsuFarmer.Managers
 
 						trackerItemList.Children.Add(c);
 						TrackerItemControlViewModel? context = (TrackerItemControlViewModel?)c.DataContext;
-						context.Title = item.Name;
+						context.Title = item.Name ?? string.Empty;
 						//c.SetTitle(item.Name);
 						//c.SetChangedValue(0);
 						//c.AttachedProperty = item.Property;
@@ -174,17 +184,17 @@ namespace OsuFarmer.Managers
 					{
 						TrackerOptionControl optionControl = new TrackerOptionControl();
 						TrackerOptionControlViewModel? _context = (TrackerOptionControlViewModel?)optionControl.DataContext;
-						optionControl.Name = item.Property;
+						optionControl.Name = item.Property ?? string.Empty;
 						settingsTrackerList.Children.Add(optionControl);
 
-						_context.Title = item.Name;
-						_context.AttachedProperty = item.Property;
+						_context.Title = item.Name ?? string.Empty;
+						_context.AttachedProperty = item.Property ?? string.Empty;
 					}
                 }
 
 				foreach (TrackerItem item in Settings.PrefabTrackers)
                 {
-					TrackerOptionControl optionControl = FindTrackerOption(item.Property);
+					TrackerOptionControl? optionControl = FindTrackerOption(item.Property);
 					TrackerOptionControlViewModel? _context = (TrackerOptionControlViewModel?)optionControl.DataContext;
 					_context.IsToggled = settings.RunningTrackers.Exists(_item => _item.Property == item.Property);
 				}
@@ -208,16 +218,19 @@ namespace OsuFarmer.Managers
 						SessionItemControlViewModel? context = (SessionItemControlViewModel?)control.DataContext;
 						SessionListElement.Children.Add(control);
 
-						context.Username = session.Start.Username;
-						context.Filename = session.Name;
+						context.Username = session.Start.Username ?? string.Empty;
+						context.Filename = session.Name ?? string.Empty;
 						context.Fileage = session.LastUpdatedAt.ToString("MM/dd/yyyy h:mm tt");
 					}
 				}
 			});
 		}
 
-		public TrackerOptionControl? FindTrackerOption(string name)
+		public TrackerOptionControl? FindTrackerOption(string? name)
         {
+			if (name == null)
+				return null;
+
 			SettingsPage settingsPage = MainWindow.FindControl<SettingsPage>("SettingsPage");
 			StackPanel settingsTrackerList = settingsPage.FindControl<StackPanel>("settingsTrackerList");
 
@@ -232,8 +245,11 @@ namespace OsuFarmer.Managers
 			return null;
 		}
 
-		private TrackerItemControl FindTrackerItem(string name)
+		private TrackerItemControl? FindTrackerItem(string? name)
 		{
+			if (name == null)
+				return null;
+
 			TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
 			StackPanel trackerItemList = trackerPage.FindControl<StackPanel>("TrackerItemList");
 

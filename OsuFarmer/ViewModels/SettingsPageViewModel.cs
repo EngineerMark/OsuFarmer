@@ -32,7 +32,7 @@ namespace OsuFarmer.ViewModels
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                UIManager.Instance.SetLoadState(true);
+                UIManager.Instance?.SetLoadState(true);
                 bool resetSession = false;
                 bool apply = true;
 
@@ -50,7 +50,7 @@ namespace OsuFarmer.ViewModels
 
                 if (apply)
                 {
-                    await SettingsManager.Instance?.ApplySettings(newSettings);
+                    await SettingsManager.Instance.ApplySettings(newSettings);
                     if (resetSession)
                     {
                         AppManager.Instance?.StartLoop();
@@ -73,11 +73,11 @@ namespace OsuFarmer.ViewModels
             foreach (TrackerItem item in Settings.PrefabTrackers)
             {
 
-                TrackerOptionControl? control = UIManager.Instance.FindTrackerOption(item.Property);
-                TrackerOptionControlViewModel? context = (TrackerOptionControlViewModel)control.DataContext;
+                TrackerOptionControl? control = UIManager.Instance.FindTrackerOption(item.Property??string.Empty);
+                TrackerOptionControlViewModel? context = (TrackerOptionControlViewModel?)control.DataContext;
                 if (control != null && context!=null)
                 {
-                    settings.Trackers.Add(item.Property, context.IsToggled);
+                    settings.Trackers.Add(item.Property ?? string.Empty, context.IsToggled);
                 }
             }
 

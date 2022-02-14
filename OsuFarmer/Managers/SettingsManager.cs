@@ -14,7 +14,7 @@ namespace OsuFarmer.Managers
     {
         public string FileLocation { get => @"Data\";}
 
-        public string SettingsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory(), FileLocation); }
+        public string SettingsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory()??string.Empty, FileLocation); }
         public string SettingsPath { get => Path.Combine(SettingsDirectory, "Settings.json"); }
 
         public Settings? settings = null;

@@ -8,7 +8,7 @@ namespace OsuFarmer.ViewModels
 {
     public class TrackerItemControlViewModel : BaseViewModel
     {
-        public string AttachedProperty { get; set; }
+        public string? AttachedProperty { get; set; }
 
         private string _Title = "Example Tracker";
         private double _OriginalValue = 0;

@@ -46,17 +46,18 @@ namespace OsuFarmer.Core
             new TrackerItem("Playcount", "Playcount", true),
         };
 
-        public Dictionary<string, bool> Trackers { get; set; }
+        public Dictionary<string, bool>? Trackers { get; set; }
 
         [JsonIgnore]
-        public List<TrackerItem> RunningTrackers { get; set; }
+        public List<TrackerItem>? RunningTrackers { get; set; }
 
         public void UpdateTrackers(){
             if (Trackers == null)
             {
                 Trackers = new Dictionary<string, bool>();
                 foreach (TrackerItem item in PrefabTrackers)
-                    Trackers.Add(item.Property, item.Enabled);
+                    if(item.Property!=null)
+                        Trackers.Add(item.Property, item.Enabled);
             }
 
             if (Trackers.Count > 0)
@@ -72,10 +73,6 @@ namespace OsuFarmer.Core
                             TrackerItem newItem = new TrackerItem(prefab);
                             if (newItem != null)
                                 RunningTrackers.Add(newItem);
-                            else
-                            {
-                                string s = "";
-                            }
                         }
                     }
                 }

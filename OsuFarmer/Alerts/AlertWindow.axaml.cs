@@ -28,13 +28,13 @@ namespace OsuFarmer.Alerts
 
         private void AlertWindow_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
-            ((AlertWindowViewModel)DataContext).IsFinished = true;
+            ((AlertWindowViewModel?)DataContext).IsFinished = true;
         }
 
         public async Task<AlertResult> Run(string? title = null, string? description = null, string[]? buttons = null, bool hasInputField = false, bool isPassword = false)
         {
             Show();
-            AlertWindowViewModel vm = (AlertWindowViewModel)this.DataContext;
+            AlertWindowViewModel? vm = (AlertWindowViewModel?)this.DataContext;
 
             vm.ShowInputField = hasInputField;
 
@@ -73,7 +73,7 @@ namespace OsuFarmer.Alerts
         private void OnClick(string button)
         {
             res.PressedButton = button;
-            AlertWindowViewModel vm = (AlertWindowViewModel)this.DataContext;
+            AlertWindowViewModel? vm = (AlertWindowViewModel?)this.DataContext;
             vm.IsFinished = true;
         }
 

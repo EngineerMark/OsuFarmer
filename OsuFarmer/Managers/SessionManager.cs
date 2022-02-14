@@ -14,11 +14,11 @@ namespace OsuFarmer.Managers
     public class SessionManager : Manager<SessionManager>, IUsesStorage
     {
         public string FileLocation { get { return Path.Combine(SettingsManager.Instance.FileLocation, "Sessions"); } }
-        public string SessionsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory(), FileLocation); }
+        public string SessionsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory()??string.Empty, FileLocation); }
 
-        public Session CurrentSession { get; set; }
+        public Session? CurrentSession { get; set; }
 
-        public List<Session> StoredSessions;
+        public List<Session>? StoredSessions;
 
         public SessionManager(){
             Register(this);
@@ -50,10 +50,13 @@ namespace OsuFarmer.Managers
             UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
-        public async Task LoadSession(Session s)
+        public async Task LoadSession(Session? s)
         {
-            string user = s.Start.Username;
-            if(!SettingsManager.Instance.settings.ApiUsername.Equals(s.Start.Username, StringComparison.InvariantCultureIgnoreCase))
+            if (s == null)
+                return;
+
+            string? user = s.Start.Username;
+            if(!SettingsManager.Instance.settings.ApiUsername.Equals(user, StringComparison.InvariantCultureIgnoreCase))
                 SettingsManager.Instance.settings.ApiUsername = user;
 
             Mode mode = s.Mode;
@@ -79,7 +82,7 @@ namespace OsuFarmer.Managers
             UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
-        public async Task<bool> SaveSessionToFile(Session s)
+        public async Task<bool> SaveSessionToFile(Session? s)
         {
             if (s != null)
             {
@@ -150,7 +153,7 @@ namespace OsuFarmer.Managers
                         {
                             data = JsonConvert.DeserializeObject<Session>(fileData);
                         }
-                        catch(Exception e) { }
+                        catch(Exception) { }
                         if (data != null)
                             temp_sessions.Add(data);
                     }

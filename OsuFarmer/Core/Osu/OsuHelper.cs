@@ -10,8 +10,11 @@ namespace OsuFarmer.Core.Osu
 {
     public class OsuHelper
     {
-        public static async Task<User?> GetUser(string id, int mode, string id_type = "string")
+        public static async Task<User?> GetUser(string? id, int mode, string id_type = "string")
         {
+            if (id == null)
+                return null;
+
             List<User?>? users = await ApiHelper.GetDataDeserialized<List<User?>?>("https://osu.ppy.sh/api/get_user?k=" + SettingsManager.Instance.Settings.ApiKey + "&u=" + id + "&m=" + mode + "&type=" + id_type);
             if (users == null || users.Count == 0)
             {
@@ -28,7 +31,7 @@ namespace OsuFarmer.Core.Osu
             return await IsUserValid("peppy");
         }
 
-        public static async Task<bool> IsUserValid(string name){
+        public static async Task<bool> IsUserValid(string? name){
             return (await GetUser(name, 0)) != null;
         }
     }
