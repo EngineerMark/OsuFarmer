@@ -32,10 +32,17 @@ namespace OsuFarmer.Managers
 				_loaders += (state ? 1 : -1);
 
 				Control UILock = MainWindow.FindControl<Control>("UILocker");
+				Control UIContent = MainWindow.FindControl<Control>("UIContent");
                 if (_loaders > 0)
+                {
 					UILock.IsVisible = true;
+					UIContent.IsVisible = false;
+				}
                 else
+                {
 					UILock.IsVisible = false;
+					UIContent.IsVisible = true;
+                }
 			});
 		}
 

@@ -30,21 +30,23 @@
 				</StackPanel>
 			</Grid>
 		</Grid>
-		<Menu Margin="0,30" Height="30" VerticalAlignment="Top">
-			<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="TrackerPage" Header="_Home" />
-			<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SettingsPage" Header="_Settings" />
-			<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SessionsPage" Header="_Sessions" />
-		</Menu>
-		<Grid Margin="0,60,0,0">
-			<ScrollViewer>
-				<Grid x:Name="PagesList">
-					<pages:TrackerPage x:Name="TrackerPage" IsVisible="True" />
-					<pages:SettingsPage x:Name="SettingsPage" IsVisible="False"/>
-					<pages:SessionsPage x:Name="SessionsPage" IsVisible="False"/>
-				</Grid>
-			</ScrollViewer>
+		<Grid x:Name="UIContent">
+			<Menu Margin="0,30" Height="30" VerticalAlignment="Top">
+				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="TrackerPage" Header="_Home" />
+				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SettingsPage" Header="_Settings" />
+				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SessionsPage" Header="_Sessions" />
+			</Menu>
+			<Grid Margin="0,60,0,0">
+				<ScrollViewer>
+					<Grid x:Name="PagesList">
+						<pages:TrackerPage x:Name="TrackerPage" IsVisible="True" />
+						<pages:SettingsPage x:Name="SettingsPage" IsVisible="False"/>
+						<pages:SessionsPage x:Name="SessionsPage" IsVisible="False"/>
+					</Grid>
+				</ScrollViewer>
+			</Grid>
 		</Grid>
-		<Grid x:Name="UILocker" IsVisible="False" Margin="0,30,0,0" Background="#ff000000">
+		<Grid x:Name="UILocker" IsVisible="False" Margin="0,30,0,0" Background="Transparent">
 			<ProgressRing IsIndeterminate="True" />
 		</Grid>
 	</Grid>
