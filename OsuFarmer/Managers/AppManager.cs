@@ -114,7 +114,7 @@ namespace OsuFarmer.Managers
 
             if (string.IsNullOrEmpty(SettingsManager.Instance?.Settings?.ApiUsername))
             {
-                AlertResult? val = await UIManager.Instance.DisplayInputAlertAsync("Username", "No or invalid osu! username is in use, please enter it", true);
+                AlertResult? val = await UIManager.Instance.DisplayInputAlertAsync("Username", "No or invalid osu! username is in use, please enter it", false);
                 if (val.Value.Input != null)
                     SettingsManager.Instance.settings.ApiUsername = val.Value.Input;
                 if (!(await OsuHelper.IsUserValid(SettingsManager.Instance.settings.ApiUsername)))
