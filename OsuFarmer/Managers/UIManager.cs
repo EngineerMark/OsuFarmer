@@ -11,6 +11,8 @@ using OsuFarmer.ViewModels;
 using OsuFarmer.Core.Osu;
 using System.Globalization;
 using OsuFarmer.Alerts;
+using Avalonia.Media.Imaging;
+using OsuFarmer.Helpers;
 
 namespace OsuFarmer.Managers
 {
@@ -68,6 +70,35 @@ namespace OsuFarmer.Managers
 
 				context.Username = user.Username ?? String.Empty;
 
+				//Profile picture
+				try
+				{
+					context.AvatarImage = ImageHelper.GetAvaloniaBitmapFromWeb("https://a.ppy.sh/" + user.ID);
+				}
+				catch (Exception)
+				{
+					context.AvatarImage = TrackerPageViewModel.DefaultAvatarImage;
+				}
+
+				//Header Image
+				if (web)
+                {
+					string headerUrl = user.WebData.User.Cover.CustomURL;
+                    try
+                    {
+						context.HeaderImage = ImageHelper.GetAvaloniaBitmapFromWeb(headerUrl);
+					}
+                    catch (Exception)
+                    {
+						context.HeaderImage = TrackerPageViewModel.DefaultHeaderImage;
+                    }
+                }
+                else
+                {
+					context.HeaderImage = TrackerPageViewModel.DefaultHeaderImage;
+				}
+
+				//Country
 				CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
 				string? country = null;
 				foreach (CultureInfo culture in cultures)
@@ -80,6 +111,16 @@ namespace OsuFarmer.Managers
 					}
 				}
 				context.CountryName = country ?? "Unknown";
+
+				try
+				{
+					context.FlagImage = ImageHelper.GetAvaloniaBitmapFromAssets("avares://OsuFarmer/Assets/Images/Flags/"+user.Country.ToUpperInvariant()+".png");
+				}
+				catch (Exception)
+				{
+					context.FlagImage = TrackerPageViewModel.DefaultFlagImage;
+				}
+
 				//if (web)
 				//	trackerUserHeader.Source = user.WebData?.User?.Cover?.Url;
 				//else

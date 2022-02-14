@@ -8,7 +8,8 @@
              x:Class="OsuFarmer.Pages.TrackerPage">
 	<Grid>
 		<Grid VerticalAlignment="Top">
-			<Image IsVisible="{Binding ShowHeader}" Source="avares://OsuFarmer/Assets/Images/Placeholders/header.jpg">
+			<!--<Image IsVisible="{Binding ShowHeader}" Source="avares://OsuFarmer/Assets/Images/Placeholders/header.jpg">-->
+			<Image IsVisible="{Binding ShowHeader}" Source="{Binding HeaderImage}">
 				<Image.OpacityMask>
 					<LinearGradientBrush StartPoint="0%,30%" EndPoint="0%,90%">
 						<LinearGradientBrush.GradientStops>
@@ -25,10 +26,11 @@
 				<Button Content="Save" Command="{Binding OnSave}" />
 			</StackPanel>
 			<Label />
-			<Image Width="150" Source="avares://OsuFarmer/Assets/Images/Placeholders/avatar-guest.png" />
+			<!--<Image Width="150" Source="avares://OsuFarmer/Assets/Images/Placeholders/avatar-guest.png" />-->
+			<Image Width="150" Source="{Binding AvatarImage}" />
 			<Label FontSize="30" Content="{Binding Username}" HorizontalContentAlignment="Center" />
 			<StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
-				<Image Height="25" VerticalAlignment="Center" Source="/Assets/Images/Flags/AU.png" />
+				<Image Height="25" VerticalAlignment="Center" Source="{Binding FlagImage}" />
 				<Label FontSize="25" Content="{Binding CountryName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
 			</StackPanel>
 			<Label />

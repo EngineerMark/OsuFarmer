@@ -15,13 +15,23 @@ namespace OsuFarmer.ViewModels
 {
     public class TrackerPageViewModel : BaseViewModel
     {
+        public static readonly Bitmap? DefaultHeaderImage = ImageHelper.GetAvaloniaBitmapFromAssets("avares://OsuFarmer/Assets/Images/Placeholders/header.jpg");
+        public static readonly Bitmap? DefaultAvatarImage = ImageHelper.GetAvaloniaBitmapFromAssets("avares://OsuFarmer/Assets/Images/Placeholders/avatar-guest.png");
+        public static readonly Bitmap? DefaultFlagImage = ImageHelper.GetAvaloniaBitmapFromAssets("avares://OsuFarmer/Assets/Images/Flags/__.png");
+        
         private bool _ShowHeader = true;
         private string _Username = "peppy";
         private string _CountryName = "Australia";
+        private Bitmap? _HeaderImage = DefaultHeaderImage;
+        private Bitmap? _AvatarImage = DefaultAvatarImage;
+        private Bitmap? _FlagImage = DefaultFlagImage;
 
         public bool ShowHeader { get { return _ShowHeader; } set { _ShowHeader = value; OnPropertyChanged(nameof(ShowHeader)); } }
         public string Username { get { return _Username; } set { _Username = value; OnPropertyChanged(nameof(Username)); } }
         public string CountryName { get { return _CountryName; } set { _CountryName = value; OnPropertyChanged(nameof(CountryName)); } }
+        public Bitmap? HeaderImage { get { return _HeaderImage; } set { _HeaderImage = value; OnPropertyChanged(nameof(HeaderImage)); } }
+        public Bitmap? AvatarImage { get { return _AvatarImage; } set { _AvatarImage = value; OnPropertyChanged(nameof(AvatarImage)); } }
+        public Bitmap? FlagImage { get { return _FlagImage; } set { _FlagImage = value; OnPropertyChanged(nameof(FlagImage)); } }
 
         public void OnReset()
         {
