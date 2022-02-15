@@ -332,6 +332,7 @@ namespace OsuFarmer.Managers
 			{
 				SetLoadState(true);
 				AlertWindow alertWindow = new AlertWindow();
+				alertWindow.ShowDialog(MainWindow);
 				AlertResult res = await alertWindow.Run(title, message, buttons);
 				SetLoadState(false);
 				return res;
@@ -344,6 +345,7 @@ namespace OsuFarmer.Managers
 			{
 				SetLoadState(true);
 				AlertWindow alertWindow = new AlertWindow();
+				alertWindow.ShowDialog(MainWindow);
 				AlertResult res = await alertWindow.Run(title, message, new string[] { "Continue" }, true, isPassword);
 				SetLoadState(false);
 				return res;
