@@ -12,8 +12,6 @@
 		x:Name="MainWin"
 		MinWidth="350"
 		MinHeight="600"
-		Width="350"
-		Height="700"
 		Design.Width="350"
 		Design.Height="700"
 		xmlns:controls = "clr-namespace:OsuFarmer.Controls;assembly=OsuFarmer" 

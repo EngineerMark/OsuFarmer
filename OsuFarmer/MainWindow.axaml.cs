@@ -23,6 +23,12 @@ namespace OsuFarmer
             this.DataContext = new MainWindowViewModel();
             //this.FindControl<Grid>("UILocker").IsVisible = false;
 
+            ClientSize = new Size(AppSettings.Default.Width, AppSettings.Default.Height);
+            if (AppSettings.Default.X != -1)
+            {
+                Position = new PixelPoint(AppSettings.Default.X, AppSettings.Default.Y);
+            }
+
             UIManager = new UIManager(this);
             AppManager = new AppManager(new AppManagerData()
             {
@@ -30,6 +36,17 @@ namespace OsuFarmer
                 UIManager = UIManager
             });
             AppManager.Start();
+
+            Closing += (object? sender, System.ComponentModel.CancelEventArgs e) => OnClose();
+        }
+
+        private void OnClose()
+        {
+            AppSettings.Default.X = Position.X;
+            AppSettings.Default.Y = Position.Y;
+            AppSettings.Default.Width = ClientSize.Width;
+            AppSettings.Default.Height = ClientSize.Height;
+            AppSettings.Default.Save();
         }
 
         private void InitializeComponent()
