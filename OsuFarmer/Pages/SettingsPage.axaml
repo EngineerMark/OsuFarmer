@@ -10,7 +10,7 @@
 			<StackPanel Orientation="Vertical" Spacing="5">
 				<!--<Label FontSize="25" Content="Australia" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />-->
 				<Label FontSize="15" FontWeight="Bold" Content="API" />
-				<TextBox RevealPassword="True" Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
+				<TextBox Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
 				<TextBox Watermark="Username" Text="{Binding APIUsername}" />
 				<ComboBox SelectedIndex="{Binding APIGamemode}">
 					<ComboBoxItem Content="Standard" />
