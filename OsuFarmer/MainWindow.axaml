@@ -33,6 +33,7 @@
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="TrackerPage" Header="_Home" />
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SettingsPage" Header="_Settings" />
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SessionsPage" Header="_Sessions" />
+				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="InfoPage" Header="_Info" />
 			</Menu>
 			<Grid Margin="0,60,0,0">
 				<ScrollViewer>
@@ -40,6 +41,7 @@
 						<pages:TrackerPage x:Name="TrackerPage" IsVisible="True" />
 						<pages:SettingsPage x:Name="SettingsPage" IsVisible="False"/>
 						<pages:SessionsPage x:Name="SessionsPage" IsVisible="False"/>
+						<pages:InfoPage x:Name="InfoPage" IsVisible="False"/>
 					</Grid>
 				</ScrollViewer>
 			</Grid>

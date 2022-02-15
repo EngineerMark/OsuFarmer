@@ -16,6 +16,7 @@ namespace OsuFarmer.Core
         public Mode ApiGamemode { get; set; } = Mode.Standard;
 
         public bool ShowHeaderImage { get; set; } = true;
+        public bool UseExpandedTracker { get; set; } = true;
 
         public static List<TrackerItem> PrefabTrackers { get; set; } = new List<TrackerItem>(){
             new TrackerItem("Total SS", "TotalSS", false),

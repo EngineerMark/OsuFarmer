@@ -352,6 +352,24 @@ namespace OsuFarmer.Managers
 			});
 		}
 
+		public void ToggleExpansiveMode(bool state)
+		{
+			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			{
+
+				state = SettingsManager.Instance.Settings.UseExpandedTracker && state;
+
+                //TODO implement
+                state = false;
+
+                TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
+				TrackerPageViewModel? vm = (TrackerPageViewModel?)trackerPage.DataContext;
+
+				vm.ExpansiveModeEnabled = state;
+				vm.ThinTrackerWidth = vm.ExpansiveModeEnabled ? UIManager.Instance.MainWindow.MinWidth : double.NaN;
+			});
+		}
+
 		public void GoToPage(string page)
 		{
 			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>

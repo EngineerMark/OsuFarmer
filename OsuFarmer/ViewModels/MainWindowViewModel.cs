@@ -1,4 +1,5 @@
-﻿using Avalonia.Controls;
+﻿using Avalonia;
+using Avalonia.Controls;
 using OsuFarmer.Managers;
 using System;
 using System.Collections.Generic;

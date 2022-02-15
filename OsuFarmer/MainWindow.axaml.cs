@@ -23,13 +23,16 @@ namespace OsuFarmer
             this.DataContext = new MainWindowViewModel();
             //this.FindControl<Grid>("UILocker").IsVisible = false;
 
+            UIManager = new UIManager(this);
+            PropertyChanged += MainWindow_PropertyChanged;
+
             ClientSize = new Size(AppSettings.Default.Width, AppSettings.Default.Height);
             if (AppSettings.Default.X != -1)
             {
                 Position = new PixelPoint(AppSettings.Default.X, AppSettings.Default.Y);
             }
 
-            UIManager = new UIManager(this);
+
             AppManager = new AppManager(new AppManagerData()
             {
                 Window = this,
@@ -38,6 +41,15 @@ namespace OsuFarmer
             AppManager.Start();
 
             Closing += (object? sender, System.ComponentModel.CancelEventArgs e) => OnClose();
+        }
+
+        private void MainWindow_PropertyChanged(object? sender, AvaloniaPropertyChangedEventArgs e)
+        {
+            if (e.Property == ClientSizeProperty)
+            {
+                double aspect = ClientSize.Width / ClientSize.Height;
+                UIManager.Instance.ToggleExpansiveMode(aspect > 1.1);
+            }
         }
 
         private void OnClose()

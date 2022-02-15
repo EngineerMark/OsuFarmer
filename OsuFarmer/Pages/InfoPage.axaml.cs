@@ -15,5 +15,10 @@ namespace OsuFarmer.Pages
         {
             AvaloniaXamlLoader.Load(this);
         }
+
+        public void OpenGithub()
+        {
+
+        }
     }
 }

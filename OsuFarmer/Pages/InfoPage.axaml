@@ -2,7 +2,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="600"
+			 xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
+			FontFamily="/Assets/Fonts/Torus.otf#Torus"
              x:Class="OsuFarmer.Pages.InfoPage">
-  Welcome to Avalonia!
+	<Grid Margin="10">
+		<StackPanel>
+			<Image Source="avares://OsuFarmer/Assets/Images/icon.png" Width="64" />
+			<Label Content="osu!Farmer" HorizontalContentAlignment="Center" FontSize="20" />
+			<Label Content="aka osu!Achieved 3.0" HorizontalContentAlignment="Center" FontSize="11" />
+			<md:MarkdownScrollViewer>
+				Source code available on [GitHub](https://github.com/EngineerMark/OsuFarmer)
+				Check on there to see if any new update is available.
+
+				To send feedback, either open an issue on GitHub or join this [Discord server](https://discord.gg/2554baXDZS) in the #dev-channel
+
+				Developed by [Misaki Nakahara](https://osu.ppy.sh/users/10153735)
+
+				Dependencies:
+				* Score rank provided by [Respektive](https://github.com/respektive/osu-profile#score-rank-api)
+			</md:MarkdownScrollViewer>
+		</StackPanel>
+	</Grid>
 </UserControl>

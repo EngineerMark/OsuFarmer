@@ -3,42 +3,73 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			FontFamily="/Assets/Fonts/Torus.otf#Torus"
-             mc:Ignorable="d" d:DesignWidth="400" d:DesignHeight="650"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
 			xmlns:controls = "clr-namespace:OsuFarmer.Controls;assembly=OsuFarmer" 
              x:Class="OsuFarmer.Pages.TrackerPage">
 	<Grid>
-		<Grid VerticalAlignment="Top">
-			<!--<Image IsVisible="{Binding ShowHeader}" Source="avares://OsuFarmer/Assets/Images/Placeholders/header.jpg">-->
-			<Image IsVisible="{Binding ShowHeader}" Source="{Binding HeaderImage}">
-				<Image.OpacityMask>
-					<LinearGradientBrush StartPoint="0%,30%" EndPoint="0%,90%">
-						<LinearGradientBrush.GradientStops>
-							<GradientStop Offset="0" Color="#55ffffff"/>
-							<GradientStop Offset="1" Color="Transparent"/>
-						</LinearGradientBrush.GradientStops>
-					</LinearGradientBrush>
-				</Image.OpacityMask>
-			</Image>
-		</Grid>
-		<StackPanel Spacing="5" Margin="10,10,10,0">
-			<StackPanel Orientation="Horizontal">
-				<Button Content="Reset" Command="{Binding OnReset}" />
-				<Button Content="Save" Command="{Binding OnSave}" />
-			</StackPanel>
-			<Label />
-			<!--<Image Width="150" Source="avares://OsuFarmer/Assets/Images/Placeholders/avatar-guest.png" />-->
-			<Image Width="150" Source="{Binding AvatarImage}" />
-			<Label FontSize="30" Content="{Binding Username}" HorizontalContentAlignment="Center" />
-			<StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
-				<Image Height="25" VerticalAlignment="Center" Source="{Binding FlagImage}" />
-				<Label FontSize="25" Content="{Binding CountryName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
-			</StackPanel>
-			<Label />
-			<Grid Margin="15,0,15,15">
-				<StackPanel x:Name="TrackerItemList" Spacing="5">
-					<controls:TrackerItemControl />
-				</StackPanel>
+		<DockPanel VerticalAlignment="Stretch" LastChildFill="True">
+			<Grid Width="{Binding ThinTrackerWidth}" VerticalAlignment="Stretch" DockPanel.Dock="Left" Margin="0">
+					<Grid VerticalAlignment="Top">
+						<!--<Image IsVisible="{Binding ShowHeader}" Source="avares://OsuFarmer/Assets/Images/Placeholders/header.jpg">-->
+						<Image IsVisible="{Binding ShowHeader}" Source="{Binding HeaderImage}">
+							<Image.OpacityMask>
+								<LinearGradientBrush StartPoint="0%,30%" EndPoint="0%,90%">
+									<LinearGradientBrush.GradientStops>
+										<GradientStop Offset="0" Color="#55ffffff"/>
+										<GradientStop Offset="1" Color="Transparent"/>
+									</LinearGradientBrush.GradientStops>
+								</LinearGradientBrush>
+							</Image.OpacityMask>
+						</Image>
+					</Grid>
+					<StackPanel Spacing="5" Margin="10,10,10,0">
+						<StackPanel Orientation="Horizontal">
+							<Button Content="Reset" Command="{Binding OnReset}" />
+							<Button Content="Save" Command="{Binding OnSave}" />
+						</StackPanel>
+						<Label />
+						<!--<Image Width="150" Source="avares://OsuFarmer/Assets/Images/Placeholders/avatar-guest.png" />-->
+						<Image Width="150" Source="{Binding AvatarImage}" />
+						<Label FontSize="30" Content="{Binding Username}" HorizontalContentAlignment="Center" />
+						<StackPanel Spacing="5" Orientation="Horizontal" HorizontalAlignment="Center" Height="40">
+							<Image Height="25" VerticalAlignment="Center" Source="{Binding FlagImage}" />
+							<Label FontSize="25" Content="{Binding CountryName}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+						</StackPanel>
+						<Label />
+						<Grid Margin="15,0,15,15">
+							<StackPanel x:Name="TrackerItemList" Spacing="5">
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+								<controls:TrackerItemControl />
+							</StackPanel>
+						</Grid>
+					</StackPanel>
 			</Grid>
-		</StackPanel>
+			<Grid IsVisible="{Binding ExpansiveModeEnabled}" DockPanel.Dock="Right">
+				<Label Content="Test" />
+			</Grid>
+		</DockPanel>
 	</Grid>
 </UserControl>

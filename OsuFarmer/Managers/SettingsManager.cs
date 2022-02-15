@@ -12,7 +12,7 @@ namespace OsuFarmer.Managers
 {
     public class SettingsManager : Manager<SettingsManager>, IUsesStorage
     {
-        public string FileLocation { get => @"Data\";}
+        public string FileLocation { get => @"Data";}
 
         public string SettingsDirectory { get => Path.Combine(FileManager.GetExecutableDirectory()??string.Empty, FileLocation); }
         public string SettingsPath { get => Path.Combine(SettingsDirectory, "Settings.json"); }

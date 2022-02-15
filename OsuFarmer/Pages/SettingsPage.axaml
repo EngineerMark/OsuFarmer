@@ -7,10 +7,10 @@
              x:Class="OsuFarmer.Pages.SettingsPage">
 	<ScrollViewer>
 		<Grid Margin="10,10,30,20">
-			<StackPanel Orientation="Vertical" Spacing="10">
+			<StackPanel Orientation="Vertical" Spacing="5">
 				<!--<Label FontSize="25" Content="Australia" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />-->
 				<Label FontSize="15" FontWeight="Bold" Content="API" />
-				<TextBox Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
+				<TextBox RevealPassword="True" Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
 				<TextBox Watermark="Username" Text="{Binding APIUsername}" />
 				<ComboBox SelectedIndex="{Binding APIGamemode}">
 					<ComboBoxItem Content="Standard" />
@@ -27,9 +27,19 @@
 				</ScrollViewer>
 				<Label />
 				<Label FontSize="15" FontWeight="Bold" Content="Visuals" />
-				<StackPanel Orientation="Horizontal" Spacing="10" Height="35">
-					<ToggleSwitch x:Name="VisualsHeaderToggle" IsChecked="{Binding VisualsHeaderEnabled}" VerticalContentAlignment="Center"/>
-					<Label VerticalContentAlignment="Center" Content="Display header image" />
+				<StackPanel>
+					<StackPanel ToolTip.Tip="Show or hide the background image on the tracker page" Orientation="Horizontal" Spacing="10" Height="30">
+						<ToggleSwitch x:Name="VisualsHeaderToggle" IsChecked="{Binding VisualsHeaderEnabled}" VerticalContentAlignment="Center"/>
+						<Label VerticalContentAlignment="Center" Content="Display header image" />
+					</StackPanel>
+					<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
+						<ToggleSwitch x:Name="VisualsExpandedTrackerToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
+						<Label VerticalContentAlignment="Center" Content="Expansive tracker info" />
+					</StackPanel>
+					<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
+						<ToggleSwitch x:Name="VisualsBlurredWindowToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
+						<Label VerticalContentAlignment="Center" Content="Transparent Blur Window" />
+					</StackPanel>
 				</StackPanel>
 				<Label />
 				<StackPanel Spacing="10" Orientation="Horizontal">
