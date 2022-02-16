@@ -26,8 +26,8 @@ namespace OsuFarmer.ViewModels
         private IBrush _ChangedSignColor = PositiveColor;
 
         public string Title { get { return _Title; } set { _Title = value; OnPropertyChanged(nameof(Title)); } }
-        public string OriginalValue { get { return string.Format("{0:n" + Rounding + "}", _OriginalValue); } set { _OriginalValue = Convert.ToDouble(value); OnPropertyChanged(nameof(OriginalValue)); } }
-        public string ChangedValue { get { return string.Format("{0:n" + Rounding + "}", _ChangedValue); } set { _ChangedValue = Convert.ToDouble(value); OnPropertyChanged(nameof(ChangedValue)); } }
+        public string OriginalValue { get { return string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:n" + Rounding + "}", _OriginalValue); } set { _OriginalValue = Convert.ToDouble(value); OnPropertyChanged(nameof(OriginalValue)); } }
+        public string ChangedValue { get { return string.Format(new System.Globalization.CultureInfo("en-GB"), "{0:n" + Rounding + "}", _ChangedValue); } set { _ChangedValue = Convert.ToDouble(value); OnPropertyChanged(nameof(ChangedValue)); } }
         public string ChangedSign { get { return _ChangedSign; } set { _ChangedSign = value; OnPropertyChanged(nameof(ChangedSign)); } }
         public IBrush ChangedSignColor { get { return _ChangedSignColor; } set { _ChangedSignColor = value; OnPropertyChanged(nameof(ChangedSignColor)); } }
     }
