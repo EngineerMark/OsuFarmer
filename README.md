@@ -1,3 +1,7 @@
+![](https://img.shields.io/github/downloads/EngineerMark/OsuFarmer/total) ![](https://img.shields.io/github/repo-size/EngineerMark/OsuFarmer) ![](https://img.shields.io/github/v/release/EngineerMark/OsuFarmer?include_prereleases)
+
+[Trello Board](https://trello.com/b/rJxvGJfF/osutracker)
+
 # osu!Farmer
 
 ## About & Support
