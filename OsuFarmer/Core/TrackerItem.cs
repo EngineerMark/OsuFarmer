@@ -33,17 +33,26 @@ namespace OsuFarmer.Core
         /// </summary>
         public int Priority { get; set; }
 
+        /// <summary>
+        /// Amount of digits to round to
+        /// </summary>
+        public int Rounding { get; set; }
+
         public TrackerItem(){ }
-        public TrackerItem(string name, string property, bool enabled = true, bool inverted = false){
+
+        public TrackerItem(string name, string property, bool enabled = true, bool inverted = false, int rounding = 0){
             this.Name = name;
             this.Property = property;
             this.Enabled = enabled;
             this.Inverted = inverted;
+            this.Rounding = rounding;
         }
         public TrackerItem(TrackerItem item){
             this.Name = item.Name;
             this.Property = item.Property;
             this.Enabled = item.Enabled;
+            this.Inverted = item.Inverted;
+            this.Rounding = item.Rounding;
         }
     }
 }

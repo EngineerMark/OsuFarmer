@@ -143,8 +143,8 @@ namespace OsuFarmer.Managers
 				foreach (TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers)
 				{
 
-					double original = Convert.ToInt64(session.Start[item.Property??string.Empty]);
-					double current = Convert.ToInt64(session.Latest[item.Property ?? string.Empty]);
+					double original = Convert.ToDouble(session.Start[item.Property??string.Empty]);
+					double current = Convert.ToDouble(session.Latest[item.Property ?? string.Empty]);
 
 					double diff = current - original;
 
@@ -195,6 +195,7 @@ namespace OsuFarmer.Managers
 						TrackerItemControlViewModel? context = (TrackerItemControlViewModel?)c.DataContext;
 						context.Title = item.Name ?? string.Empty;
 						context.InvertSign = item.Inverted;
+						context.Rounding = item.Rounding;
 						//c.SetTitle(item.Name);
 						//c.SetChangedValue(0);
 						//c.AttachedProperty = item.Property;
