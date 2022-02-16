@@ -37,14 +37,17 @@ namespace OsuFarmer.Core
             new TrackerItem("Country Rank", "CountryRank", true, true),
 
             new TrackerItem("PP", "PP", true, false, 2),
-            new TrackerItem("Accuracy", "Accuracy", true, false, 2),
+            new TrackerItem("Accuracy", "Accuracy", false, false, 2),
 
             new TrackerItem("Clears", "Clears", true),
 
+            new TrackerItem("Total Hits", "TotalHits", false),
+            new TrackerItem("Hits per Play", "HitsPerPlay", false, false, 2),
             new TrackerItem("300 Hits", "Count300", false),
             new TrackerItem("100 Hits", "Count100", false),
             new TrackerItem("50 Hits", "Count50", false),
 
+            //new TrackerItem("Playtime", "Playtime", true, "{0:%h}h {0:%m}m", typeof(TimeSpan)),
             new TrackerItem("Playcount", "Playcount", true),
         };
 

@@ -77,6 +77,7 @@ namespace OsuFarmer.Core.Osu
         public long CountryRank { get; set; }
 
         public long TotalHits { get => Count300 + Count100 + Count50; }
+        public double HitsPerPlay { get => (double)TotalHits / (double)Playcount; }
         public long Clears { get => CountSSH + CountSS + CountSH + CountS + CountA; }
         public long TotalSS { get => CountSSH + CountSS; }
         public long TotalS { get => CountSH + CountS; }

@@ -6,7 +6,7 @@
 		<ApplicationIcon>Assets\Images\icon.ico</ApplicationIcon>
 		<PublishSingleFile>false</PublishSingleFile>
 		<DebugType>embedded</DebugType>
-		<Version>1.0.0</Version>
+		<Version>1.1.0</Version>
 	</PropertyGroup>
 	<ItemGroup>
 		<None Remove=".gitignore" />
