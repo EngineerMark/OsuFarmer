@@ -14,7 +14,7 @@ namespace OsuFarmer.Core.Osu
     public class User
     {
         [JsonProperty("score_rank_object")]
-        private UserScoreRank? ScoreRankObject { get; set; }
+        public UserScoreRank? ScoreRankObject { get; set; }
 
         [JsonIgnore]
         public int ScoreRank { get => ScoreRankObject?.Rank ?? -1; }
@@ -141,14 +141,14 @@ namespace OsuFarmer.Core.Osu
             return WebData != null;
         }
 
-        public async Task<bool> PopulateScoreRank(int mode)
+        public async Task<bool> PopulateScoreRank(int mode, long? last_update = null)
         {
-            if (ScoreRankObject != null)
+            if (ScoreRankObject != null || last_update != null)
             {
-                DateTimeOffset lastUpdate = DateTimeOffset.FromUnixTimeSeconds(ScoreRankObject.LastUpdate);
+                DateTimeOffset lastUpdate = ScoreRankObject == null ? DateTimeOffset.FromUnixTimeSeconds((long)last_update) : DateTimeOffset.FromUnixTimeSeconds(ScoreRankObject.LastUpdate);
                 DateTimeOffset now = DateTimeOffset.UtcNow;
                 if (now - lastUpdate <= TimeSpan.FromMinutes(10))
-                    return true;
+                    return false;
             }
 
             UserScoreRank? rank = null;

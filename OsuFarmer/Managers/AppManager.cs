@@ -94,7 +94,7 @@ namespace OsuFarmer.Managers
             //    return;
             //}
 
-            await Task.Delay(2000);
+            await Task.Delay(100);
 
             ////test api
             if (!(await OsuHelper.IsApiValid()))
@@ -110,7 +110,7 @@ namespace OsuFarmer.Managers
                 }
             }
 
-            await Task.Delay(200);
+            await Task.Delay(100);
 
             if (string.IsNullOrEmpty(SettingsManager.Instance?.Settings?.ApiUsername))
             {
@@ -124,14 +124,14 @@ namespace OsuFarmer.Managers
                 }
             }
 
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             await SettingsManager.Instance.SaveSettings();
             //PageManager.Instance?.GetPage<SettingsPage>()?.PrefillSettings(SettingsManager.Instance.Settings);
             UIManager.Instance?.PrefillSettings(SettingsManager.Instance.Settings);
             await UIManager.Instance?.ApplySettings(SettingsManager.Instance.Settings);
 
-            await Task.Delay(50);
+            await Task.Delay(100);
 
             ////test
             User? user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
@@ -158,8 +158,25 @@ namespace OsuFarmer.Managers
                 }
 
                 await Task.Delay(4500);
-                user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
-                SessionManager.Instance?.IterateSession(user);
+                try
+                {
+                    WebData? webDataCache = user.WebData;
+                    UserScoreRank? scoreRankCache = user.ScoreRankObject;
+                    user = await OsuHelper.GetUser(SettingsManager.Instance.settings.ApiUsername, (int)SettingsManager.Instance.settings.ApiGamemode);
+                    bool web = await user?.PopulateWebProfile((int)SettingsManager.Instance.Settings.ApiGamemode);
+                    bool score = await user?.PopulateScoreRank((int)SettingsManager.Instance.Settings.ApiGamemode, scoreRankCache?.LastUpdate);
+
+                    if (!web)
+                        user.WebData = webDataCache;
+
+                    if (!score)
+                        user.ScoreRankObject = scoreRankCache;
+
+                    SessionManager.Instance?.IterateSession(user);
+                }catch(Exception e)
+                {
+                    string s = "";
+                }
             }
 
             IsLoopRunning = false;
