@@ -18,6 +18,11 @@
 					<ComboBoxItem Content="Catch The Beat" />
 					<ComboBoxItem Content="Mania" />
 				</ComboBox>
+				<StackPanel ToolTip.Tip="Amount of seconds between each update" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Stretch">
+					<Label Width="30" Content="{Binding ElementName=UpdateRateSlider, Path=Value, Mode=OneWay}" VerticalContentAlignment="Center" FontSize="13" />
+					<Slider Value="{Binding APIUpdateRate}" x:Name="UpdateRateSlider" IsSnapToTickEnabled="True" TickFrequency="10" Width="150" VerticalAlignment="Center" Minimum="10" Maximum="120" />
+					<Label Content="Update Rate" VerticalContentAlignment="Center" FontSize="13" />
+				</StackPanel>
 				<Label />
 				<Label FontSize="15" FontWeight="Bold" Content="Trackers" />
 				<ScrollViewer MaxHeight="350">

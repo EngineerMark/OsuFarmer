@@ -74,7 +74,7 @@ namespace OsuFarmer.Managers
             IsLoopRunning = true;
             CancelLoop = false;
 
-            UIManager.Instance.SetLoadState(true);
+            await UIManager.Instance.SetLoadState(true);
 
             await SettingsManager.Instance?.LoadSettings();
             await UIManager.Instance.GenerateTrackerFields(SettingsManager.Instance.Settings);
@@ -141,15 +141,26 @@ namespace OsuFarmer.Managers
             if (reset)
                 SessionManager.Instance?.StartNewSession(user);
             else if (SessionManager.Instance?.CurrentSession != null)
-                SessionManager.Instance?.IterateSession(user);
+                await SessionManager.Instance?.IterateSession(user);
 
             //PageManager.Instance?.GetPage<TrackerPage>().SetLoadedState(true);
-            UIManager.Instance.SetLoadState(false);
+            await UIManager.Instance.SetLoadState(false);
 
+            long currentTime = 0;
             while (true)
             {
-                if (CancelLoop)
-                    break;
+                currentTime = 0;
+
+                int waitFor = SettingsManager.Instance.Settings.ApiUpdateInterval > 5 ? SettingsManager.Instance.Settings.ApiUpdateInterval : 5;
+
+                if (currentTime <= waitFor*1000)
+                {
+                    await Task.Delay(25);
+                    currentTime += 25;
+
+                    if (CancelLoop)
+                        break;
+                }
 
                 if (!NetworkManager.CheckForInternetConnection())
                 {
@@ -157,7 +168,7 @@ namespace OsuFarmer.Managers
                     continue;
                 }
 
-                await Task.Delay(4500);
+                //await Task.Delay(SettingsManager.Instance.Settings.ApiUpdateInterval > 5 ? SettingsManager.Instance.Settings.ApiUpdateInterval * 1000 : 5000);
                 try
                 {
                     WebData? webDataCache = user.WebData;
@@ -172,7 +183,7 @@ namespace OsuFarmer.Managers
                     if (!score)
                         user.ScoreRankObject = scoreRankCache;
 
-                    SessionManager.Instance?.IterateSession(user);
+                    await SessionManager.Instance?.IterateSession(user);
                 }catch(Exception e)
                 {
                     string s = "";

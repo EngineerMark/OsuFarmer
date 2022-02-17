@@ -14,9 +14,11 @@ namespace OsuFarmer.Core
         public string? ApiKey { get; set; } = "";
         public string? ApiUsername { get; set; } = "";
         public Mode ApiGamemode { get; set; } = Mode.Standard;
+        public int ApiUpdateInterval { get; set; } = 30;
 
         public bool ShowHeaderImage { get; set; } = true;
         public bool UseExpandedTracker { get; set; } = true;
+
 
         public static List<TrackerItem> PrefabTrackers { get; set; } = new List<TrackerItem>(){
             new TrackerItem("Total SS", "TotalSS", false),

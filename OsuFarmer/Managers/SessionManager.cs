@@ -36,7 +36,7 @@ namespace OsuFarmer.Managers
             return StoredSessions?.Find(s => s.Name.Equals(name, StringComparison.InvariantCultureIgnoreCase));
         }
 
-        public void StartNewSession(User? user){
+        public async void StartNewSession(User? user){
             CurrentSession = new Session();
             CurrentSession.Start = user;
             CurrentSession.Latest = user;
@@ -47,7 +47,7 @@ namespace OsuFarmer.Managers
             CurrentSession.Mode = SettingsManager.Instance?.Settings?.ApiGamemode ?? Mode.Standard;
 
             //PageManager.Instance.GetPage<TrackerPage>().ApplySession(CurrentSession);
-            UIManager.Instance.TrackersApplySession(CurrentSession);
+            await UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
         public async Task LoadSession(Session? s)
@@ -67,11 +67,11 @@ namespace OsuFarmer.Managers
             UIManager.Instance.PrefillSettings(SettingsManager.Instance.settings);
 
             CurrentSession = new Session(s);
-            UIManager.Instance.TrackersApplySession(CurrentSession);
+            await UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
 
-        public void IterateSession(User? user){
+        public async Task IterateSession(User? user){
             if(CurrentSession==null){
                 throw new NullReferenceException("No session currently exists, yet trying to update it");
             }
@@ -79,7 +79,7 @@ namespace OsuFarmer.Managers
             CurrentSession.Latest = user;
             CurrentSession.LastUpdatedAt = DateTime.Now;
 
-            UIManager.Instance.TrackersApplySession(CurrentSession);
+            await UIManager.Instance.TrackersApplySession(CurrentSession);
         }
 
         public async Task<bool> SaveSessionToFile(Session? s)

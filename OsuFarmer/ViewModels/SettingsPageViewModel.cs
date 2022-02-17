@@ -16,11 +16,13 @@ namespace OsuFarmer.ViewModels
         private string _APIKey = string.Empty;
         private string _APIUsername = string.Empty;
         private int _APIGamemode = 0;
+        private int _APIUpdateRate = 30;
         private bool _VisualsHeaderEnabled = true;
 
         public string APIKey { get { return _APIKey; } set { _APIKey = value; OnPropertyChanged(nameof(APIKey)); } }
         public string APIUsername { get { return _APIUsername; } set { _APIUsername = value; OnPropertyChanged(nameof(APIUsername)); } }
         public Mode APIGamemode { get { return (Mode)_APIGamemode; } set { _APIGamemode = (int)value; OnPropertyChanged(nameof(APIGamemode)); } }
+        public int APIUpdateRate { get { return _APIUpdateRate; } set { _APIUpdateRate = value; OnPropertyChanged(nameof(APIUpdateRate)); } }
         public bool VisualsHeaderEnabled { get { return _VisualsHeaderEnabled; } set { _VisualsHeaderEnabled = value; OnPropertyChanged(nameof(VisualsHeaderEnabled)); } }
 
         public void OnReset()
@@ -32,7 +34,7 @@ namespace OsuFarmer.ViewModels
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                UIManager.Instance?.SetLoadState(true);
+                await UIManager.Instance?.SetLoadState(true);
                 bool resetSession = false;
                 bool apply = true;
 
@@ -56,7 +58,7 @@ namespace OsuFarmer.ViewModels
                         AppManager.Instance?.StartLoop();
                     }
                 }
-                UIManager.Instance.SetLoadState(false);
+                await UIManager.Instance.SetLoadState(false);
             });
         }
 
@@ -66,7 +68,8 @@ namespace OsuFarmer.ViewModels
             {
                 ApiKey = APIKey,
                 ApiUsername = APIUsername,
-                ApiGamemode = APIGamemode
+                ApiGamemode = APIGamemode,
+                ApiUpdateInterval = APIUpdateRate
             };
 
             settings.Trackers = new Dictionary<string, bool>();

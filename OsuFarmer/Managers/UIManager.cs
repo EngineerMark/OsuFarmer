@@ -25,9 +25,9 @@ namespace OsuFarmer.Managers
 		public MainWindow MainWindow { get; private set; }
 
 		private int _loaders = 0;
-		public void SetLoadState(bool state)
+		public async Task SetLoadState(bool state)
         {
-			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
 			{
 				_loaders += (state ? 1 : -1);
 
@@ -143,9 +143,9 @@ namespace OsuFarmer.Managers
 			});
 		}
 
-		public void TrackersApplySession(Session session)
+		public async Task TrackersApplySession(Session session)
 		{
-			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
 			{
 				foreach (TrackerItem item in SettingsManager.Instance.Settings.RunningTrackers)
 				{
@@ -244,6 +244,7 @@ namespace OsuFarmer.Managers
 				context.APIKey = settings.ApiKey ?? string.Empty;
 				context.APIUsername = settings.ApiUsername ?? string.Empty;
 				context.APIGamemode = settings.ApiGamemode;
+				context.APIUpdateRate = settings.ApiUpdateInterval;
 				context.VisualsHeaderEnabled = settings.ShowHeaderImage;
 
 				StackPanel settingsTrackerList = settingsPage.FindControl<StackPanel>("settingsTrackerList");
@@ -338,11 +339,11 @@ namespace OsuFarmer.Managers
 		{
 			return await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
-				SetLoadState(true);
+				await SetLoadState(true);
 				AlertWindow alertWindow = new AlertWindow();
 				alertWindow.ShowDialog(MainWindow);
 				AlertResult res = await alertWindow.Run(title, message, buttons);
-				SetLoadState(false);
+				await SetLoadState(false);
 				return res;
 			});
 		}
@@ -351,11 +352,11 @@ namespace OsuFarmer.Managers
 		{
 			return await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
-				SetLoadState(true);
+				await SetLoadState(true);
 				AlertWindow alertWindow = new AlertWindow();
 				alertWindow.ShowDialog(MainWindow);
 				AlertResult res = await alertWindow.Run(title, message, new string[] { "Continue" }, true, isPassword);
-				SetLoadState(false);
+				await SetLoadState(false);
 				return res;
 			});
 		}
@@ -364,6 +365,8 @@ namespace OsuFarmer.Managers
 		{
 			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
 			{
+				if (SettingsManager.Instance == null || SettingsManager.Instance.Settings == null)
+					return;
 
 				state = SettingsManager.Instance.Settings.UseExpandedTracker && state;
 

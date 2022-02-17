@@ -41,14 +41,14 @@ namespace OsuFarmer.ViewModels
         {
             Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
             {
-                UIManager.Instance?.SetLoadState(true);
+                await UIManager.Instance?.SetLoadState(true);
                 AlertResult res = await UIManager.Instance?.DisplayAlertAsync("New session", "Are you sure you want to start a new session?", new string[] { "Yes", "No" });
                 if (res.PressedButton == "Yes")
                 {
                     await AppManager.Instance?.BreakLoopAsync();
                     AppManager.Instance?.StartLoop(true);
                 }
-                UIManager.Instance?.SetLoadState(false);
+                await UIManager.Instance?.SetLoadState(false);
             });
         }
 
