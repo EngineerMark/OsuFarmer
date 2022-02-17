@@ -1,4 +1,4 @@
-![](https://img.shields.io/github/downloads/EngineerMark/OsuFarmer/total) ![](https://img.shields.io/github/repo-size/EngineerMark/OsuFarmer) ![](https://img.shields.io/github/v/release/EngineerMark/OsuFarmer?include_prereleases)
+![](https://img.shields.io/github/downloads/EngineerMark/OsuFarmer/total) ![](https://img.shields.io/github/downloads/EngineerMark/OsuFarmer/v1.0.0/total) ![](https://img.shields.io/github/repo-size/EngineerMark/OsuFarmer) ![](https://img.shields.io/github/v/release/EngineerMark/OsuFarmer?include_prereleases) ![](https://img.shields.io/github/last-commit/EngineerMark/OsuFarmer)
 
 [Trello Board](https://trello.com/b/rJxvGJfF/osutracker)
 
