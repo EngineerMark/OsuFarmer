@@ -2,8 +2,10 @@ name: .NET
 
 on:
   push:
+    paths: [ 'OsuFarmer/**' ]
     branches: [ master ]
   pull_request:
+    paths: [ 'OsuFarmer/**' ]
     branches: [ master ]
 
 jobs:
