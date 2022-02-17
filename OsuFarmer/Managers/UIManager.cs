@@ -108,17 +108,23 @@ namespace OsuFarmer.Managers
 				}
 
 				//Country
-				CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+				// CultureInfo[] cultures = CultureInfo.GetCultures(CultureTypes.SpecificCultures);
+				RegionInfo? region = null;
+				try{
+					region = new RegionInfo(user.Country.ToUpper());
+				}catch(ArgumentException){}
 				string? country = null;
-				foreach (CultureInfo culture in cultures)
-				{
-					RegionInfo region = new RegionInfo(culture.LCID);
-					if (region.TwoLetterISORegionName.ToUpper() == user.Country.ToUpper())
-					{
-						country = region.EnglishName;
-						break;
-					}
-				}
+				if(region!=null)
+					country = region.EnglishName;
+				// foreach (CultureInfo culture in cultures)
+				// {
+				// 	RegionInfo region = new RegionInfo(culture.LCID);
+				// 	if (region.TwoLetterISORegionName.ToUpper() == user.Country.ToUpper())
+				// 	{
+				// 		country = region.EnglishName;
+				// 		break;
+				// 	}
+				// }
 				context.CountryName = country ?? "Unknown";
 
 				try

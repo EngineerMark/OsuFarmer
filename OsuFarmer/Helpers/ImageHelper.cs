@@ -8,38 +8,46 @@ using System.Threading.Tasks;
 using System.Net;
 using Avalonia;
 using Avalonia.Platform;
+using System.Net.Http;
 
 namespace OsuFarmer.Helpers
 {
     //For clarity, do not include one of the bitmap types' namespaces
     public static class ImageHelper
     {
-        public static Avalonia.Media.Imaging.Bitmap? FromSysBitmap(System.Drawing.Bitmap? bmp)
+        public static Avalonia.Media.Imaging.Bitmap? FromSysBitmap(Avalonia.Media.Imaging.Bitmap? bmp)
         {
-            if(bmp == null)
-                return null;
+            // if(bmp == null)
+            //     return null;
 
-            Avalonia.Media.Imaging.Bitmap? newBmp = null;
-            using (MemoryStream memory = new MemoryStream())
-            {
-                bmp.Save(memory, ImageFormat.Png);
-                memory.Position = 0;
+            // Avalonia.Media.Imaging.Bitmap? newBmp = null;
+            // using (MemoryStream memory = new MemoryStream())
+            // {
+            //     bmp.Save(memory, ImageFormat.Png);
+            //     memory.Position = 0;
 
-                //AvIrBitmap is our new Avalonia compatible image. You can pass this to your view
-                newBmp = new Avalonia.Media.Imaging.Bitmap(memory);
-            }
-            return newBmp;
+            //     //AvIrBitmap is our new Avalonia compatible image. You can pass this to your view
+            //     newBmp = new Avalonia.Media.Imaging.Bitmap(memory);
+            // }
+            // return newBmp;
+            return bmp;
         }
 
-        public static System.Drawing.Bitmap? GetBitmapFromWeb(string? url)
+        public static Avalonia.Media.Imaging.Bitmap? GetBitmapFromWeb(string? url)
         {
             if(url == null)
                 return default;
 
-            WebRequest request = WebRequest.Create(url);
-            WebResponse response = request.GetResponse();
-            Stream responseStream = response.GetResponseStream();
-            System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(responseStream);
+            HttpClient client = new HttpClient();
+            byte[] bytes = client.GetByteArrayAsync(url).Result;
+            var stream = new MemoryStream(bytes);
+            Avalonia.Media.Imaging.Bitmap bitmap = new Avalonia.Media.Imaging.Bitmap(stream);
+
+            // WebRequest request = WebRequest.Create(url);
+            // WebResponse response = request.GetResponse();
+            // Stream responseStream = response.GetResponseStream();
+            // System.Drawing.Bitmap bitmap = new System.Drawing.Bitmap(responseStream);
+            // Avalonia.Media.Imaging.Bitmap bitmap = new Avalonia.Media.Imaging.Bitmap(responseStream);
             return bitmap;
         }
 
