@@ -153,7 +153,7 @@ namespace OsuFarmer.Managers
                 currentTime = 0;
 
                 int waitFor = SettingsManager.Instance.Settings.ApiUpdateInterval > 5 ? SettingsManager.Instance.Settings.ApiUpdateInterval : 5;
-                DateTime expectedUpdate = DateTime.Now + TimeSpan.FromSeconds(waitFor);
+                DateTime expectedUpdate = lastUpdate + TimeSpan.FromSeconds(waitFor);
 
                 DateTime clockCheck = DateTime.Now;
                 DateTime lastProgressIteration = DateTime.Now;
@@ -185,6 +185,8 @@ namespace OsuFarmer.Managers
                     if (CancelLoop)
                         break;
                 }
+                if (CancelLoop)
+                    break;
 
                 lastUpdate = DateTime.Now;
 
