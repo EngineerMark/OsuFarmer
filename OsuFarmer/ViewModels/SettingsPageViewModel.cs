@@ -18,12 +18,16 @@ namespace OsuFarmer.ViewModels
         private int _APIGamemode = 0;
         private int _APIUpdateRate = 30;
         private bool _VisualsHeaderEnabled = true;
+        private bool _VisualsProgressTimerEnabled = true;
+        private bool _VisualsSmoothProgressTimerEnabled = true;
 
         public string APIKey { get { return _APIKey; } set { _APIKey = value; OnPropertyChanged(nameof(APIKey)); } }
         public string APIUsername { get { return _APIUsername; } set { _APIUsername = value; OnPropertyChanged(nameof(APIUsername)); } }
         public Mode APIGamemode { get { return (Mode)_APIGamemode; } set { _APIGamemode = (int)value; OnPropertyChanged(nameof(APIGamemode)); } }
         public int APIUpdateRate { get { return _APIUpdateRate; } set { _APIUpdateRate = value; OnPropertyChanged(nameof(APIUpdateRate)); } }
         public bool VisualsHeaderEnabled { get { return _VisualsHeaderEnabled; } set { _VisualsHeaderEnabled = value; OnPropertyChanged(nameof(VisualsHeaderEnabled)); } }
+        public bool VisualsProgressTimerEnabled { get { return _VisualsProgressTimerEnabled; } set { _VisualsProgressTimerEnabled = value; OnPropertyChanged(nameof(VisualsProgressTimerEnabled)); } }
+        public bool VisualsSmoothProgressTimerEnabled { get { return _VisualsSmoothProgressTimerEnabled; } set { _VisualsSmoothProgressTimerEnabled = value; OnPropertyChanged(nameof(VisualsSmoothProgressTimerEnabled)); } }
 
         public void OnReset()
         {
@@ -69,7 +73,9 @@ namespace OsuFarmer.ViewModels
                 ApiKey = APIKey,
                 ApiUsername = APIUsername,
                 ApiGamemode = APIGamemode,
-                ApiUpdateInterval = APIUpdateRate
+                ApiUpdateInterval = APIUpdateRate,
+                ShowTrackerTimer = VisualsProgressTimerEnabled,
+                SmoothTrackerTimer = VisualsSmoothProgressTimerEnabled
             };
 
             settings.Trackers = new Dictionary<string, bool>();

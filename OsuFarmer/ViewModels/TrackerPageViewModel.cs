@@ -21,21 +21,28 @@ namespace OsuFarmer.ViewModels
 
         private bool _ExpansiveModeEnabled = false;
         private double _ThinTrackerWidth = double.NaN;
-        private bool _ShowHeader = true;
         private string _Username = "peppy";
         private string _CountryName = "Australia";
         private Bitmap? _HeaderImage = DefaultHeaderImage;
         private Bitmap? _AvatarImage = DefaultAvatarImage;
         private Bitmap? _FlagImage = DefaultFlagImage;
 
+        private bool _showTimer = true;
+        private float _TimerProgress = 0;
+        private string _TimerText = "Next update in 0 seconds";
+        private bool _ShowHeader = true;
+
         public bool ExpansiveModeEnabled { get { return _ExpansiveModeEnabled; } set { _ExpansiveModeEnabled = value; OnPropertyChanged(nameof(ExpansiveModeEnabled)); } }
         public double ThinTrackerWidth { get { return _ThinTrackerWidth; } set { _ThinTrackerWidth = value; OnPropertyChanged(nameof(ThinTrackerWidth)); } }
-        public bool ShowHeader { get { return _ShowHeader; } set { _ShowHeader = value; OnPropertyChanged(nameof(ShowHeader)); } }
         public string Username { get { return _Username; } set { _Username = value; OnPropertyChanged(nameof(Username)); } }
         public string CountryName { get { return _CountryName; } set { _CountryName = value; OnPropertyChanged(nameof(CountryName)); } }
         public Bitmap? HeaderImage { get { return _HeaderImage; } set { _HeaderImage = value; OnPropertyChanged(nameof(HeaderImage)); } }
         public Bitmap? AvatarImage { get { return _AvatarImage; } set { _AvatarImage = value; OnPropertyChanged(nameof(AvatarImage)); } }
         public Bitmap? FlagImage { get { return _FlagImage; } set { _FlagImage = value; OnPropertyChanged(nameof(FlagImage)); } }
+        public bool ShowTimer { get { return _showTimer; } set { _showTimer = value; OnPropertyChanged(nameof(ShowTimer)); } }
+        public float TimerProgress { get { return _TimerProgress; } set { _TimerProgress = value; OnPropertyChanged(nameof(TimerProgress)); } }
+        public string TimerText { get { return _TimerText; } set { _TimerText = value; OnPropertyChanged(nameof(TimerText)); } }
+        public bool ShowHeader { get { return _ShowHeader; } set { _ShowHeader = value; OnPropertyChanged(nameof(ShowHeader)); } }
 
         public void OnReset()
         {

@@ -58,6 +58,7 @@ namespace OsuFarmer.Managers
 				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
 
 				context.ShowHeader = settings.ShowHeaderImage;
+				context.ShowTimer = settings.ShowTrackerTimer;
 			});
 		}
 
@@ -181,6 +182,22 @@ namespace OsuFarmer.Managers
 
 		}
 
+		public void SetTrackerProgress(long currentTime, int expectedTime)
+        {
+            float progress = (float)currentTime / (expectedTime * 1000);
+
+			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			{
+				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
+				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
+
+				double diff = ((expectedTime * 1000) - currentTime) / 1000;
+
+				context.TimerProgress = 1 - progress;
+				context.TimerText = string.Format("Next update in {0} seconds", Math.Round(diff));
+			});
+		}
+
 		public async Task GenerateTrackerFields(Settings? settings)
 		{
 			if (settings == null)
@@ -246,6 +263,8 @@ namespace OsuFarmer.Managers
 				context.APIGamemode = settings.ApiGamemode;
 				context.APIUpdateRate = settings.ApiUpdateInterval;
 				context.VisualsHeaderEnabled = settings.ShowHeaderImage;
+				context.VisualsProgressTimerEnabled = settings.ShowTrackerTimer;
+				context.VisualsSmoothProgressTimerEnabled = settings.SmoothTrackerTimer;
 
 				StackPanel settingsTrackerList = settingsPage.FindControl<StackPanel>("settingsTrackerList");
 

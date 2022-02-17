@@ -3,8 +3,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			FontFamily="/Assets/Fonts/Torus.otf#Torus"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="650"
+             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="550"
 			xmlns:controls = "clr-namespace:OsuFarmer.Controls;assembly=OsuFarmer" 
+			xmlns:helper = "clr-namespace:OsuFarmer.Helpers" 
              x:Class="OsuFarmer.Pages.TrackerPage">
 	<Grid>
 		<DockPanel VerticalAlignment="Stretch" LastChildFill="True">
@@ -42,27 +43,12 @@
 								<controls:TrackerItemControl />
 								<controls:TrackerItemControl />
 								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
-								<controls:TrackerItemControl />
+							</StackPanel>
+						</Grid>
+						<Grid Margin="50,20,50,0" IsVisible="{Binding ShowTimer}">
+							<StackPanel>
+								<Label FontStyle="Italic" Content="{Binding TimerText}" />
+								<ProgressBar Name="TimerProgressBar" Maximum="1" Value="{Binding TimerProgress}" Height="10"></ProgressBar>
 							</StackPanel>
 						</Grid>
 					</StackPanel>

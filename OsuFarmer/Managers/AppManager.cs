@@ -153,10 +153,21 @@ namespace OsuFarmer.Managers
 
                 int waitFor = SettingsManager.Instance.Settings.ApiUpdateInterval > 5 ? SettingsManager.Instance.Settings.ApiUpdateInterval : 5;
 
-                if (currentTime <= waitFor*1000)
+                while(currentTime <= waitFor*1000)
                 {
-                    await Task.Delay(25);
-                    currentTime += 25;
+                    await Task.Delay(16);
+                    currentTime += 16;
+
+                    if (SettingsManager.Instance.Settings.ShowTrackerTimer)
+                    {
+                        if (!SettingsManager.Instance.Settings.SmoothTrackerTimer)
+                        {
+                            if(currentTime%1000==0)
+                                UIManager.Instance?.SetTrackerProgress(currentTime, waitFor);
+                        }
+                        else
+                            UIManager.Instance?.SetTrackerProgress(currentTime, waitFor);
+                    }
 
                     if (CancelLoop)
                         break;
