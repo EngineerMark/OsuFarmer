@@ -13,6 +13,12 @@ namespace OsuFarmer.Core.Osu
 {
     public class User
     {
+        [JsonProperty("score_rank_object")]
+        private UserScoreRank? ScoreRankObject { get; set; }
+
+        [JsonIgnore]
+        public int ScoreRank { get => ScoreRankObject?.Rank ?? -1; }
+
         [JsonProperty("user_id")]
         public long ID { get; set; }
 
@@ -132,71 +138,37 @@ namespace OsuFarmer.Core.Osu
                 return false;
             }
 
-            //if (WebData != null && WebData.User != null)
-            //{
-            //    DateTime now = (DateTime)DateTime.UtcNow;
-            //    DateTime? first = null;
-            //    int months = -1;
-            //    //Fill in empty playcount data
-            //    if (WebData?.User?.Playcount != null && WebData?.User?.Playcount?.Count > 1)
-            //    {
-            //        first = (DateTime)WebData?.User?.Playcount[0]?.Start;
-            //        months = Math.Abs((now.Month - ((DateTime)first).Month) + 12 * (now.Year - ((DateTime)first).Year)) + 1;
-            //    }
-
-
-            //    if (WebData?.User?.Playcount != null && WebData?.User?.Playcount?.Count > 1)
-            //    {
-            //        if (WebData?.User?.Replayswatched != null)
-            //        {
-            //            List<WebUserMonthlyData?>? replays = new List<WebUserMonthlyData?>();
-
-            //            for (int i = 0; i < months; i++)
-            //            {
-            //                DateTime m = ((DateTime)first).AddMonths(i);
-
-            //                WebUserMonthlyData s = WebData?.User?.Replayswatched.Find(x => x.Start.Equals(m)) ?? null;
-            //                if (s == null)
-            //                {
-            //                    replays.Add(new WebUserMonthlyData()
-            //                    {
-            //                        Start = m,
-            //                        Count = 0
-            //                    });
-            //                }
-            //                else
-            //                {
-            //                    replays.Add(s);
-            //                }
-            //            }
-
-            //            WebData?.User?.SetReplayswatched(replays);
-            //        }
-            //        List<WebUserMonthlyData?>? playcount = new List<WebUserMonthlyData?>();
-
-            //        for (int i = 0; i < months; i++)
-            //        {
-            //            DateTime m = ((DateTime)first).AddMonths(i);
-
-            //            WebUserMonthlyData s = WebData?.User?.Playcount.Find(x => x.Start.Equals(m)) ?? null;
-            //            if (s == null)
-            //            {
-            //                playcount.Add(new WebUserMonthlyData()
-            //                {
-            //                    Start = m,
-            //                    Count = 0
-            //                });
-            //            }
-            //            else
-            //            {
-            //                playcount.Add(s);
-            //            }
-            //        }
-
-            //        WebData?.User?.SetPlaycount(playcount);
-            //    }
-            //}
             return WebData != null;
+        }
+
+        public async Task<bool> PopulateScoreRank(int mode)
+        {
+            if (ScoreRankObject != null)
+            {
+                DateTimeOffset lastUpdate = DateTimeOffset.FromUnixTimeSeconds(ScoreRankObject.LastUpdate);
+                DateTimeOffset now = DateTimeOffset.UtcNow;
+                if (now - lastUpdate <= TimeSpan.FromMinutes(10))
+                    return true;
+            }
+
+            UserScoreRank? rank = null;
+            try
+            {
+                List<UserScoreRank?>? ranks = await ApiHelper.GetDataDeserialized<List<UserScoreRank?>>("https://score.respektive.pw/u/" + ID + "?m=" + mode);
+                rank = ranks != null ? ranks[0] : null;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            if (rank != null)
+            {
+                rank.LastUpdate = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+            }
+
+            ScoreRankObject = rank;
+            return rank != null;
         }
 
         public object? this[string propertyName]
@@ -217,5 +189,19 @@ namespace OsuFarmer.Core.Osu
                 myPropInfo.SetValue(this, value, null);
             }
         }
+    }
+
+    public class UserScoreRank
+    {
+        [JsonProperty("rank")]
+        public int Rank { get; set; }
+        [JsonProperty("user_id")]
+        public long UserID { get; set; }
+        [JsonProperty("username")]
+        public string? Username { get; set; }
+        [JsonProperty("score")]
+        public long Score { get; set; }
+        [JsonProperty("last_update")]
+        public long LastUpdate { get; set; } = -1;
     }
 }

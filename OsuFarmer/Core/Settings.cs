@@ -30,6 +30,7 @@ namespace OsuFarmer.Core
             new TrackerItem("Total A", "CountA", false),
 
             new TrackerItem("Level", "Level", true, false, 2),
+            new TrackerItem("Score Rank", "ScoreRank", true),
             new TrackerItem("Ranked Score", "RankedScore", true),
             new TrackerItem("Total Score", "TotalScore", true),
 

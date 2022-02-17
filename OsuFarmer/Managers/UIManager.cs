@@ -69,6 +69,7 @@ namespace OsuFarmer.Managers
 			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () =>
 			{
 				bool web = await user.PopulateWebProfile((int)SettingsManager.Instance.Settings.ApiGamemode);
+				bool scorerank = await user.PopulateScoreRank((int)SettingsManager.Instance.Settings.ApiGamemode);
 
 				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
 				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
