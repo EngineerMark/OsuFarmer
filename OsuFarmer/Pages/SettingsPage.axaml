@@ -39,11 +39,15 @@
 					</StackPanel>
 					<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
 						<ToggleSwitch x:Name="VisualsProgressTimerToggle" IsChecked="{Binding VisualsProgressTimerEnabled}" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Next update timer" />
+						<Label VerticalContentAlignment="Center" Content="Display next update timer" />
 					</StackPanel>
 					<StackPanel ToolTip.Tip="Disable this if CPU usage is high" Orientation="Horizontal" Spacing="10" Height="30">
 						<ToggleSwitch x:Name="VisualsSmoothProgressTimerToggle" IsEnabled="{Binding ElementName=VisualsProgressTimerToggle, Path=IsChecked}" IsChecked="{Binding VisualsSmoothProgressTimerEnabled}" VerticalContentAlignment="Center"/>
 						<Label VerticalContentAlignment="Center" Content="Smooth update timer" />
+					</StackPanel>
+					<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
+						<ToggleSwitch x:Name="VisualsClockToggle" IsChecked="{Binding VisualsClockEnabled}" VerticalContentAlignment="Center"/>
+						<Label VerticalContentAlignment="Center" Content="Display clock" />
 					</StackPanel>
 					<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
 						<ToggleSwitch x:Name="VisualsExpandedTrackerToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>

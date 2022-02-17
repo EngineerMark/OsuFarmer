@@ -16,6 +16,7 @@ namespace OsuFarmer.Core
         public Mode ApiGamemode { get; set; } = Mode.Standard;
         public int ApiUpdateInterval { get; set; } = 30;
 
+        public bool ShowClock { get; set; } = true;
         public bool ShowTrackerTimer { get; set; } = true;
         public bool SmoothTrackerTimer { get; set; } = true;
         public bool ShowHeaderImage { get; set; } = true;

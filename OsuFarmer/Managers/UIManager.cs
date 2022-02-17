@@ -59,6 +59,7 @@ namespace OsuFarmer.Managers
 
 				context.ShowHeader = settings.ShowHeaderImage;
 				context.ShowTimer = settings.ShowTrackerTimer;
+				context.ShowClock = settings.ShowClock;
 			});
 		}
 
@@ -182,19 +183,29 @@ namespace OsuFarmer.Managers
 
 		}
 
-		public void SetTrackerProgress(long currentTime, int expectedTime)
+		public void SetClockValue(DateTime time)
         {
-            float progress = (float)currentTime / (expectedTime * 1000);
+			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			{
+				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
+				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
+
+				context.ClockValue = time.ToString("HH:mm:ss");
+			});
+		}
+
+		public void SetTrackerProgress(DateTime start, DateTime now, DateTime expected)
+        {
+			double diff = (expected - start).TotalMilliseconds;
+			double perc = (DateTime.Now - start).TotalMilliseconds / diff;
 
 			Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
 			{
 				TrackerPage trackerPage = MainWindow.FindControl<TrackerPage>("TrackerPage");
 				TrackerPageViewModel? context = (TrackerPageViewModel?)trackerPage.DataContext;
 
-				double diff = ((expectedTime * 1000) - currentTime) / 1000;
-
-				context.TimerProgress = 1 - progress;
-				context.TimerText = string.Format("Next update in {0} seconds", Math.Round(diff));
+				context.TimerProgress = 1 - perc;
+				context.TimerText = string.Format("Next update in {0} seconds", Math.Round((expected - DateTime.Now).TotalSeconds));
 			});
 		}
 

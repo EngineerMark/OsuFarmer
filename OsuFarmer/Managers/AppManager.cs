@@ -147,31 +147,46 @@ namespace OsuFarmer.Managers
             await UIManager.Instance.SetLoadState(false);
 
             long currentTime = 0;
+            DateTime lastUpdate = DateTime.Now;
             while (true)
             {
                 currentTime = 0;
 
                 int waitFor = SettingsManager.Instance.Settings.ApiUpdateInterval > 5 ? SettingsManager.Instance.Settings.ApiUpdateInterval : 5;
+                DateTime expectedUpdate = DateTime.Now + TimeSpan.FromSeconds(waitFor);
 
-                while(currentTime <= waitFor*1000)
+                DateTime clockCheck = DateTime.Now;
+                DateTime lastProgressIteration = DateTime.Now;
+                while(DateTime.Now < expectedUpdate)
                 {
                     await Task.Delay(16);
                     currentTime += 16;
+
+                    if (SettingsManager.Instance.Settings.ShowClock && (DateTime.Now - clockCheck)>TimeSpan.FromSeconds(1))
+                    {
+                        clockCheck = DateTime.Now;
+                        UIManager.Instance?.SetClockValue(clockCheck);
+                    }
 
                     if (SettingsManager.Instance.Settings.ShowTrackerTimer)
                     {
                         if (!SettingsManager.Instance.Settings.SmoothTrackerTimer)
                         {
-                            if(currentTime%1000==0)
-                                UIManager.Instance?.SetTrackerProgress(currentTime, waitFor);
+                            if ((DateTime.Now - lastProgressIteration)>TimeSpan.FromMilliseconds(16))
+                            {
+                                UIManager.Instance?.SetTrackerProgress(lastUpdate, DateTime.Now, expectedUpdate);
+                                lastProgressIteration = DateTime.Now;
+                            }
                         }
                         else
-                            UIManager.Instance?.SetTrackerProgress(currentTime, waitFor);
+                            UIManager.Instance?.SetTrackerProgress(lastUpdate, DateTime.Now, expectedUpdate);
                     }
 
                     if (CancelLoop)
                         break;
                 }
+
+                lastUpdate = DateTime.Now;
 
                 if (!NetworkManager.CheckForInternetConnection())
                 {

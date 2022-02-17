@@ -20,6 +20,7 @@ namespace OsuFarmer.ViewModels
         private bool _VisualsHeaderEnabled = true;
         private bool _VisualsProgressTimerEnabled = true;
         private bool _VisualsSmoothProgressTimerEnabled = true;
+        private bool _VisualsClockEnabled = true;
 
         public string APIKey { get { return _APIKey; } set { _APIKey = value; OnPropertyChanged(nameof(APIKey)); } }
         public string APIUsername { get { return _APIUsername; } set { _APIUsername = value; OnPropertyChanged(nameof(APIUsername)); } }
@@ -28,6 +29,7 @@ namespace OsuFarmer.ViewModels
         public bool VisualsHeaderEnabled { get { return _VisualsHeaderEnabled; } set { _VisualsHeaderEnabled = value; OnPropertyChanged(nameof(VisualsHeaderEnabled)); } }
         public bool VisualsProgressTimerEnabled { get { return _VisualsProgressTimerEnabled; } set { _VisualsProgressTimerEnabled = value; OnPropertyChanged(nameof(VisualsProgressTimerEnabled)); } }
         public bool VisualsSmoothProgressTimerEnabled { get { return _VisualsSmoothProgressTimerEnabled; } set { _VisualsSmoothProgressTimerEnabled = value; OnPropertyChanged(nameof(VisualsSmoothProgressTimerEnabled)); } }
+        public bool VisualsClockEnabled { get { return _VisualsClockEnabled; } set { _VisualsClockEnabled = value; OnPropertyChanged(nameof(VisualsClockEnabled)); } }
 
         public void OnReset()
         {
@@ -75,7 +77,8 @@ namespace OsuFarmer.ViewModels
                 ApiGamemode = APIGamemode,
                 ApiUpdateInterval = APIUpdateRate,
                 ShowTrackerTimer = VisualsProgressTimerEnabled,
-                SmoothTrackerTimer = VisualsSmoothProgressTimerEnabled
+                SmoothTrackerTimer = VisualsSmoothProgressTimerEnabled,
+                ShowClock = VisualsClockEnabled
             };
 
             settings.Trackers = new Dictionary<string, bool>();

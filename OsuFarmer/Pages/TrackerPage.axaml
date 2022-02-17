@@ -3,7 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			FontFamily="/Assets/Fonts/Torus.otf#Torus"
-             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="550"
+             mc:Ignorable="d" d:DesignWidth="350" d:DesignHeight="750"
 			xmlns:controls = "clr-namespace:OsuFarmer.Controls;assembly=OsuFarmer" 
 			xmlns:helper = "clr-namespace:OsuFarmer.Helpers" 
              x:Class="OsuFarmer.Pages.TrackerPage">
@@ -50,6 +50,9 @@
 								<Label FontStyle="Italic" Content="{Binding TimerText}" />
 								<ProgressBar Name="TimerProgressBar" Maximum="1" Value="{Binding TimerProgress}" Height="10"></ProgressBar>
 							</StackPanel>
+						</Grid>
+						<Grid IsVisible="{Binding ShowClock}">
+							<Label Content="{Binding ClockValue}" HorizontalContentAlignment="Center" FontSize="25"/>
 						</Grid>
 					</StackPanel>
 			</Grid>
