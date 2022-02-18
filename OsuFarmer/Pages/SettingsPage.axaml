@@ -6,59 +6,64 @@
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
              x:Class="OsuFarmer.Pages.SettingsPage">
 	<ScrollViewer>
-		<Grid Margin="10,10,30,20">
+		<Grid Margin="10,10,10,20">
 			<StackPanel Orientation="Vertical" Spacing="5">
-				<!--<Label FontSize="25" Content="Australia" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />-->
-				<Label FontSize="15" FontWeight="Bold" Content="API" />
-				<TextBox Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
-				<TextBox Watermark="Username" Text="{Binding APIUsername}" />
-				<ComboBox SelectedIndex="{Binding APIGamemode}">
-					<ComboBoxItem Content="Standard" />
-					<ComboBoxItem Content="Taiko" />
-					<ComboBoxItem Content="Catch The Beat" />
-					<ComboBoxItem Content="Mania" />
-				</ComboBox>
-				<StackPanel ToolTip.Tip="Amount of seconds between each update" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Stretch">
-					<Label Width="30" Content="{Binding ElementName=UpdateRateSlider, Path=Value, Mode=OneWay}" VerticalContentAlignment="Center" FontSize="13" />
-					<Slider Value="{Binding APIUpdateRate}" x:Name="UpdateRateSlider" IsSnapToTickEnabled="True" TickFrequency="10" Width="150" VerticalAlignment="Center" Minimum="10" Maximum="120" />
-					<Label Content="Update Rate" VerticalContentAlignment="Center" FontSize="13" />
-				</StackPanel>
-				<Label />
-				<Label FontSize="15" FontWeight="Bold" Content="Trackers" />
-				<ScrollViewer MaxHeight="350">
-					<StackPanel x:Name="settingsTrackerList">
+				<Expander Header="API" IsExpanded="True">
+					<StackPanel>
+						<TextBox Watermark="API Key" PasswordChar="*" Text="{Binding APIKey}" />
+						<TextBox Watermark="Username" Text="{Binding APIUsername}" />
+						<ComboBox SelectedIndex="{Binding APIGamemode}">
+							<ComboBoxItem Content="Standard" />
+							<ComboBoxItem Content="Taiko" />
+							<ComboBoxItem Content="Catch The Beat" />
+							<ComboBoxItem Content="Mania" />
+						</ComboBox>
+						<StackPanel ToolTip.Tip="Amount of seconds between each update" Spacing="5" Orientation="Horizontal" HorizontalAlignment="Stretch">
+							<Label Width="30" Content="{Binding ElementName=UpdateRateSlider, Path=Value, Mode=OneWay}" VerticalContentAlignment="Center" FontSize="13" />
+							<Slider Value="{Binding APIUpdateRate}" x:Name="UpdateRateSlider" IsSnapToTickEnabled="True" TickFrequency="10" Width="150" VerticalAlignment="Center" Minimum="10" Maximum="120" />
+							<Label Content="Update Rate" VerticalContentAlignment="Center" FontSize="13" />
+						</StackPanel>
+					</StackPanel>
+				</Expander>
+				<Expander Header="Trackers" IsExpanded="True">
+					<StackPanel>
+						<ScrollViewer MaxHeight="350">
+							<StackPanel x:Name="settingsTrackerList">
 						
+							</StackPanel>
+						</ScrollViewer>
 					</StackPanel>
-				</ScrollViewer>
-				<Label />
-				<Label FontSize="15" FontWeight="Bold" Content="Visuals" />
-				<StackPanel>
-					<StackPanel ToolTip.Tip="Show or hide the background image on the tracker page" Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsHeaderToggle" IsChecked="{Binding VisualsHeaderEnabled}" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Display header image" />
+				</Expander>
+				<Expander Header="Visuals" IsExpanded="True">
+					<StackPanel>
+						<StackPanel>
+							<StackPanel ToolTip.Tip="Show or hide the background image on the tracker page" Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsHeaderToggle" IsChecked="{Binding VisualsHeaderEnabled}" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Display header image" />
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsProgressTimerToggle" IsChecked="{Binding VisualsProgressTimerEnabled}" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Display next update timer" />
+							</StackPanel>
+							<StackPanel ToolTip.Tip="Disable this if CPU usage is high" Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsSmoothProgressTimerToggle" IsEnabled="{Binding ElementName=VisualsProgressTimerToggle, Path=IsChecked}" IsChecked="{Binding VisualsSmoothProgressTimerEnabled}" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Smooth update timer" />
+							</StackPanel>
+							<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsClockToggle" IsChecked="{Binding VisualsClockEnabled}" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Display clock" />
+							</StackPanel>
+							<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsExpandedTrackerToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Expansive tracker info" />
+							</StackPanel>
+							<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
+								<ToggleSwitch x:Name="VisualsBlurredWindowToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
+								<Label VerticalContentAlignment="Center" Content="Transparent Blur Window" />
+							</StackPanel>
+						</StackPanel>
 					</StackPanel>
-					<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsProgressTimerToggle" IsChecked="{Binding VisualsProgressTimerEnabled}" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Display next update timer" />
-					</StackPanel>
-					<StackPanel ToolTip.Tip="Disable this if CPU usage is high" Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsSmoothProgressTimerToggle" IsEnabled="{Binding ElementName=VisualsProgressTimerToggle, Path=IsChecked}" IsChecked="{Binding VisualsSmoothProgressTimerEnabled}" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Smooth update timer" />
-					</StackPanel>
-					<StackPanel Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsClockToggle" IsChecked="{Binding VisualsClockEnabled}" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Display clock" />
-					</StackPanel>
-					<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsExpandedTrackerToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Expansive tracker info" />
-					</StackPanel>
-					<StackPanel ToolTip.Tip="Not implemented yet" Orientation="Horizontal" Spacing="10" Height="30">
-						<ToggleSwitch x:Name="VisualsBlurredWindowToggle" IsChecked="False" IsEnabled="False" VerticalContentAlignment="Center"/>
-						<Label VerticalContentAlignment="Center" Content="Transparent Blur Window" />
-					</StackPanel>
-				</StackPanel>
-				<Label />
+				</Expander>
 				<StackPanel Spacing="10" Orientation="Horizontal">
 					<Button x:Name="ButtonSave" Command="{Binding OnSave}" Content="Save" />
 					<Button x:Name="ButtonReset" Command="{Binding OnReset}" Content="Reset" />
