@@ -11,11 +11,10 @@ namespace OsuFarmer.Helpers
 {
     public static class ApiHelper
     {
-        public static Bitmap BitmapFromUrl(string url)
+        public static async Task<Bitmap> BitmapFromUrl(string url)
         {
-            System.Net.WebRequest request = System.Net.WebRequest.Create(url);
-            System.Net.WebResponse response = request.GetResponse();
-            System.IO.Stream responseStream = response.GetResponseStream();
+            HttpClient client = new HttpClient();
+            System.IO.Stream responseStream = await client.GetStreamAsync(url);
             return new Bitmap(url);
         }
 
@@ -39,9 +38,10 @@ namespace OsuFarmer.Helpers
             return default;
         }
 
-        public static async Task<string?> GetData(string url)
+        public static async Task<string?> GetData(string url, int timeout = 20000)
         {
             using HttpClient? client = new HttpClient();
+            client.Timeout = TimeSpan.FromMilliseconds(timeout);
             //client.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/4.0 (Compatible; Windows NT 5.1; MSIE 6.0) (compatible; MSIE 6.0; Windows NT 5.1; .NET CLR 1.1.4322; .NET CLR 2.0.50727)");
             string s = "";
             try
