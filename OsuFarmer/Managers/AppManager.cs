@@ -23,6 +23,7 @@ namespace OsuFarmer.Managers
         public SettingsManager? SettingsManager { get; set; } = null;
         public FileManager? FileManager { get; set; } = null;
         public NetworkManager? NetworkManager { get; set; } = null;
+        public UpdateManager? UpdateManager { get; set; } = null;
 
         public AppManager(AppManagerData data)
         {
@@ -39,6 +40,7 @@ namespace OsuFarmer.Managers
             SessionManager = new SessionManager();
             //PageManager = new PageManager();
             NetworkManager = new NetworkManager();
+            UpdateManager = new UpdateManager();
 
             StartLoop();
         }

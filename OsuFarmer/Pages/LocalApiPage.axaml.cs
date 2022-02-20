@@ -1,17 +1,14 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
-using OsuFarmer.ViewModels;
 
 namespace OsuFarmer.Pages
 {
-    public partial class InfoPage : UserControl
+    public partial class LocalApiPage : UserControl
     {
-        public InfoPage()
+        public LocalApiPage()
         {
             InitializeComponent();
-            DataContext = new InfoPageViewModel();
         }
 
         private void InitializeComponent()

@@ -7,7 +7,7 @@
         x:Class="OsuFarmer.MainWindow"
 		Icon="/Assets/Images/icon.png"
 		FontFamily="/Assets/Fonts/Torus.otf#Torus"
-        Title="osu!Farmer"
+        Title="osu!Farmer 1.1.0"
 		ExtendClientAreaToDecorationsHint="True"
 		x:Name="MainWin"
 		MinWidth="350"
@@ -29,19 +29,21 @@
 			</Grid>
 		</Grid>
 		<Grid x:Name="UIContent">
-			<Menu Margin="0,30" Height="30" VerticalAlignment="Top">
+			<Menu Margin="0,30" Height="40" VerticalAlignment="Top">
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="TrackerPage" Header="_Home" />
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SettingsPage" Header="_Settings" />
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="SessionsPage" Header="_Sessions" />
 				<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="InfoPage" Header="_Info" />
+				<!--<MenuItem Command="{Binding OnTabButtonPress}" CommandParameter="LocalApiPage" Header="_Local API" />-->
 			</Menu>
-			<Grid Margin="0,60,0,0">
+			<Grid Margin="0,70,0,0">
 				<ScrollViewer>
 					<Grid x:Name="PagesList">
 						<pages:TrackerPage x:Name="TrackerPage" IsVisible="True" />
 						<pages:SettingsPage x:Name="SettingsPage" IsVisible="False"/>
 						<pages:SessionsPage x:Name="SessionsPage" IsVisible="False"/>
 						<pages:InfoPage x:Name="InfoPage" IsVisible="False"/>
+						<!--<pages:LocalApiPage x:Name="LocalApiPage" IsVisible="False"/>-->
 					</Grid>
 				</ScrollViewer>
 			</Grid>

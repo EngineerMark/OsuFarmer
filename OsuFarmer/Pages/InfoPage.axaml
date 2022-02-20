@@ -11,6 +11,14 @@
 			<Image Source="avares://OsuFarmer/Assets/Images/icon.png" Width="64" />
 			<Label Content="osu!Farmer" HorizontalContentAlignment="Center" FontSize="20" />
 			<Label Content="aka osu!Achieved 3.0" HorizontalContentAlignment="Center" FontSize="11" />
+			<Expander Header="Update available" IsExpanded="True">
+				<StackPanel>
+					<md:MarkdownScrollViewer>
+					
+					</md:MarkdownScrollViewer>
+					<Button Content="Download on GitHub" Command="{Binding OnUpdateDownload}" />
+				</StackPanel>
+			</Expander>
 			<md:MarkdownScrollViewer>
 				Source code available on [GitHub](https://github.com/EngineerMark/OsuFarmer)
 				Check on there to see if any new update is available.
