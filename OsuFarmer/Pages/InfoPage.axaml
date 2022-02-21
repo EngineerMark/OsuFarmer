@@ -11,11 +11,9 @@
 			<Image Source="avares://OsuFarmer/Assets/Images/icon.png" Width="64" />
 			<Label Content="osu!Farmer" HorizontalContentAlignment="Center" FontSize="20" />
 			<Label Content="aka osu!Achieved 3.0" HorizontalContentAlignment="Center" FontSize="11" />
-			<Expander Header="Update available" IsExpanded="True">
+			<Expander IsVisible="{Binding HasUpdateAvailable}" Header="Update available" IsExpanded="True">
 				<StackPanel>
-					<md:MarkdownScrollViewer>
-					
-					</md:MarkdownScrollViewer>
+					<md:MarkdownScrollViewer MaxHeight="300" Markdown="{Binding UpdateDetails}"></md:MarkdownScrollViewer>
 					<Button Content="Download on GitHub" Command="{Binding OnUpdateDownload}" />
 				</StackPanel>
 			</Expander>

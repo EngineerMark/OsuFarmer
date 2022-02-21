@@ -14,6 +14,7 @@ using OsuFarmer.Alerts;
 using Avalonia.Media.Imaging;
 using OsuFarmer.Helpers;
 using Avalonia.Media;
+using OsuFarmer.Core.Github;
 
 namespace OsuFarmer.Managers
 {
@@ -43,6 +44,18 @@ namespace OsuFarmer.Managers
 					UILock.IsVisible = false;
 					UIContent.IsVisible = true;
                 }
+			});
+		}
+
+		public async void ApplyUpdate(Release rel)
+        {
+			await Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(() =>
+			{
+				InfoPage infoPage = MainWindow.FindControl<InfoPage>("InfoPage");
+				InfoPageViewModel? context = (InfoPageViewModel?)infoPage.DataContext;
+
+				context.HasUpdateAvailable = true;
+				context.UpdateDetails = rel.Body;
 			});
 		}
 

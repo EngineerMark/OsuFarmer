@@ -20,6 +20,15 @@
         Background="Transparent"
 		>
 	<Grid>
+		<ExperimentalAcrylicBorder IsHitTestVisible="False">
+			<ExperimentalAcrylicBorder.Material>
+				<ExperimentalAcrylicMaterial
+					 BackgroundSource="Digger"
+					 TintColor="Black"
+					 TintOpacity="1"
+					 MaterialOpacity="0.8" />
+			</ExperimentalAcrylicBorder.Material>
+		</ExperimentalAcrylicBorder>
 		<Grid Height="30" VerticalAlignment="Top" IsHitTestVisible="False">
 			<Grid Margin="3">
 				<StackPanel Orientation="Horizontal" Spacing="5">

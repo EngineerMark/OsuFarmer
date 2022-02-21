@@ -1,6 +1,7 @@
 ﻿using Avalonia.Controls;
 using OsuFarmer.Alerts;
 using OsuFarmer.Core;
+using OsuFarmer.Core.Github;
 using OsuFarmer.Core.Osu;
 using System;
 using System.Collections;
@@ -35,14 +36,22 @@ namespace OsuFarmer.Managers
         }
 
         public void Start(){
-            FileManager = new FileManager();
-            SettingsManager = new SettingsManager();
-            SessionManager = new SessionManager();
-            //PageManager = new PageManager();
-            NetworkManager = new NetworkManager();
-            UpdateManager = new UpdateManager();
+            Avalonia.Threading.Dispatcher.UIThread.InvokeAsync(async () => { 
+                FileManager = new FileManager();
+                SettingsManager = new SettingsManager();
+                SessionManager = new SessionManager();
+                //PageManager = new PageManager();
+                NetworkManager = new NetworkManager();
+                UpdateManager = new UpdateManager();
 
-            StartLoop();
+                try
+                {
+                    await UpdateManager.Instance.Start();
+                }
+                catch (Exception) { }
+
+                StartLoop();
+            });
         }
 
         public void StartLoop(bool reset = true){
@@ -174,7 +183,7 @@ namespace OsuFarmer.Managers
                     {
                         if (!SettingsManager.Instance.Settings.SmoothTrackerTimer)
                         {
-                            if ((DateTime.Now - lastProgressIteration)>TimeSpan.FromMilliseconds(16))
+                            if ((DateTime.Now - lastProgressIteration)>TimeSpan.FromSeconds(1))
                             {
                                 UIManager.Instance?.SetTrackerProgress(lastUpdate, DateTime.Now, expectedUpdate);
                                 lastProgressIteration = DateTime.Now;

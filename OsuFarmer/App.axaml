@@ -3,6 +3,7 @@
              x:Class="OsuFarmer.App">
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
+		<StyleInclude Source="avares://OsuFarmer/Icons.axaml" />
 		<StyleInclude Source="avares://Aura.UI.FluentTheme/AuraUI.xaml"/>
     </Application.Styles>
 	<Application.Resources>
