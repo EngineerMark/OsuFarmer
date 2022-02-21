@@ -82,6 +82,11 @@ namespace OsuFarmer.Core.Osu
         [JsonProperty("pp_country_rank")]
         public long CountryRank { get; set; }
 
+        [JsonIgnore]
+        public int Followers { get { return (WebData?.User?.Followers) ?? 0; } }
+        public int ReplaysWatched { get { return (WebData?.User?.Replayswatched?.Sum(a => a.Count)) ?? 0; } }
+        public int UniquePlaycount { get { return (WebData?.User?.UniquePlaycount) ?? 0; } }
+
         public long TotalHits { get => Count300 + Count100 + Count50; }
         public double HitsPerPlay { get => (double)TotalHits / (double)Playcount; }
         public long Clears { get => CountSSH + CountSS + CountSH + CountS + CountA; }

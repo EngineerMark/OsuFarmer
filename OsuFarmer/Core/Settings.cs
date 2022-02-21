@@ -55,6 +55,10 @@ namespace OsuFarmer.Core
 
             //new TrackerItem("Playtime", "Playtime", true, "{0:%h}h {0:%m}m", typeof(TimeSpan)),
             new TrackerItem("Playcount", "Playcount", true),
+            new TrackerItem("Unique Plays", "UniquePlaycount", true),
+
+            new TrackerItem("Followers", "Followers", true),
+            new TrackerItem("Replays Watched", "ReplaysWatched", true),
         };
 
         public Dictionary<string, bool>? Trackers { get; set; }
